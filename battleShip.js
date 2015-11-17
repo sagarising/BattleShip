@@ -1,13 +1,14 @@
 var lib={};
 exports.lib=lib;
-var grid={};
+
+lib.grid={};
 for (var i=65;i<75;i++){
 	var ar=new Array(10);
-	grid[String.fromCharCode(i)]=(function makeArray(){var arr=[];
+	lib.grid[String.fromCharCode(i)]=(function makeArray(){var arr=[];
 		for(var j=0;j<10;j++){arr.push(j+1)}
 			return arr})();
 }
-console.log(grid);
+console.log(lib.grid);
 lib.Ship = function(size){
 	for(var i=65;i<(65+size);i++){
 		this[String.fromCharCode(i)]='';
@@ -47,4 +48,4 @@ lib.isAllowed = function(ship,align,firstPoint,grid){
 
 
 }
-positionShip(ship1,v,grid.A[1],grid)
+// lib.positionShip(ship1,v,grid.A[1],grid)
