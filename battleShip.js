@@ -1,3 +1,4 @@
+
 var grid={};
 for (var i=65;i<75;i++){
 	var ar=new Array(10);
@@ -20,7 +21,7 @@ var positionShip = function(ship,align,fp,grid){
 
 //from fp we have to separate key and numeric value
 
-var isAllowed = function(ship,align,fp,grid){
+lib.isAllowed = function(ship,align,fp,grid){
 	var rows=['A','B','C','D','E','F','G','H','I','J'];
 	var shipsize = Object.keys(ship).length;
 	if(align == "vertical"){
