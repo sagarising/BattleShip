@@ -1,3 +1,5 @@
+var lib={};
+exports.lib=lib;
 var grid={};
 for (var i=65;i<75;i++){
 	var ar=new Array(10);
@@ -6,13 +8,19 @@ for (var i=65;i<75;i++){
 			return arr})();
 }
 console.log(grid);
-var carrier= {a:'',b:'',c:'',d:'',e:''};
-var battleShip= {a:'',b:'',c:'',d:''};
-var cruiser= {a:'',b:'',c:''};
-var submarine= {a:'',b:'',c:''};
-var destroyer= {a:'',b:''};
-var positionShip = function(ship,align,fp,grid){
-	console.log(fp)
+lib.Ship = function(size){
+	for(var i=65;i<(65+size);i++){
+		this[String.fromCharCode(i)]='';
+	}
+}
+var carrier= new Ship(5);
+var battleShip= new Ship(4); 
+var cruiser= new Ship(3);
+var submarine= new Ship(3);
+var destroyer= new Ship(2);
+
+lib.positionShip = function(ship,align,firstPoint,grid){
+	console.log(firstPoint)
 	// for(var key in ship){
 	// 	key=grid
 	// }
@@ -20,19 +28,19 @@ var positionShip = function(ship,align,fp,grid){
 
 //from fp we have to separate key and numeric value
 
-var isAllowed = function(ship,align,fp,grid){
+lib.isAllowed = function(ship,align,firstPoint,grid){
 	var rows=['A','B','C','D','E','F','G','H','I','J'];
 	var shipsize = Object.keys(ship).length;
 	if(align == "vertical"){
 		var allowedRows = Object.keys(grid).length - (shipsize - 1);
-		if(rows.indexOf(fp.row) < allowedRows)
+		if(rows.indexOf(firstPoint.row) < allowedRows)
 			return true;
 		return false;
 	}
 
 	if(align == "horizontal"){
 		var allowedColumn = Object.keys(grid).length - (shipsize - 1);
-		if(fp.column <= allowedColumn)
+		if(firstPoint.column <= allowedColumn)
 			return true;
 		return false;
 	}
