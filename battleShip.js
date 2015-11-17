@@ -4,7 +4,7 @@ var grid={};
 for (var i=65;i<75;i++){
 	var ar=new Array(10);
 	grid[String.fromCharCode(i)]=(function makeArray(){var arr=[];
-		for(var j=0;j<10;j++){arr.push(j)}
+		for(var j=0;j<10;j++){arr.push(j+1)}
 			return arr})();
 }
 console.log(grid);
@@ -13,11 +13,11 @@ lib.Ship = function(size){
 		this[String.fromCharCode(i)]='';
 	}
 }
-var carrier= new Ship(5);
-var battleShip= new Ship(4); 
-var cruiser= new Ship(3);
-var submarine= new Ship(3);
-var destroyer= new Ship(2);
+var carrier= new lib.Ship(5);
+var battleShip= new lib.Ship(4); 
+var cruiser= new lib.Ship(3);
+var submarine= new lib.Ship(3);
+var destroyer= new lib.Ship(2);
 
 lib.positionShip = function(ship,align,firstPoint,grid){
 	console.log(firstPoint)
