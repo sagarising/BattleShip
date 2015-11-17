@@ -11,9 +11,9 @@ describe('Ship',function(){
 		var ship = new lib.Ship(3);
 		expect(ship).to.be.a('object');
 	});
-	it('returned ship must have only desired fields',function(){
+	it('returned ship must have only desired fields with null values',function(){
 		var ship1 = new lib.Ship(3); 
-		expect(ship1).to.have.all.keys(['a','b','c']);
+		expect(ship1).to.have.all.keys({'a':null,'b':null,'c':null});
 	});
 });
 
@@ -59,3 +59,16 @@ describe('isUsedSpace',function(){
 		assert.equal(false,grid.isUsedSpace(ship));
 	});
 })
+
+
+describe('isUsedCoordinate',function(){
+	it('returns true if coordinate is used by other ship');
+	it('returns false if coordinate is not used by any other ship');
+});
+
+describe('positionShip',function(){
+	it('fills the coordinates of the ship object');
+	it('returns error if the ship cannot be placed on used coordinate');
+})
+
+
