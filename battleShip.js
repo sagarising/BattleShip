@@ -68,25 +68,27 @@ lib.positionShip = function(ship,align,firstPoint,grid){
 	
 	if(lib.isAllowed(ship,align,firstPoint,grid)){
 		var tempCoordinates = [];
+		var coordinateToBePushed;
 		if(align=='vertical'){
 			var initialCharCode = firstPoint.charCodeAt(0);
 			for (var key in ship.coordinates){
-				ship.coordinates[key] = String.fromCharCode(initialCharCode++) + firstPoint.slice(1); 
-				tempCoordinates.push(ship[key]);
+				coordinateToBePushed = String.fromCharCode(initialCharCode++) + firstPoint.slice(1); 
+				tempCoordinates.push(coordinateToBePushed);
 			}
 		}   //don't put semi-colon here 
 		else if(align == 'horizontal'){
 			var initialColumnNumber = firstPoint.slice(1);
 			for (var key in ship.coordinates){
-				ship.coordinates[key] = firstPoint[0] + initialColumnNumber++;
-				tempCoordinates.push(ship[key]);
+				coordinateToBePushed = firstPoint[0] + initialColumnNumber++;
+				tempCoordinates.push(coordinateToBePushed);
 			}
 		};
-		if(grid.isUsedSpace(ship.coordinates)){
+		if(grid.isUsedSpace(tempCoordinates)){
 				throw new Error('Cannot place over other ship.');
-			}
-			grid.usedCoordinates = grid.usedCoordinates.concat(tempCoordinates); 
-			return (ship);
+		}
+		ship.coordinates = tempCoordinates;										// be careful using tempCoordinates because its reference is given to ship
+		grid.usedCoordinates = grid.usedCoordinates.concat(tempCoordinates); 
+		return;                                   // return to just early exit from the function
 	};
 	throw new Error('Cannot position ship here.');
 };

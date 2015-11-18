@@ -60,7 +60,8 @@ describe('positionShip',function(){
 		firstpoint = 'A4';
 		var grid = new lib.gridCreater();
 		var expected = {coordinates:['A4','B4','C4']}
-		assert.equal(JSON.stringify(expected),JSON.stringify(lib.positionShip(ship,align,firstpoint,grid)));
+		lib.positionShip(ship,align,firstpoint,grid);
+		assert.equal(JSON.stringify(expected),JSON.stringify(ship));
 	});
 	it('should position the ship and return ship with some filled coordinates for horizontal',function(){
 		var ship = new lib.Ship(3);
@@ -68,7 +69,8 @@ describe('positionShip',function(){
 		firstpoint = 'A4';
 		var grid = new lib.gridCreater();
 		var expected = {coordinates:['A4','A5','A6']}
-		assert.equal(JSON.stringify(expected),JSON.stringify(lib.positionShip(ship,align,firstpoint,grid)));
+		lib.positionShip(ship,align,firstpoint,grid);
+		assert.equal(JSON.stringify(expected),JSON.stringify(ship));
 	});
 	it('should return error if the ship cannot be placed',function(){
 		var ship = new lib.Ship(3);
@@ -78,7 +80,7 @@ describe('positionShip',function(){
 		var boundFunction = lib.positionShip.bind(null,ship,align,firstpoint,grid);
 		assert.throw(boundFunction,Error,'Cannot position ship here.');
 	});
-	it('should return error if the ship cannot be placed over used space',function(){
+	it('should return error if the ship cannot be placed over used space and expect ship to be unchanged',function(){
 		var ship = new lib.Ship(3);
 		var align='vertical';
 		firstpoint = 'B4';
@@ -86,5 +88,6 @@ describe('positionShip',function(){
 		grid.usedCoordinates = ['C4'];
 		var boundFunction = lib.positionShip.bind(null,ship,align,firstpoint,grid);
 		assert.throw(boundFunction,Error,'Cannot place over other ship.');
+		expect(ship).to.have.all.keys({coordinates:[null,null,null]});
 	});
 });
