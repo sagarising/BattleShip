@@ -62,7 +62,7 @@ lib.isAllowed = function(ship,align,firstPoint,grid){
 		return false;
 	}
 
-}
+};
 
 lib.positionShip = function(ship,align,firstPoint,grid){
 	
