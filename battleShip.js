@@ -83,7 +83,7 @@ lib.positionShip = function(ship,align,firstPoint,grid){
 			}
 		};
 		if(grid.isUsedSpace(ship.coordinates)){
-				throw Error('Cannot place over other ship.')
+				throw new Error('Cannot place over other ship.');
 			}
 			grid.usedCoordinates = grid.usedCoordinates.concat(tempCoordinates); 
 			return (ship);

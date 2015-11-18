@@ -51,7 +51,7 @@ describe('isUsedSpace',function(){
 		var ship = new lib.Ship(3);
 		assert.equal(false,grid.isUsedSpace(ship.coordinates));
 	});
-})
+});
 
 describe('positionShip',function(){
 	it('should position the ship and return ship with some filled coordinates for vertical',function(){
@@ -73,24 +73,18 @@ describe('positionShip',function(){
 	it('should return error if the ship cannot be placed',function(){
 		var ship = new lib.Ship(3);
 		var align='vertical';
-		firstpoint = {row:'I',column:4};
+		firstpoint = 'I4';
 		var grid = new lib.gridCreater();
-		var expected = new Error('Cannot position ship here.');
 		var boundFunction = lib.positionShip.bind(null,ship,align,firstpoint,grid);
-
-		expect(boundFunction).to.throw(Error);
+		assert.throw(boundFunction,Error,'Cannot position ship here.');
 	});
 	it('should return error if the ship cannot be placed over used space',function(){
 		var ship = new lib.Ship(3);
 		var align='vertical';
-		firstpoint = {row:'B',column:4};
+		firstpoint = 'B4';
 		var grid = new lib.gridCreater();
-		grid.usedCoordinates = [{row:'C',column:4}]
-		var expected = new Error('Cannot place over other ship.');
+		grid.usedCoordinates = ['C4'];
 		var boundFunction = lib.positionShip.bind(null,ship,align,firstpoint,grid);
-
-		expect(boundFunction).to.throw(Error);
+		assert.throw(boundFunction,Error,'Cannot place over other ship.');
 	});
-
-	it('should return error with specific error message');
-})
+});
