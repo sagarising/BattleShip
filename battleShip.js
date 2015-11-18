@@ -67,33 +67,26 @@ lib.isAllowed = function(ship,align,firstPoint,grid){
 lib.positionShip = function(ship,align,firstPoint,grid){
 	
 	if(lib.isAllowed(ship,align,firstPoint,grid)){
+		var tempCoordinates = [];
 		if(align=='vertical'){
-			var tempCoordinates1=[];
 			var initialCharCode = firstPoint.charCodeAt(0);
-			for (var key1 in ship.coordinates){
-				ship.coordinates[key1] = String.fromCharCode(initialCharCode++) + firstPoint.slice(1); 
-				tempCoordinates1.push(ship[key1]);
+			for (var key in ship.coordinates){
+				ship.coordinates[key] = String.fromCharCode(initialCharCode++) + firstPoint.slice(1); 
+				tempCoordinates.push(ship[key]);
 			}
-			if(grid.isUsedSpace(ship.coordinates)){
+		}   //don't put semi-colon here 
+		else if(align == 'horizontal'){
+			var initialColumnNumber = firstPoint.slice(1);
+			for (var key in ship.coordinates){
+				ship.coordinates[key] = firstPoint[0] + initialColumnNumber++;
+				tempCoordinates.push(ship[key]);
+			}
+		};
+		if(grid.isUsedSpace(ship.coordinates)){
 				throw Error('Cannot place over other ship.')
 			}
-			grid.usedCoordinates = grid.usedCoordinates.concat(tempCoordinates1);   // we should optimise this
+			grid.usedCoordinates = grid.usedCoordinates.concat(tempCoordinates); 
 			return (ship);
-		}
-
-		if(align == 'horizontal'){
-			var tempCoordinates2=[];
-			var initialColumnNumber = firstPoint.slice(1);
-			for (var key2 in ship.coordinates){
-				ship.coordinates[key2] = firstPoint[0] + initialColumnNumber++;
-				tempCoordinates2.push(ship[key2]);
-			}
-			if(grid.isUsedSpace(ship.coordinates)){
-				throw new Error('Cannot place over other ship.');
-			}
-			grid.usedCoordinates = grid.usedCoordinates.concat(tempCoordinates2); //we should optimise this
-			return (ship);
-		}
 	};
 	throw new Error('Cannot position ship here.');
 };
