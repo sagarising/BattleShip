@@ -31,11 +31,12 @@ function fillArrayWithNull(size,array){
 	return arr;
 };
 
-
+// lib.sunk = function()
 
 lib.Ship = function(size){
 	this.coordinates = fillArrayWithNull(size);
 	Object.defineProperty(this,'isAlive',{value:true,writable:true})
+	
 };
 
 var carrier= new lib.Ship(5);
