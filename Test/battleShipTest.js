@@ -91,3 +91,20 @@ describe('positionShip',function(){
 		expect(ship).to.have.all.keys({coordinates:[null,null,null]});
 	});
 });
+describe('makesCoordinate',function(){
+	it('should check when initilCharCode is undefined and gives new generated coordinates',function(){
+		var ship = new lib.Ship(3);
+		firstpoint = 'A4';
+		var initilColumnNumber = firstpoint.slice(1);
+		var expected = ['A4','A5','A6'];
+		assert.equal(JSON.stringify(expected),JSON.stringify(lib.makesCoordinates(ship,firstpoint,undefined,initilColumnNumber)));
+	})
+	it('should check when initilCharCode is defined and gives new generated coordinates',function(){
+		var ship = new lib.Ship(3);
+		firstpoint = 'A4';
+		var initilCharCode = firstpoint.charCodeAt(0);
+		var initilColumnNumber = firstpoint.slice(1);
+		var expected = ['A4','B4','C4'];
+		assert.equal(JSON.stringify(expected),JSON.stringify(lib.makesCoordinates(ship,firstpoint,initilCharCode,initilColumnNumber)));
+	})
+})

@@ -68,11 +68,11 @@ lib.positionShip = function(ship,align,firstPoint,grid){
 	if(lib.isAllowed(ship,align,firstPoint,grid)){
 		if(align=='vertical'){
 			var initialCharCode = firstPoint.charCodeAt(0);
-			var tempCoordinates = makesCoordinate(ship,firstPoint,initialCharCode);
+			var tempCoordinates = lib.makesCoordinates(ship,firstPoint,initialCharCode);
 		}   //don't put semi-colon here 
 		else if(align == 'horizontal'){
 			var initialColumnNumber = firstPoint.slice(1);	
-			var tempCoordinates = makesCoordinate(ship,firstPoint,initialCharCode,initialColumnNumber);
+			var tempCoordinates = lib.makesCoordinates(ship,firstPoint,initialCharCode,initialColumnNumber);
 		};
 		if(grid.isUsedSpace(tempCoordinates)){
 				throw new Error('Cannot place over other ship.');
@@ -83,7 +83,7 @@ lib.positionShip = function(ship,align,firstPoint,grid){
 	};
 	throw new Error('Cannot position ship here.');
 };
-var makesCoordinate = function(ship,firstPoint,initialCharCode,initialColumnNumber){
+lib.makesCoordinates = function(ship,firstPoint,initialCharCode,initialColumnNumber){
 	var generatedCoordinates = [];
 	for (var key in ship.coordinates){
 		var coordinateToBePushed = initialCharCode != undefined ? (String.fromCharCode(initialCharCode++) + firstPoint.slice(1))
