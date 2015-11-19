@@ -63,39 +63,33 @@ lib.isAllowed = function(ship,align,firstPoint,grid){
 		return false;
 	}
 
-}
+};
 
 lib.positionShip = function(ship,align,firstPoint,grid){
-	
 	if(lib.isAllowed(ship,align,firstPoint,grid)){
 		if(align=='vertical'){
-			var tempCoordinates1=[];
 			var initialCharCode = firstPoint.charCodeAt(0);
-			for (var key1 in ship.coordinates){
-				ship.coordinates[key1] = String.fromCharCode(initialCharCode++) + firstPoint.slice(1); 
-				tempCoordinates1.push(ship[key1]);
-			}
-			if(grid.isUsedSpace(ship.coordinates)){
-				throw Error('Cannot place over other ship.')
-			}
-			grid.usedCoordinates = grid.usedCoordinates.concat(tempCoordinates1);   // we should optimise this
-			return (ship);
-		}
-
-		if(align == 'horizontal'){
-			var tempCoordinates2=[];
-			var initialColumnNumber = firstPoint.slice(1);
-			for (var key2 in ship.coordinates){
-				ship.coordinates[key2] = firstPoint[0] + initialColumnNumber++;
-				tempCoordinates2.push(ship[key2]);
-			}
-			if(grid.isUsedSpace(ship.coordinates)){
+			var tempCoordinates = lib.makesCoordinates(ship,firstPoint,initialCharCode);
+		}   //don't put semi-colon here 
+		else if(align == 'horizontal'){
+			var initialColumnNumber = firstPoint.slice(1);	
+			var tempCoordinates = lib.makesCoordinates(ship,firstPoint,initialCharCode,initialColumnNumber);
+		};
+		if(grid.isUsedSpace(tempCoordinates)){
 				throw new Error('Cannot place over other ship.');
-			}
-			grid.usedCoordinates = grid.usedCoordinates.concat(tempCoordinates2); //we should optimise this
-			return (ship);
-		}
+		};
+		ship.coordinates = tempCoordinates;										// be careful using tempCoordinates because its reference is given to ship
+		grid.usedCoordinates = grid.usedCoordinates.concat(tempCoordinates); 
+		return;                                   // return to just early exit from the function
 	};
 	throw new Error('Cannot position ship here.');
 };
-
+lib.makesCoordinates = function(ship,firstPoint,initialCharCode,initialColumnNumber){
+	var generatedCoordinates = [];
+	for (var key in ship.coordinates){
+		var coordinateToBePushed = initialCharCode != undefined ? (String.fromCharCode(initialCharCode++) + firstPoint.slice(1))
+									: (firstPoint[0] + initialColumnNumber++);
+		generatedCoordinates.push(coordinateToBePushed);
+	};
+	return generatedCoordinates;
+};
