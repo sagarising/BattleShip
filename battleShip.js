@@ -65,31 +65,30 @@ lib.isAllowed = function(ship,align,firstPoint,grid){
 };
 
 lib.positionShip = function(ship,align,firstPoint,grid){
-	
 	if(lib.isAllowed(ship,align,firstPoint,grid)){
-		var tempCoordinates = [];
-		var coordinateToBePushed;
 		if(align=='vertical'){
 			var initialCharCode = firstPoint.charCodeAt(0);
-			for (var key in ship.coordinates){
-				coordinateToBePushed = String.fromCharCode(initialCharCode++) + firstPoint.slice(1); 
-				tempCoordinates.push(coordinateToBePushed);
-			}
+			var tempCoordinates = makesCoordinate(ship,firstPoint,initialCharCode);
 		}   //don't put semi-colon here 
 		else if(align == 'horizontal'){
-			var initialColumnNumber = firstPoint.slice(1);
-			for (var key in ship.coordinates){
-				coordinateToBePushed = firstPoint[0] + initialColumnNumber++;
-				tempCoordinates.push(coordinateToBePushed);
-			}
+			var initialColumnNumber = firstPoint.slice(1);	
+			var tempCoordinates = makesCoordinate(ship,firstPoint,initialCharCode,initialColumnNumber);
 		};
 		if(grid.isUsedSpace(tempCoordinates)){
 				throw new Error('Cannot place over other ship.');
-		}
+		};
 		ship.coordinates = tempCoordinates;										// be careful using tempCoordinates because its reference is given to ship
 		grid.usedCoordinates = grid.usedCoordinates.concat(tempCoordinates); 
 		return;                                   // return to just early exit from the function
 	};
 	throw new Error('Cannot position ship here.');
 };
-
+var makesCoordinate = function(ship,firstPoint,initialCharCode,initialColumnNumber){
+	var generatedCoordinates = [];
+	for (var key in ship.coordinates){
+		var coordinateToBePushed = initialCharCode != undefined ? (String.fromCharCode(initialCharCode++) + firstPoint.slice(1))
+									: (firstPoint[0] + initialColumnNumber++);
+		generatedCoordinates.push(coordinateToBePushed);
+	};
+	return generatedCoordinates;
+};
