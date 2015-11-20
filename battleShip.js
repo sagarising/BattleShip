@@ -1,6 +1,8 @@
+var events = require('events');
+var eventEmitter = new events.EventEmitter();
+
 var lib={};
 exports.lib=lib;
-
 
 lib.gridCreater = function (){
 	for (var i=65;i<75;i++){
@@ -31,8 +33,6 @@ function fillArrayWithNull(size,array){
 	return arr;
 };
 
-
-
 lib.Ship = function(size){
 	this.coordinates = fillArrayWithNull(size);
 	Object.defineProperty(this,'isAlive',{value:true,writable:true})
@@ -44,7 +44,6 @@ var cruiser= new lib.Ship(3);
 var submarine= new lib.Ship(3);
 var destroyer= new lib.Ship(2);
 
-
 lib.isAllowed = function(ship,align,firstPoint,grid){
 	var rows=['A','B','C','D','E','F','G','H','I','J'];
 	var shipsize = ship.coordinates.length;
@@ -54,14 +53,12 @@ lib.isAllowed = function(ship,align,firstPoint,grid){
 			return true;
 		return false;
 	}
-
 	if(align == "horizontal"){
 		var allowedColumn = Object.keys(grid).length - (shipsize - 1);
 		if(firstPoint.slice(1) <= allowedColumn)
 			return true;
 		return false;
 	}
-
 };
 
 lib.positionShip = function(ship,align,firstPoint,grid){
@@ -83,6 +80,7 @@ lib.positionShip = function(ship,align,firstPoint,grid){
 	};
 	throw new Error('Cannot position ship here.');
 };
+
 var makesCoordinate = function(ship,firstPoint,initialCharCode,initialColumnNumber){
 	var generatedCoordinates = [];
 	for (var key in ship.coordinates){
@@ -92,3 +90,10 @@ var makesCoordinate = function(ship,firstPoint,initialCharCode,initialColumnNumb
 	};
 	return generatedCoordinates;
 };
+
+var Player = function(id,turn,ships){
+	this.id = id;
+	this.turn = turn;
+	this.ships = ships;
+};
+
