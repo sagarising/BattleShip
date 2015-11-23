@@ -1,0 +1,35 @@
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+	<!-- // <script type="text/javascript" src = "new.js"></script> -->
+	<script type="text/javascript" src = "../javascript/placingOfShip.js"></script>
+</head>
+<body>
+    <hr><h1 align="center">BATTLESHIP</h1><hr><br>
+	<script type="text/javascript" src='../javascript/gridPrinting.js'></script>
+		<!-- <button id = "submit" name="button" onclick="craeteShip(this.name)">hello</button><br> -->
+
+	<form name="myform" method="POST" >
+	<div>
+	Ships<br>
+	<select name="Ships" id="ship">
+		<option value="5" >Carrier</option>
+		<option value="4">Battleship</option>
+		<option value="3">Cruiser</option>
+		<option value="3">Submarine</option>
+		<option value="2">Destroyer</option>
+	</select><br>
+	Alignment<br>
+		<input type="radio" id="horizontal" name="group1" value="horizontal" checked> Horizontal<br>
+		<input type="radio" id="vertical" name="group1" value="vertical"> Vertical<br>
+		<input	type="text" size="50" maxlength="3" pattern="[a-zA-Z0-9]{0,100}" id="text" value="Select a point on grid to place ship" readonly="readonly"><br>
+		<button onclick="checkAndSubmit()"> Place Ship</button>
+	</div>
+</form>
+	<!-- <embed type="image/svg+xml" src="radar.svg" /> -->
+</html>
+
+
+
+
