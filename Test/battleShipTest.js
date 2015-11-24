@@ -109,4 +109,3 @@ describe('makesCoordinate',function(){
 	})
 })
 
-describe('hitOrMiss')
