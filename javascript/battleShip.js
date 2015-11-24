@@ -91,3 +91,8 @@ lib.makesCoordinates = function(ship,firstPoint,initialCharCode,initialColumnNum
 	};
 	return generatedCoordinates;
 };
+
+lib.hitOrMiss = function(attackPoint) {
+	var result = grid.usedCoordinates.indexOf(attackPoint)!==-1 && 'hit' || 'miss';
+	return result;
+}

@@ -4,7 +4,8 @@
   "description": "",
   "main": "battleShip.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "watch": "mocha -R min --watch"
   },
   "repository": {
     "type": "git",

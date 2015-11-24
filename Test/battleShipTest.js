@@ -108,3 +108,5 @@ describe('makesCoordinate',function(){
 		assert.equal(JSON.stringify(expected),JSON.stringify(lib.makesCoordinates(ship,firstpoint,initilCharCode,initilColumnNumber)));
 	})
 })
+
+describe('hitOrMiss')
