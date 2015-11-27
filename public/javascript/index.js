@@ -1,4 +1,5 @@
 var createPlayer = function(){
+	document.getElementsByTagName('button')[1].style.display='inline';
 	if(document.querySelector('#name').value==''){
 		alert('first enter your name')
 	}
@@ -6,11 +7,14 @@ var createPlayer = function(){
 		req = new XMLHttpRequest();
 		req.onreadystatechange = function() {
 			if(req.readyState == 4 && req.status ==200) {
-				alert(req.responseText);
+				alert('welcome');
 			}
 		}
 		req.open('POST','player',true);
 		req.send('name='+document.querySelector('#name').value);
 	}
-		document.getElementsByTagName('button')[0].style.display='inline';
 }
+
+window.onload = function(){
+	document.querySelector('#submitName').onclick = createPlayer;
+};

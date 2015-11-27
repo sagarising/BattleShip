@@ -2,7 +2,7 @@ var events = require('events');
 var eventEmitter = new events.EventEmitter();
 var lib={};
 exports.lib = lib;
-
+exports.players = [];
 lib.gridCreater = function (){
 	for (var i=65;i<75;i++){
 		this[String.fromCharCode(i)] = (function makeArray(){var arr=[];
