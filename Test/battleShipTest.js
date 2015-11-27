@@ -1,6 +1,6 @@
 var assert = require('chai').assert;
 var expect = require('chai').expect;
-var lib = require('../javascript/battleShip.js').lib;
+var lib = require('../public/javascript/battleShip.js').lib;
 var test = {};
 exports.test = test; 
 

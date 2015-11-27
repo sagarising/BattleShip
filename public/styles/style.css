@@ -1,0 +1,28 @@
+.enemy {
+	margin: -26.6em 0 0 30em;
+}	
+td:hover{
+	background-color: yellow;
+}
+nav{
+	margin: -85.6em 0 0 82em;
+}
+input:hover{
+	background-color: yellow;
+}
+body.firstpage{
+    background-image: url("../images/battleship.JPG");
+    background-size: 1450px 820px;
+}
+div.firstpagestart{
+    margin: 10em 0 0 40em;
+}
+.button {
+    background-color: rgb(78,181,181);
+    width: 50px;
+    height:50px;
+    border-radius: 50%;
+}
+button:hover{
+    background-color: rgb(109,252,252);
+}
