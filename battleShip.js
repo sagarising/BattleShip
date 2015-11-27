@@ -1,8 +1,7 @@
 var events = require('events');
 var eventEmitter = new events.EventEmitter();
-
 var lib={};
-exports.lib=lib;
+exports.lib = lib;
 
 lib.gridCreater = function (){
 	for (var i=65;i<75;i++){
@@ -23,7 +22,13 @@ lib.gridCreater.prototype = {
 	}
 };
 
-var grid = new lib.gridCreater();
+exports.grid = new lib.gridCreater();
+
+exports.Player = function(name,grid,ship){
+	this.name = name;
+	this.grid = grid;
+	this.ship = ship;
+}
 
 function fillArrayWithNull(size,array){
  	var arr = array||[];
