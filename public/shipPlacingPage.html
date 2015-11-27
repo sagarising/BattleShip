@@ -7,7 +7,7 @@
 <body>
     <hr><h1 align="center">BATTLESHIP</h1><hr><br>
 	<form name="myform" method="POST" >
-	<table border="1" id="own">
+	<table border="1" id="table" value="own">
 		<tr>
 			<td  width=70px  height=70px id="A1" onclick="fillBox(this)"></td>
 			<td  width=70px  height=70px id="A2" onclick="fillBox(this)"></td>
@@ -131,12 +131,12 @@
 	</table>
 	<div id="selectShip">
 	Ships<br>
-	<select name="Ships" id="ship">
-		<option value="5" >Carrier</option>
-		<option value="4">Battleship</option>
-		<option value="3">Cruiser</option>
-		<option value="3">Submarine</option>
-		<option value="2">Destroyer</option>
+	<select id="ship">
+		<option value="carrier">Carrier</option>
+		<option value="battleship">Battleship</option>
+		<option value="cruiser">Cruiser</option>
+		<option value="submarine">Submarine</option>
+		<option value="destroyer">Destroyer</option>
 	</select><br><br>
 	Alignment<br>
 		<input type="radio" id="horizontal" name="group1" value="horizontal" checked> Horizontal<br>
