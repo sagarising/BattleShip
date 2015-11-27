@@ -1,152 +1,16 @@
+<!DOCTYPE html>
 <html>
 <head>
-	<title></title>
-	<link rel="stylesheet" type="text/css" href="../css/style.css">
-	<script type="text/javascript" src = "../javascript/positioningOfShip.js"></script>
+	<title>Battleship</title>
+	<link rel="stylesheet" type="text/css" href="./styles/style.css">
 </head>
-<body>
-    <hr><h1 align="center">BATTLESHIP</h1><hr><br>
-	<form name="myform" method="POST" >
-	<table border="1" id="own">
-		<tr>
-			<td  width=70px  height=70px id="A1" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="A2" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="A3" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="A4" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="A5" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="A6" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="A7" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="A8" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="A9" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="A10" onclick="fillBox(this)"></td>
-		</tr>
-		<tr>
-			<td  width=70px  height=70px id="B1" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="B2" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="B3" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="B4" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="B5" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="B6" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="B7" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="B8" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="B9" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="B10" onclick="fillBox(this)"></td>
-		</tr>
-		<tr>
-			<td  width=70px  height=70px id="C1" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="C2" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="C3" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="C4" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="C5" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="C6" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="C7" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="C8" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="C9" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="C10" onclick="fillBox(this)"></td>
-		</tr>
-		<tr>
-			<td  width=70px  height=70px id="D1" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="D2" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="D3" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="D4" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="D5" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="D6" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="D7" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="D8" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="D9" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="D10" onclick="fillBox(this)"></td>
-		</tr>
-		<tr>
-			<td  width=70px  height=70px id="E1" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="E2" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="E3" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="E4" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="E5" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="E6" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="E7" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="E8" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="E9" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="E10" onclick="fillBox(this)"></td>
-		</tr>
-		<tr>
-			<td  width=70px  height=70px id="F1" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="F2" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="F3" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="F4" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="F5" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="F6" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="F7" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="F8" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="F9" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="F10" onclick="fillBox(this)"></td>
-		</tr>
-		<tr>
-			<td  width=70px  height=70px id="G1" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="G2" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="G3" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="G4" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="G5" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="G6" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="G7" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="G8" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="G9" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="G10" onclick="fillBox(this)"></td>
-		</tr>
-		<tr>
-			<td  width=70px  height=70px id="H1" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="H2" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="H3" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="H4" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="H5" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="H6" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="H7" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="H8" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="H9" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="H10" onclick="fillBox(this)"></td>
-		</tr>
-		<tr>
-			<td  width=70px  height=70px id="I1" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="I2" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="I3" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="I4" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="I5" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="I6" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="I7" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="I8" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="I9" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="I10" onclick="fillBox(this)"></td>
-		</tr>
-		<tr>
-			<td  width=70px  height=70px id="J1" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="J2" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="J3" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="J4" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="J5" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="J6" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="J7" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="J8" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="J9" onclick="fillBox(this)"></td>
-			<td  width=70px  height=70px id="J10" onclick="fillBox(this)"></td>
-		</tr>
-	</table>
-	<div id="selectShip">
-	Ships<br>
-	<select name="Ships" id="ship">
-		<option value="5" >Carrier</option>
-		<option value="4">Battleship</option>
-		<option value="3">Cruiser</option>
-		<option value="3">Submarine</option>
-		<option value="2">Destroyer</option>
-	</select><br><br>
-	Alignment<br>
-		<input type="radio" id="horizontal" name="group1" value="horizontal" checked> Horizontal<br>
-		<input type="radio" id="vertical" name="group1" value="vertical"> Vertical<br><br>
-		<input	type="text" size="35" maxlength="3" pattern="[a-zA-Z0-9]{0,100}" id="text" value="Select a point on grid to place ship" readonly="readonly"><br>
-		<button id="placeShipButton" onclick="checkAndSubmit()"> Place Ship</button>
+<body class="firstpage">
+	<hr><h1 align="center" id="homepageheading" >BATTLESHIP</h1><hr>
+	<div class="firstpagestart">
+		Please enter your name:<br>
+		<input type="text" id="name" name = "name"><br>
+		<button class="button" type= "submit" onclick = 'createPlayerAndStart()'><a href="shipPlacingPage.html"> start</a></button>
+		<button class="button" ><a href="options.html">option</a></button>
 	</div>
-</form>
+</body>
 </html>
-
-
-
-
