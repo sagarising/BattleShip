@@ -12,8 +12,8 @@ describe('Ship',function(){
 		expect(ship).to.be.a('object');
 	});
 	it('returned ship must have only coordinates with null values',function(){
-		var ship1 = new lib.lib.Ship(3,'cruiser'); 
-		expect(ship1).to.have.all.keys({coordinates:[null,null,null],shipName:'cruiser'});
+		var ship1 = new lib.lib.Ship(3); 
+		expect(ship1).to.have.all.keys({coordinates:[null,null,null]});
 	});
 });
 
@@ -55,20 +55,20 @@ describe('isUsedSpace',function(){
 
 describe('positionShip',function(){
 	it('should position the ship and return ship with some filled coordinates for vertical',function(){
-		var ship = new lib.lib.Ship(3,'carrier');
+		var ship = new lib.lib.Ship(3);
 		var align='vertical';
 		firstpoint = 'A4';
 		var grid = new lib.lib.gridCreater();
-		var expected = {coordinates:['A4','B4','C4'],shipName:'carrier'}
+		var expected = {coordinates:['A4','B4','C4']}
 		lib.positionShip(ship,align,firstpoint,grid);
 		assert.equal(JSON.stringify(expected),JSON.stringify(ship));
 	});
 	it('should position the ship and return ship with some filled coordinates for horizontal',function(){
-		var ship = new lib.lib.Ship(3,'cruiser');
+		var ship = new lib.lib.Ship(3);
 		var align='horizontal';
 		firstpoint = 'A1';
 		var grid = new lib.lib.gridCreater();
-		var expected = {coordinates:['A1','A2','A3'],shipName:'cruiser'}
+		var expected = {coordinates:['A1','A2','A3']}
 		lib.positionShip(ship,align,firstpoint,grid);
 		assert.equal(JSON.stringify(expected),JSON.stringify(ship));
 	});
@@ -81,14 +81,14 @@ describe('positionShip',function(){
 		assert.throw(boundFunction,Error,'Cannot position ship here.');
 	});
 	it('should return error if the ship cannot be placed over used space and expect ship to be unchanged',function(){
-		var ship = new lib.lib.Ship(3,'carrier');
+		var ship = new lib.lib.Ship(3);
 		var align='vertical';
 		firstpoint = 'B4';
 		var grid = new lib.lib.gridCreater();
 		grid.usedCoordinates = ['C4'];
 		var boundFunction = lib.positionShip.bind(null,ship,align,firstpoint,grid);
 		assert.throw(boundFunction,Error,'Cannot place over other ship.');
-		expect(ship).to.have.all.keys({coordinates:[null,null,null],shipName:'carrier'});
+		expect(ship).to.have.all.keys({coordinates:[null,null,null]});
 	});
 });
 describe('makesCoordinate',function(){

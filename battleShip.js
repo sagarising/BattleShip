@@ -9,11 +9,11 @@ lib.gridCreater = function (){
 			for(var j=1;j<11;j++){arr.push(j)}
 				return arr})();
 	};
-	Object.defineProperty(this,'usedCoordinates',{value:[],writable:true});
+	this.usedCoordinates = [];
+	
 };
 
 lib.gridCreater.prototype = {
-	
 	isUsedSpace : function(coordinates){
 		var self = this;
 		return coordinates.some(function(coordinate){
@@ -24,14 +24,14 @@ lib.gridCreater.prototype = {
 
 exports.Player = function(name){
 	this.name = name;
-	this.ships = [new lib.Ship(5,'carrier'),
-				 new lib.Ship(4,'battleship'),
-				 new lib.Ship(3,'cruiser'),
-				 new lib.Ship(3,'submarine'),
-				 new lib.Ship(2,'destroyer')];
+	this.ships = [new lib.Ship(5),
+				 new lib.Ship(4),
+				 new lib.Ship(3),
+				 new lib.Ship(3),
+				 new lib.Ship(2)];
 	this.grid = new lib.gridCreater();
 	this.isReady = false;
-}
+};
 
 function fillArrayWithNull(size,array){
  	var arr = array||[];
@@ -41,24 +41,29 @@ function fillArrayWithNull(size,array){
 	return arr;
 };
 
-lib.Ship = function(size,shipname){
+lib.Ship = function(size){
 	this.coordinates = fillArrayWithNull(size);
-	this.shipName = shipname;
 	Object.defineProperty(this,'isAlive',{value:true,writable:true})
 	
 };
 
-lib.isAllowed = function(ship,align,firstPoint,grid){
+// var carrier= new exports.Ship(5);
+// var battleShip= new exports.Ship(4); 
+// var cruiser= new exports.Ship(3);
+// var submarine= new exports.Ship(3);
+// var destroyer= new exports.Ship(2);
+
+lib.isAllowed = function(ship,align,firstPoint){
 	var rows=['A','B','C','D','E','F','G','H','I','J'];
 	var shipsize = ship.coordinates.length;
 	if(align == "vertical"){
-		var allowedRows = Object.keys(grid).length - (shipsize - 1);
+		var allowedRows = 10 - (shipsize - 1);
 		if(rows.indexOf(firstPoint[0]) < allowedRows)
 			return true;
 		return false;
 	}
 	if(align == "horizontal"){
-		var allowedColumn = Object.keys(grid).length - (shipsize - 1);
+		var allowedColumn = 10 - (shipsize - 1);
 		if(firstPoint.slice(1) <= allowedColumn)
 			return true;
 		return false;
@@ -66,21 +71,28 @@ lib.isAllowed = function(ship,align,firstPoint,grid){
 };
 
 exports.positionShip = function(ship,align,firstPoint,grid){
-	if(lib.isAllowed(ship,align,firstPoint,grid)){
+	console.log(ship,align,firstPoint,grid)
+	if(lib.isAllowed(ship,align,firstPoint)){
 		if(align=='vertical'){
 			var initialCharCode = firstPoint.charCodeAt(0);
 			var tempCoordinates = lib.makesCoordinates(ship,firstPoint,initialCharCode);
 		}   //don't put semi-colon here 
 		else if(align == 'horizontal'){
-			var initialColumnNumber = firstPoint.slice(1);	
+			var initialColumnNumber = firstPoint.slice(1);
+			// console.log(initialColumnNumber);	
 			var tempCoordinates = lib.makesCoordinates(ship,firstPoint,initialCharCode,initialColumnNumber);
+			// console.log(tempCoordinates+"hello");
 		};
 		if(grid.isUsedSpace(tempCoordinates)){
 				throw new Error('Cannot place over other ship.');
 		};
-		ship.coordinates = tempCoordinates;										// be careful using tempCoordinates because its reference is given to ship
+		if(grid.usedCoordinates.concat(tempCoordinates).length > 17){
+			throw new Error('Ships already placed');
+		};
+
+		ship.coordinates = tempCoordinates;
 		grid.usedCoordinates = grid.usedCoordinates.concat(tempCoordinates); 
-		return true;                                   // return to just early exit from the function
+		return;                                   // return to just early exit from the function
 	};
 	throw new Error('Cannot position ship here.');
 };

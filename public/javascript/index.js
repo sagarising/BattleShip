@@ -1,10 +1,22 @@
 var createPlayer = function(){
-	req = new XMLHttpRequest();
-	req.onreadystatechange = function() {
-		if(req.readyState == 4 && req.status ==200) {
-			document.getElementsByTagName('button')[1].style.display='inline';
-		}
+	document.getElementsByTagName('button')[1].style.display='inline';
+	if(document.querySelector('#name').value==''){
+		alert('first enter your name')
 	}
-	req.open('POST','player',true);
-	req.send('name='+document.querySelector('#name').value);
+	else{
+		req = new XMLHttpRequest();
+		req.onreadystatechange = function() {
+			if(req.readyState == 4 && req.status ==200) {
+				console.log("welcome");
+				window.location.href = 'shipPlacingPage.html'
+			}
+		}
+		req.open('POST','player',true);
+		req.send('name='+document.querySelector('#name').value);
+	}
 }
+
+window.onload = function(){
+	document.querySelector('#start').onclick = createPlayer;
+
+};

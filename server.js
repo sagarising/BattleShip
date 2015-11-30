@@ -47,6 +47,6 @@ d.on('error', function(er) {
 d.run(function() {
 	var server = http.createServer(requestHandler);
 	server.listen(3000);
+	console.log("server listening on 3000")
 });
-// var server = http.createServer(requestHandler);
-// server.listen(3000,console.log('listening at 3000'));
+
