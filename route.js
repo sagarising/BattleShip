@@ -6,6 +6,17 @@ var method_not_allowed = function(req, res){
 	console.log(res.statusCode);
 	res.end('Method is not allowed');
 };
+
+var currentPlayer = function(players,cookie){
+	var player_who_requested;
+	players.forEach(function(element){
+		if(element.name == cookie){
+			player_who_requested = element;
+		};
+	});
+	return player_who_requested;
+};
+
 var checkAndSubmit = function(req, res){
 	var data = '';
 	req.on('data', function(chunk){
@@ -17,15 +28,8 @@ var checkAndSubmit = function(req, res){
 		var shipIndex = args[1];
 		var startingPoint = args[2];
 		var align = args[3];
-		var player;
-		lib.players.forEach(function(element){
-			if(element.name == req.headers.cookie){
-				player = element;
-			};
-		});
-		console.log(player.name,">>>>>>>>>>player");
+		var player = currentPlayer(lib.players,req.headers.cookie);
 		lib.positionShip(player.ships[shipIndex],align,startingPoint,player.grid);
-		console.log(player.ships[0].coordinates,">>>>in route.js");
 		res.end(JSON.stringify(player.grid.usedCoordinates));
 	});
 }
@@ -73,16 +77,10 @@ var areBothReady = function(){
 };
 
 var routingToGame = function(req,res){
-	var player;
-	lib.players.forEach(function(element){
-		if(element.name == req.headers.cookie){
-			player = element;
-		};
-	});
+	var player = currentPlayer(lib.players,req.headers.cookie);
 	player.isReady=true;
-	res.end(Number(areBothReady()).toString());
-
-}
+	res.end(Number(areBothReady()&&lib.players.length == 2).toString());
+};
 
 
 
@@ -90,21 +88,17 @@ var fileNotFound = function(req, res){
 	res.statusCode = 404;
 	console.log(req.url);
 	res.end('Not Found');
-	// console.log(res.statusCode);
 };
 
 exports.post_handlers = [
 	{path: '^/player$', handler: createPlayer},
 	{path:'^/placingOfShip$',handler:checkAndSubmit},
-	// {path: '^/place$', handler: placeShip},
 	{path: '', handler: method_not_allowed}
 ];
 exports.get_handlers = [
 	{path: '^/$', handler: serveIndex},
 	{path: '^/show$', handler: showDetails},
 	{path:'^/makeReady$',handler:routingToGame},
-	// {path: '^/ready$', handler: isReady},
-	// {path: '^/gamePage.html$', handler: isReady},
 	{path: '', handler: serveStaticFile},
 	{path: '', handler: fileNotFound}
 ];

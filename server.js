@@ -1,7 +1,6 @@
 var http = require('http');
 var EventEmitter = require('events').EventEmitter;
 var routes = require('./route.js');
-var d = require('domain').create();
 
 var get_handlers = routes.get_handlers;
 var post_handlers = routes.post_handlers;
@@ -32,6 +31,10 @@ var handle_all_get = function(req, res,num){
 };
 
 var requestHandler = function(req, res){
+	process.on('uncaughtException',function(err){
+	console.log(err);
+	res.end();
+	});
 	var playerName=req.headers.cookie;
 	if(req.method == 'GET')
 		handle_all_get(req, res);
@@ -41,12 +44,11 @@ var requestHandler = function(req, res){
 		method_not_allowed(req, res);
 };
 
-d.on('error', function(er) {
-	console.log(er);
-});
-d.run(function() {
 	var server = http.createServer(requestHandler);
 	server.listen(3000);
-	console.log("server listening on 3000")
+	console.log("server listening on 3000");
+
+process.on('uncaughtException',function(err){
+	console.log(err);
 });
 
