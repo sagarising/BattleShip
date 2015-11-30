@@ -3,6 +3,18 @@ var fillBox=function(self){
 	coordianteBox.value = self.id;
 };
 
+var sendToGamePage = function(){
+	var req = new XMLHttpRequest;
+	req.onreadystatechange = function(){
+		if(req.readyState==4 && req.status==200){
+			console.log(req.responseText);
+			if(+req.responseText)
+				window.location.href='game.html';
+		}
+	}
+	req.open('GET',"makeReady",true);
+	req.send();
+ }
 
 var checkAndSubmit = function(){
 	var req = new XMLHttpRequest();
@@ -18,7 +30,7 @@ var checkAndSubmit = function(){
 			var ship = document.querySelector('#ship');
 			ship.remove(ship.selectedIndex);
 			if(ship.children.length==0){
-				window.location.href = "game.html";
+				setInterval(sendToGamePage,20); 
 			}
 			shipCoordinate.map(function(element){
 			var cell = document.getElementById(element);

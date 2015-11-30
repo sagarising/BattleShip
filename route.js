@@ -14,13 +14,19 @@ var checkAndSubmit = function(req, res){
 	req.on('end', function(){
 		var args = data.split(" ");
 		var name = args[0];
-		var index = args[1];
+		var shipIndex = args[1];
 		var startingPoint = args[2];
 		var align = args[3];
-		
-		lib.positionShip(lib.players[0].ships[index],align,startingPoint,lib.players[0].grid);
-		console.log(lib.players[0].ships[0].coordinates,">>>>in route.js");
-		res.end(JSON.stringify(lib.players[0].grid.usedCoordinates));
+		var player;
+		lib.players.forEach(function(element){
+			if(element.name == req.headers.cookie){
+				player = element;
+			};
+		});
+		console.log(player.name,">>>>>>>>>>player");
+		lib.positionShip(player.ships[shipIndex],align,startingPoint,player.grid);
+		console.log(player.ships[0].coordinates,">>>>in route.js");
+		res.end(JSON.stringify(player.grid.usedCoordinates));
 	});
 }
 var createPlayer = function(req, res){
@@ -32,7 +38,7 @@ var createPlayer = function(req, res){
 		var entry = querystring.parse(data);
 		lib.players.push(new lib.Player(entry.name));
 		res.writeHead(200,
-			{'Set-Cookie':name=entry.name});
+			{'Set-Cookie':entry.name});
 		res.end()
 	});
 };
@@ -60,34 +66,25 @@ var serveStaticFile = function(req, res, next){
 	});
 };
 
-// var placeShip = function(req,res,next,name) {
-// 	var response = {};
-// 	var player;
-// 	var shipToPlace;
-// 	var shipData = '';
-// 	req.on('data',function(chunk){
-// 		lib.players.forEach(function(eachPlayer){
-// 			if(eachPlayer.name == name)
-// 				player = eachPlayer;
-// 		})
-// 		shipData +=chunk; 
-// 		var shipDetails = querystring.parse(shipData);
-// 		var ship = shipDetails.shipName;
-// 		var align = shipDetails.align;
-// 		var firstPoint = shipDetails.fp;
-// 		player.ships.forEach(function(eachShip){
-// 			if(eachShip.shipName == ship)
-// 				shipToPlace = eachShip;
-// 		})
-// 		if(lib.positionShip(shipToPlace,align,firstPoint,player.grid)){
-// 			req.on('end',function(){
-// 				response.result = 'ok';
-// 				response.ship = shipToPlace.coordinates;
-// 				res.end(JSON.stringify(response));
-// 			})
-// 		}
-// 	})
-// }
+var areBothReady = function(){
+	return lib.players.every(function(player){
+		return player.isReady;
+	});	
+};
+
+var routingToGame = function(req,res){
+	var player;
+	lib.players.forEach(function(element){
+		if(element.name == req.headers.cookie){
+			player = element;
+		};
+	});
+	player.isReady=true;
+	res.end(Number(areBothReady()).toString());
+
+}
+
+
 
 var fileNotFound = function(req, res){
 	res.statusCode = 404;
@@ -105,6 +102,7 @@ exports.post_handlers = [
 exports.get_handlers = [
 	{path: '^/$', handler: serveIndex},
 	{path: '^/show$', handler: showDetails},
+	{path:'^/makeReady$',handler:routingToGame},
 	// {path: '^/ready$', handler: isReady},
 	// {path: '^/gamePage.html$', handler: isReady},
 	{path: '', handler: serveStaticFile},
