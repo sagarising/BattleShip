@@ -17,13 +17,9 @@ var checkAndSubmit = function(req, res){
 		var index = args[1];
 		var startingPoint = args[2];
 		var align = args[3];
-		// console.log(args,name,size,align);
-		// console.log(lib.grid,">>>>>>>>>>>>>grid");
-		// console.log(ship.coordinates);
-		// var ship = new lib.Ship(shipSize);
-		// console.log(lib.player);
-		console.log(lib.players[0].grid.usedCoordinates,">>>>>>>>>>>>>>>>BNDAKSVJkjs");
+		
 		lib.positionShip(lib.players[0].ships[index],align,startingPoint,lib.players[0].grid);
+		console.log(lib.players[0].ships[0].coordinates,">>>>in route.js");
 		res.end(JSON.stringify(lib.players[0].grid.usedCoordinates));
 	});
 

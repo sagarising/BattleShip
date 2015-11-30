@@ -2,22 +2,28 @@ var fillBox=function(self){
 	var coordianteBox = document.getElementById('text');
 	coordianteBox.value = self.id;
 };
+
+
 var checkAndSubmit = function(){
 	var req = new XMLHttpRequest();
 	var ship = document.getElementById("ship");
 	var shipName = ship.options[ship.selectedIndex].text;
 	var shipSize = document.getElementById("ship").value;
+	// var ship = new makeShip(shipName,shipSize);
 	var coordinateValue = document.getElementById("text").value;
 	var align = document.getElementById("horizontal").checked ? 'horizontal' :'vertical';	
 	req.onreadystatechange = function(){
 		if(req.readyState==4 && req.status==200){
 			var shipCoordinate = JSON.parse(req.responseText); 
-			var selectedShip = document.querySelector('#ship');
-			selectedShip.remove(selectedShip.selectedIndex);
+			var ship = document.querySelector('#ship');
+			ship.remove(ship.selectedIndex);
+			if(ship.children.length==0){
+				window.location.href = "game.html";
+			}
 			shipCoordinate.map(function(element){
-				var cell = document.getElementById(element);
-				cell.bgColor ='red';
-			})
+			var cell = document.getElementById(element);
+			cell.bgColor ='red';
+			});
 		}
 	}
 	req.open('POST','placingOfShip',true);

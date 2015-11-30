@@ -13,9 +13,9 @@ body{
     margin: -26.6em 10em 0 0;
 }
 
-#placeShipButton {
-    font-size: 20px;
-}
+/*#placeShipButton {
+    font-size: 15px;
+}*/
 
 .enemy {
 	margin: -26.6em 0 0 30em;
@@ -36,18 +36,11 @@ body.firstpage{
 div.firstpagestart{
     margin: 10em 0 0 40em;
 }
-.button1 {
+button{
     background-color: rgb(78,181,181);
     width: 50px;
     height:50px;
-    border-radius: 50%;
-}
-.button2 {
-    display: none;
-    background-color: rgb(78,181,181);
-    width: 50px;
-    height:50px;
-    border-radius: 50%;
+    border-radius: 50px;
 }
 button:hover{
     background-color: rgb(109,252,252);

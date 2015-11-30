@@ -39,7 +39,10 @@ var requestHandler = function(req, res){
 		handle_all_post(req, res);
 	else
 		method_not_allowed(req, res);
+	}
+	
 };
 
-var server = http.createServer(requestHandler);
+	var server = http.createServer(requestHandler);
+
 server.listen(3000);

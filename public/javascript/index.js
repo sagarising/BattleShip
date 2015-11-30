@@ -8,6 +8,7 @@ var createPlayer = function(){
 		req.onreadystatechange = function() {
 			if(req.readyState == 4 && req.status ==200) {
 				console.log("welcome");
+				window.location.href = 'shipPlacingPage.html'
 			}
 		}
 		req.open('POST','player',true);
@@ -16,5 +17,6 @@ var createPlayer = function(){
 }
 
 window.onload = function(){
-	document.querySelector('#submitName').onclick = createPlayer;
+	document.querySelector('#start').onclick = createPlayer;
+
 };

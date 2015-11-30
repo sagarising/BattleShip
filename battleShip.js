@@ -69,18 +69,18 @@ exports.Player = function(name){
 	this.grid = new exports.gridCreater;
 	this.ships = [carrier,battleShip,cruiser,submarine,destroyer];
 }
-lib.isAllowed = function(ship,align,firstPoint,grid){
+lib.isAllowed = function(ship,align,firstPoint){
 	// console.log(grid)
 	var rows=['A','B','C','D','E','F','G','H','I','J'];
 	var shipsize = ship.coordinates.length;
 	if(align == "vertical"){
-		var allowedRows = Object.keys(grid).length - (shipsize - 1);
+		var allowedRows = 10 - (shipsize - 1);
 		if(rows.indexOf(firstPoint[0]) < allowedRows)
 			return true;
 		return false;
 	}
 	if(align == "horizontal"){
-		var allowedColumn = Object.keys(grid).length - (shipsize - 1);
+		var allowedColumn = 10 - (shipsize - 1);
 		if(firstPoint.slice(1) <= allowedColumn)
 			return true;
 		return false;
@@ -88,7 +88,7 @@ lib.isAllowed = function(ship,align,firstPoint,grid){
 };
 
 exports.positionShip = function(ship,align,firstPoint,grid){
-	if(lib.isAllowed(ship,align,firstPoint,grid)){
+	if(lib.isAllowed(ship,align,firstPoint)){
 		if(align=='vertical'){
 			var initialCharCode = firstPoint.charCodeAt(0);
 			var tempCoordinates = lib.makesCoordinates(ship,firstPoint,initialCharCode);
@@ -102,12 +102,18 @@ exports.positionShip = function(ship,align,firstPoint,grid){
 		if(grid.isUsedSpace(tempCoordinates)){
 				throw new Error('Cannot place over other ship.');
 		};
-		ship.coordinates = tempCoordinates;	
+		if(grid.usedCoordinates.concat(tempCoordinates).length > 17){
+			throw new Error('Ships already placed');
+		};
+
+
+		ship.coordinates = tempCoordinates;
+		console.log(ship.coordinates,">>>>>>>>>>ship");	
 		console.log(tempCoordinates,">>>>>>>>>>>>temp");
 		console.log(grid.usedCoordinates,">>>>>>>>>>>>>>>>>used");
 						// be careful using tempCoordinates because its reference is given to ship
 		grid.usedCoordinates = grid.usedCoordinates.concat(tempCoordinates); 
-		console.log(grid.usedCoordinates,">>>>>>>>>>>>>>>>>>>after");
+		console.log(grid.usedCoordinates,">>>>>>>>>after")
 		return;                                   // return to just early exit from the function
 	};
 	throw new Error('Cannot position ship here.');
