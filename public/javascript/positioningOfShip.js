@@ -22,7 +22,7 @@ var checkAndSubmit = function(){
 			}
 			shipCoordinate.map(function(element){
 			var cell = document.getElementById(element);
-			cell.bgColor ='red';
+			cell.bgColor ='grey';
 			});
 		}
 	}
@@ -39,3 +39,19 @@ var changingTheColor=function(clas,array,colour){
 		p[array[i]].setAttribute("style","background-color:"+colour);
 	};
 };
+
+
+var isSecondPlayerReady = function() {
+	req = new XMLHttpRequest();
+		req.onreadystatechange = function() {
+			if(req.readyState == 4 && req.status ==200) {
+				var res = req.responseText;
+				if(res =='wait')
+					document.querySelector('#wait').innerHTML = res;
+				else
+					document.querySelector('html').innerHTML = res;
+			}
+		}
+	req.open('GET','ready',true);
+	req.send()
+}
