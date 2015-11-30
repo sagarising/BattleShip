@@ -3,6 +3,10 @@ var fillBox=function(self){
 	coordianteBox.value = self.id;
 };
 
+var loadingIcon=function(){
+	document.getElementById('loading').style.visibility='visible'
+}
+
 var checkAndSubmit = function(){
 	var shipName = document.getElementById("ship").value;
  	var coordinateValue = document.getElementById("text").value;
