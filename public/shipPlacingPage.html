@@ -2,11 +2,11 @@
 <head>
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="./styles/style.css">
-	<script type="text/javascript" src = "../javascript/positioningOfShip.js"></script>
+	<script type="text/javascript" src = "javascript/positioningOfShip.js"></script>
 </head>
 <body>
     <hr><h1 align="center">BATTLESHIP</h1><hr><br>
-	<form name="myform" method="POST" >
+	<!-- <form name="myform" method="POST" > -->
 	<table border="1" id="table" value="own">
 		<tr>
 			<td  width=60px  height=60px id="A1" onclick="fillBox(this)"></td>
@@ -132,11 +132,11 @@
 	<div id="selectShip">
 	Ships<br>
 	<select id="ship">
-		<option value="carrier">Carrier</option>
-		<option value="battleship">Battleship</option>
-		<option value="cruiser">Cruiser</option>
-		<option value="submarine">Submarine</option>
-		<option value="destroyer">Destroyer</option>
+		<option value="0">Carrier</option>
+		<option value="1">Battleship</option>
+		<option value="2">Cruiser</option>
+		<option value="3">Submarine</option>
+		<option value="4">Destroyer</option>
 	</select><br><br>
 	Alignment<br>
 		<input type="radio" id="horizontal" name="group1" value="horizontal" checked> Horizontal<br>
@@ -144,7 +144,7 @@
 		<input	type="text" size="35" maxlength="3" pattern="[a-zA-Z0-9]{0,100}" id="text" value="Select a point on grid to place ship" readonly="readonly"><br>
 		<button id="placeShipButton" onclick="checkAndSubmit()"> Place Ship</button>
 	</div>
-</form>
+<!-- </form> -->
 </html>
 
 

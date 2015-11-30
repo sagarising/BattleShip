@@ -16,6 +16,7 @@ rEmitter.on('next', function(handlers, req, res, next){
 	ph.handler(req, res, next);
 });
 var handle_all_post = function(req, res){
+	// console.log(req.url);
 	var handlers = post_handlers.filter(matchHandler(req.url));
 	var next = function(){
 		rEmitter.emit('next', handlers, req, res, next);
