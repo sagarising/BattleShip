@@ -22,12 +22,15 @@ lib.gridCreater.prototype = {
 	}
 };
 
-exports.grid = new lib.gridCreater();
-
-exports.Player = function(name,grid,ship){
+exports.Player = function(name){
 	this.name = name;
-	this.grid = grid;
-	this.ship = ship;
+	this.ships = [new lib.Ship(5,'carrier'),
+				 new lib.Ship(4,'battleship'),
+				 new lib.Ship(3,'cruiser'),
+				 new lib.Ship(3,'submarine'),
+				 new lib.Ship(2,'destroyer')];
+	this.grid = new lib.gridCreater();
+	this.isReady = false;
 }
 
 function fillArrayWithNull(size,array){
@@ -38,17 +41,12 @@ function fillArrayWithNull(size,array){
 	return arr;
 };
 
-lib.Ship = function(size){
+lib.Ship = function(size,shipname){
 	this.coordinates = fillArrayWithNull(size);
+	this.shipName = shipname;
 	Object.defineProperty(this,'isAlive',{value:true,writable:true})
 	
 };
-
-var carrier= new lib.Ship(5);
-var battleShip= new lib.Ship(4); 
-var cruiser= new lib.Ship(3);
-var submarine= new lib.Ship(3);
-var destroyer= new lib.Ship(2);
 
 lib.isAllowed = function(ship,align,firstPoint,grid){
 	var rows=['A','B','C','D','E','F','G','H','I','J'];
@@ -67,7 +65,7 @@ lib.isAllowed = function(ship,align,firstPoint,grid){
 	}
 };
 
-lib.positionShip = function(ship,align,firstPoint,grid){
+exports.positionShip = function(ship,align,firstPoint,grid){
 	if(lib.isAllowed(ship,align,firstPoint,grid)){
 		if(align=='vertical'){
 			var initialCharCode = firstPoint.charCodeAt(0);
@@ -82,7 +80,7 @@ lib.positionShip = function(ship,align,firstPoint,grid){
 		};
 		ship.coordinates = tempCoordinates;										// be careful using tempCoordinates because its reference is given to ship
 		grid.usedCoordinates = grid.usedCoordinates.concat(tempCoordinates); 
-		return;                                   // return to just early exit from the function
+		return true;                                   // return to just early exit from the function
 	};
 	throw new Error('Cannot position ship here.');
 };
