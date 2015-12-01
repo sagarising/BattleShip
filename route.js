@@ -6,7 +6,22 @@ var method_not_allowed = function(req, res){
 	console.log(res.statusCode);
 	res.end('Method is not allowed');
 };
-var checkAndSubmit = function(req,res,next,playerName){
+// <<<<<<< HEAD
+// =======
+
+var currentPlayer = function(players,cookie){
+	var player_who_requested;
+	players.forEach(function(element){
+		if(element.name == cookie){
+			player_who_requested = element;
+		};
+	});
+	return player_who_requested;
+};
+
+// var checkAndSubmit = function(req, res){
+// >>>>>>> fc5cee57354eef60211f8239bd656b875b278df0
+var checkAndSubmit = function(req,res){
 	var data = '';
 	req.on('data', function(chunk){
 		data += chunk;
@@ -14,24 +29,30 @@ var checkAndSubmit = function(req,res,next,playerName){
 	req.on('end', function(){
 		var args = data.split(" ");
 		var name = args[0];
-		var index = args[1];
+		var shipIndex = args[1];
 		var startingPoint = args[2];
 		var align = args[3];
-		var player=currentPlayer(playerName);
-		console.log(player,'player ...')
-		lib.positionShip(player.ships[index],align,startingPoint,lib.players[0].grid);
-		res.end(JSON.stringify(lib.players[0].grid.usedCoordinates));
+// <<<<<<< HEAD
+// 		var player=currentPlayer(playerName);
+// 		console.log(player,'player ...')
+// 		lib.positionShip(player.ships[index],align,startingPoint,lib.players[0].grid);
+// 		res.end(JSON.stringify(lib.players[0].grid.usedCoordinates));
+// =======
+		var player = currentPlayer(lib.players,req.headers.cookie);
+		lib.positionShip(player.ships[shipIndex],align,startingPoint,player.grid);
+		res.end(JSON.stringify(player.grid.usedCoordinates));
+// >>>>>>> fc5cee57354eef60211f8239bd656b875b278df0
 	});
 }
 
-var currentPlayer=function(playerName){
-	var player;
-	lib.players.forEach(function(eachPlayer){
-		if(eachPlayer.name==playerName)
-			player=eachPlayer;
-	});
-	return player;
-};
+// var currentPlayer=function(playerName){
+// 	var player;
+// 	lib.players.forEach(function(eachPlayer){
+// 		if(eachPlayer.name==playerName)
+// 			player=eachPlayer;
+// 	});
+// 	return player;
+// };
 
 var createPlayer = function(req, res){
 	var data = '';
@@ -42,7 +63,7 @@ var createPlayer = function(req, res){
 		var entry = querystring.parse(data);
 		lib.players.push(new lib.Player(entry.name));
 		res.writeHead(200,
-			{'Set-Cookie':name=entry.name});
+			{'Set-Cookie':entry.name});
 		res.end()
 	});
 };
@@ -70,8 +91,9 @@ var serveStaticFile = function(req, res, next){
 	});
 };
 
-var usedSpace = function(req,res,next,playerName){
-	var player=currentPlayer(playerName);
+// <<<<<<< HEAD
+var usedSpace = function(req,res){
+	var player=currentPlayer(lib.players,req.headers.cookie);
 	res.end(JSON.stringify(player.grid.usedCoordinates))
 	// console.log(playerName,'playerName.;.;')
 };
@@ -104,27 +126,44 @@ var usedSpace = function(req,res,next,playerName){
 // 		}
 // 	})
 // }
+// =======
+var areBothReady = function(){
+	return lib.players.every(function(player){
+		return player.isReady;
+	});	
+};
+
+var routingToGame = function(req,res){
+	var player = currentPlayer(lib.players,req.headers.cookie);
+	player.isReady=true;
+	res.end(Number(areBothReady()&&lib.players.length == 2).toString());
+};
+
+
+// >>>>>>> fc5cee57354eef60211f8239bd656b875b278df0
 
 var fileNotFound = function(req, res){
 	res.statusCode = 404;
 	console.log(req.url);
 	res.end('Not Found');
-	// console.log(res.statusCode);
 };
 
 exports.post_handlers = [
 	{path: '^/player$', handler: createPlayer},
 	{path:'^/placingOfShip$',handler:checkAndSubmit},
-	// {path: '^/place$', handler: placeShip},
 	{path: '', handler: method_not_allowed}
 ];
 exports.get_handlers = [
 
 	{path: '^/$', handler: serveIndex},
 	{path: '^/show$', handler: showDetails},
+// <<<<<<< HEAD
 	{path: '^/usedSpace$',handler:usedSpace},
 	// {path: '^/ready$', handler: isReady},
 	// {path: '^/gamePage.html$', handler: isReady},
+// =======
+	{path:'^/makeReady$',handler:routingToGame},
+// >>>>>>> fc5cee57354eef60211f8239bd656b875b278df0
 	{path: '', handler: serveStaticFile},
 	{path: '', handler: fileNotFound}
 ];
