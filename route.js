@@ -6,7 +6,7 @@ var method_not_allowed = function(req, res){
 	console.log(res.statusCode);
 	res.end('Method is not allowed');
 };
-var checkAndSubmit = function(req, res){
+var checkAndSubmit = function(req,res,next,playerName){
 	var data = '';
 	req.on('data', function(chunk){
 		data += chunk;
@@ -17,12 +17,22 @@ var checkAndSubmit = function(req, res){
 		var index = args[1];
 		var startingPoint = args[2];
 		var align = args[3];
-		
-		lib.positionShip(lib.players[0].ships[index],align,startingPoint,lib.players[0].grid);
-		console.log(lib.players[0].ships[0].coordinates,">>>>in route.js");
+		var player=currentPlayer(playerName);
+		console.log(player,'player ...')
+		lib.positionShip(player.ships[index],align,startingPoint,lib.players[0].grid);
 		res.end(JSON.stringify(lib.players[0].grid.usedCoordinates));
 	});
 }
+
+var currentPlayer=function(playerName){
+	var player;
+	lib.players.forEach(function(eachPlayer){
+		if(eachPlayer.name==playerName)
+			player=eachPlayer;
+	});
+	return player;
+};
+
 var createPlayer = function(req, res){
 	var data = '';
 	req.on('data', function(chunk){
@@ -58,6 +68,12 @@ var serveStaticFile = function(req, res, next){
 			next();
 		}
 	});
+};
+
+var usedSpace = function(req,res,next,playerName){
+	var player=currentPlayer(playerName);
+	res.end(JSON.stringify(player.grid.usedCoordinates))
+	// console.log(playerName,'playerName.;.;')
 };
 
 // var placeShip = function(req,res,next,name) {
@@ -103,8 +119,10 @@ exports.post_handlers = [
 	{path: '', handler: method_not_allowed}
 ];
 exports.get_handlers = [
+
 	{path: '^/$', handler: serveIndex},
 	{path: '^/show$', handler: showDetails},
+	{path: '^/usedSpace$',handler:usedSpace},
 	// {path: '^/ready$', handler: isReady},
 	// {path: '^/gamePage.html$', handler: isReady},
 	{path: '', handler: serveStaticFile},

@@ -11,10 +11,10 @@ var matchHandler = function(url){
 		return url.match(new RegExp(ph.path));
 	};
 };
-rEmitter.on('next', function(handlers, req, res, next,ip){
+rEmitter.on('next', function(handlers, req, res, next,playerName){
 	if(handlers.length == 0) return;
 	var ph = handlers.shift();
-	ph.handler(req, res, next,ip);
+	ph.handler(req, res, next,playerName);
 });
 var handle_all_post = function(req, res,name){
 	var handlers = post_handlers.filter(matchHandler(req.url));
@@ -23,10 +23,10 @@ var handle_all_post = function(req, res,name){
 	};
 	next();
 }; 
-var handle_all_get = function(req, res,num){
+var handle_all_get = function(req, res,playerName){
 	var handlers = get_handlers.filter(matchHandler(req.url));
 	var next = function(){
-		rEmitter.emit('next', handlers, req, res, next,num);
+		rEmitter.emit('next', handlers, req, res, next,playerName);
 	};
 	next();
 };
@@ -34,7 +34,7 @@ var handle_all_get = function(req, res,num){
 var requestHandler = function(req, res){
 	var playerName=req.headers.cookie;
 	if(req.method == 'GET')
-		handle_all_get(req, res);
+		handle_all_get(req, res,playerName);
 	else if(req.method == 'POST')
 		handle_all_post(req, res,playerName);
 	else

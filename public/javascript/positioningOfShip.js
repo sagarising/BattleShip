@@ -29,9 +29,9 @@ var checkAndSubmit = function(){
 	req.open('POST','placingOfShip',true);
 	req.send(shipName+" "+shipSize+" "+coordinateValue+" "+align);
 };	
-window.onload = function(){
-	document.querySelector('#placeShipButton').onclick = checkAndSubmit;
- }
+// window.onload = function(){
+// 	document.querySelector('#placeShipButton').onclick = checkAndSubmit;
+//  }
 
 var changingTheColor=function(clas,array,colour){
 	var p = document.querySelector('#'+clas).getElementsByTagName('td');
@@ -40,6 +40,17 @@ var changingTheColor=function(clas,array,colour){
 	};
 };
 
+var changeTheColorOfGamePage = function(){
+	req=new XMLHttpRequest();
+	req.onreadystatechange=function(){
+		if(req.readyState==4 && req.status==200){
+			// console.log(JSON.parse(req.responseText),'response ;;;;')
+			changingTheColor('own',JSON.parse(req.responseText),'grey')
+		}
+	}
+	req.open('GET','usedSpace',true);
+	req.send();
+};
 
 var isSecondPlayerReady = function() {
 	req = new XMLHttpRequest();
@@ -54,4 +65,23 @@ var isSecondPlayerReady = function() {
 		}
 	req.open('GET','ready',true);
 	req.send()
+}
+
+
+var createPlayer = function(){
+	document.getElementsByTagName('button')[1].style.display='inline';
+	if(document.querySelector('#name').value==''){
+		alert('first enter your name')
+	}
+	else{
+		req = new XMLHttpRequest();
+		req.onreadystatechange = function() {
+			if(req.readyState == 4 && req.status ==200) {
+				console.log("welcome");
+				window.location.href = 'shipPlacingPage.html'
+			}
+		}
+		req.open('POST','player',true);
+		req.send('name='+document.querySelector('#name').value);
+	}
 }

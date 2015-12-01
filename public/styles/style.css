@@ -33,3 +33,9 @@ div#loading{
     margin: 0 0 0 34cm;
     display: inline;
 }
+#enemy{
+    margin: -26.5em 0 0 30em;
+}
+section table#own{
+    pointer-events:none;
+}

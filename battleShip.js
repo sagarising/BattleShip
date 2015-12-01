@@ -71,7 +71,6 @@ lib.isAllowed = function(ship,align,firstPoint){
 };
 
 exports.positionShip = function(ship,align,firstPoint,grid){
-	console.log(ship,align,firstPoint,grid)
 	if(lib.isAllowed(ship,align,firstPoint)){
 		if(align=='vertical'){
 			var initialCharCode = firstPoint.charCodeAt(0);
