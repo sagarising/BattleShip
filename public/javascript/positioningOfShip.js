@@ -15,7 +15,9 @@ var sendToGamePage = function(){
 			console.log(req.responseText);
 			if(+req.responseText)
 				window.location.href='game.html';
-			document.getElementsByTagName('img')[0].style.visibility='visible'
+			document.getElementsByTagName('img')[0].style.visibility='visible';
+			document.getElementById('selectShip').style.visibility='hidden';
+			document.getElementsByTagName('table')[0].style.pointerEvents='none';
 		}
 	}
 	req.open('GET',"makeReady",true);
