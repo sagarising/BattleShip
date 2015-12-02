@@ -31,6 +31,7 @@ exports.Player = function(name){
 				 new lib.Ship(2)];
 	this.grid = new lib.gridCreater();
 	this.isReady = false;
+	this.turn = false;
 };
 
 function fillArrayWithNull(size,array){
@@ -106,7 +107,7 @@ lib.makesCoordinates = function(ship,firstPoint,initialCharCode,initialColumnNum
 	return generatedCoordinates;
 };
 
-lib.hitOrMiss = function(attackPoint) {
+exports.hitOrMiss = function(attackPoint) {
 	var result = grid.usedCoordinates.indexOf(attackPoint)!==-1 && 'hit' || 'miss';
 	return result;
 }

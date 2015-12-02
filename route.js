@@ -19,6 +19,11 @@ var currentPlayer = function(players,cookie){
 	return player_who_requested;
 };
 
+var enemyPlayer = function(players,cookie){
+	var index = +(!players.indexOf(currentPlayer(players,cookie)));
+	return players[index];
+}
+
 // var checkAndSubmit = function(req, res){
 // >>>>>>> fc5cee57354eef60211f8239bd656b875b278df0
 var checkAndSubmit = function(req,res){
@@ -139,6 +144,23 @@ var routingToGame = function(req,res){
 	res.end(Number(areBothReady()&&lib.players.length == 2).toString());
 };
 
+var checkAttackedPoint = function(req,res) {
+	var attackPoint = '';
+	lib.players[0].turn = true;
+	var mySelf = currentPlayer(lib.players,req.headers.cookie);
+	var enemy = enemyPlayer(lib.players,req.headers.cookie);
+	if(mySelf.turn){
+		req.on('data',function(chunk){
+			attackPoint+=chunk;
+		})
+		if(lib.hitOrMiss(attackPoint)){
+			// emitter.emit('removeAttackedPoint')
+			req.end(true)
+		}
+		mySelf.turn =false;
+		enemy.turn = true;
+	}
+}
 
 // >>>>>>> fc5cee57354eef60211f8239bd656b875b278df0
 
@@ -151,6 +173,7 @@ var fileNotFound = function(req, res){
 exports.post_handlers = [
 	{path: '^/player$', handler: createPlayer},
 	{path:'^/placingOfShip$',handler:checkAndSubmit},
+	{path:'^/attack$',handler:checkAttackedPoint},
 	{path: '', handler: method_not_allowed}
 ];
 exports.get_handlers = [

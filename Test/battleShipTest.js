@@ -116,6 +116,6 @@ describe('PlayerCreator',function(){
 	});
 	it('should have some properties',function(){
 		var player = new lib.Player('ramu');
-		expect(player).to.have.all.keys('name','ships','grid','isReady')
+		expect(player).to.have.all.keys('name','ships','grid','isReady','turn')
 	})
 })
