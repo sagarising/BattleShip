@@ -17,6 +17,11 @@ var currentPlayer = function(players,cookie){
 	return player_who_requested;
 };
 
+var enemyPlayer = function(players,cookie){
+	var index = +(!players.indexOf(currentPlayer(players,cookie)));
+	return players[index];
+}
+
 var checkAndSubmit = function(req,res){
 	var data = '';
 	req.on('data', function(chunk){
@@ -45,7 +50,7 @@ var createPlayer = function(req, res){
 		lib.players.push(new lib.Player(entry.name));
 		res.writeHead(200,
 			{'Set-Cookie':entry.name});
-		res.end()
+		res.end(JSON.stringify(entry.name))
 	});
 };
 
@@ -84,13 +89,28 @@ var areBothReady = function(){
 	});	
 };
 
+
 var routingToGame = function(req,res){
 	var player = currentPlayer(lib.players,req.headers.cookie);
 	player.isReady=true;
+	lib.players[0].turn = true;
 	res.end(Number(areBothReady()&&lib.players.length == 2).toString());
 };
 
-
+var checkAttackedPoint = function(req,res) {
+	var attackPoint = '';
+	var mySelf = currentPlayer(lib.players,req.headers.cookie);
+	var enemy = enemyPlayer(lib.players,req.headers.cookie);
+	if(mySelf.turn){
+		req.on('data',function(chunk){
+			attackPoint+=chunk;
+		})
+		emitter.emit(lib.isHit(attackPoint,enemy))
+		mySelf.turn =false;
+		enemy.turn = true;
+	}
+	res.end()
+};
 
 var fileNotFound = function(req, res){
 	res.statusCode = 404;
@@ -101,6 +121,7 @@ var fileNotFound = function(req, res){
 exports.post_handlers = [
 	{path: '^/player$', handler: createPlayer},
 	{path:'^/placingOfShip$',handler:checkAndSubmit},
+	{path:'^/attack$',handler:checkAttackedPoint},
 	{path: '', handler: method_not_allowed}
 ];
 exports.get_handlers = [

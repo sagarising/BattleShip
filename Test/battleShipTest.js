@@ -8,23 +8,27 @@ exports.test = test;
 
 describe('Ship',function(){
 	it('should initialize ship object',function(){
-		var ship = new lib.lib.Ship(3);
+		var player = new lib.Player('ram');
+		var ship = new lib.lib.Ship(3,player);
 		expect(ship).to.be.a('object');
 	});
 	it('returned ship must have only coordinates with null values',function(){
-		var ship1 = new lib.lib.Ship(3); 
+		var player = new lib.Player('ram');
+		var ship1 = new lib.lib.Ship(3,player); 
 		expect(ship1).to.have.all.keys({coordinates:[null,null,null]});
 	});
 });
 
 describe('isAllowed',function(){
 	it('should check if the firstpoint is valid for placing ship aligned vertical',function(){
-		var ship = new lib.lib.Ship(5);
+		var player = new lib.Player('ram');
+		var ship = new lib.lib.Ship(5,player);
 		assert.equal(true,lib.lib.isAllowed(ship,"vertical","B9",new lib.lib.gridCreater())); 
 		assert.equal(false,lib.lib.isAllowed(ship,"vertical","I9",new lib.lib.gridCreater())); 
 	});
 	it('should check if the firstpoint is valid for placing ship aligned horizontal',function(){
-		var ship = new lib.lib.Ship(5);
+		var player = new lib.Player('ram');
+		var ship = new lib.lib.Ship(5,player);
 		assert.equal(true,lib.lib.isAllowed(ship,"vertical","B9",new lib.lib.gridCreater())); 
 		assert.equal(false,lib.lib.isAllowed(ship,"vertical","I9",new lib.lib.gridCreater())); 
 	});
@@ -41,21 +45,24 @@ describe('isUsedSpace',function(){
 	it('should return true if coordinate exists in used coordinates',function(){
 		var grid = new lib.lib.gridCreater();
 		grid.usedCoordinates = ['A1'];
-		var ship = new lib.lib.Ship(3);
+		var player = new lib.Player('ram');
+		var ship = new lib.lib.Ship(3,player);
 		ship.coordinates = ['A1','A2','A3'];
 		assert.equal(true,grid.isUsedSpace(ship.coordinates));
 	});
 	it('should return false if coordinate does not exists in used coordinates',function(){
 		var grid = new lib.lib.gridCreater();
 		grid.usedCoordinates = ['B2'];
-		var ship = new lib.lib.Ship(3);
+		var player = new lib.Player('ram');
+		var ship = new lib.lib.Ship(3,player);
 		assert.equal(false,grid.isUsedSpace(ship.coordinates));
 	});
 });
 
 describe('positionShip',function(){
 	it('should position the ship and return ship with some filled coordinates for vertical',function(){
-		var ship = new lib.lib.Ship(3);
+		var player = new lib.Player('ram');
+		var ship = new lib.lib.Ship(3,player);
 		var align='vertical';
 		firstpoint = 'A4';
 		var grid = new lib.lib.gridCreater();
@@ -64,7 +71,8 @@ describe('positionShip',function(){
 		assert.equal(JSON.stringify(expected),JSON.stringify(ship));
 	});
 	it('should position the ship and return ship with some filled coordinates for horizontal',function(){
-		var ship = new lib.lib.Ship(3);
+		var player = new lib.Player('ram');
+		var ship = new lib.lib.Ship(3,player);
 		var align='horizontal';
 		firstpoint = 'A1';
 		var grid = new lib.lib.gridCreater();
@@ -73,7 +81,8 @@ describe('positionShip',function(){
 		assert.equal(JSON.stringify(expected),JSON.stringify(ship));
 	});
 	it('should return error if the ship cannot be placed',function(){
-		var ship = new lib.lib.Ship(3);
+		var player = new lib.Player('ram');
+		var ship = new lib.lib.Ship(3,player);
 		var align='vertical';
 		firstpoint = 'I4';
 		var grid = new lib.lib.gridCreater();
@@ -81,7 +90,8 @@ describe('positionShip',function(){
 		assert.throw(boundFunction,Error,'Cannot position ship here.');
 	});
 	it('should return error if the ship cannot be placed over used space and expect ship to be unchanged',function(){
-		var ship = new lib.lib.Ship(3);
+		var player = new lib.Player('ram');
+		var ship = new lib.lib.Ship(3,player);
 		var align='vertical';
 		firstpoint = 'B4';
 		var grid = new lib.lib.gridCreater();
@@ -93,14 +103,16 @@ describe('positionShip',function(){
 });
 describe('makesCoordinate',function(){
 	it('should check when initilCharCode is undefined and gives new generated coordinates',function(){
-		var ship = new lib.lib.Ship(3);
+		var player = new lib.Player('ram');
+		var ship = new lib.lib.Ship(3,player);
 		firstpoint = 'A4';
 		var initilColumnNumber = firstpoint.slice(1);
 		var expected = ['A4','A5','A6'];
 		assert.equal(JSON.stringify(expected),JSON.stringify(lib.lib.makesCoordinates(ship,firstpoint,undefined,initilColumnNumber)));
 	})
 	it('should check when initilCharCode is defined and gives new generated coordinates',function(){
-		var ship = new lib.lib.Ship(3);
+		var player = new lib.Player('ram');
+		var ship = new lib.lib.Ship(3,player);
 		firstpoint = 'A4';
 		var initilCharCode = firstpoint.charCodeAt(0);
 		var initilColumnNumber = firstpoint.slice(1);
@@ -116,6 +128,6 @@ describe('PlayerCreator',function(){
 	});
 	it('should have some properties',function(){
 		var player = new lib.Player('ramu');
-		expect(player).to.have.all.keys('name','ships','grid','isReady')
+		expect(player).to.have.all.keys('name','ships','grid','isReady','turn')
 	})
 })

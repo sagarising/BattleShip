@@ -1,7 +1,7 @@
 var http = require('http');
 var EventEmitter = require('events').EventEmitter;
 var routes = require('./route.js');
-
+var d = require('domain').create();
 var get_handlers = routes.get_handlers;
 var post_handlers = routes.post_handlers;
 var rEmitter = new EventEmitter();
@@ -43,7 +43,14 @@ var requestHandler = function(req, res){
 		method_not_allowed(req, res);
 };
 
+
+d.on('error',function(er){
+	console.log(er.message);
+});
+
+d.run(function(){
 	var server = http.createServer(requestHandler);
 	server.listen(3000);
 	console.log("server listening on 3000");
+});
 
