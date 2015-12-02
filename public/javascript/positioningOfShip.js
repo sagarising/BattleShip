@@ -1,3 +1,8 @@
+var alertId=function(self){
+	alert(self.id)
+};
+
+
 var fillBox=function(self){
 	var coordianteBox = document.getElementById('text');
 	coordianteBox.value = self.id;
@@ -10,6 +15,7 @@ var sendToGamePage = function(){
 			console.log(req.responseText);
 			if(+req.responseText)
 				window.location.href='game.html';
+			document.getElementsByTagName('img')[0].style.visibility='visible'
 		}
 	}
 	req.open('GET',"makeReady",true);
@@ -50,6 +56,11 @@ var changingTheColor=function(clas,array,colour){
 	for(var i=0;i<array.length;i++){
 		p[array[i]].setAttribute("style","background-color:"+colour);
 	};
+};
+
+var printingImage=function(self){
+	var p=document.getElementById(self.id)
+		p.innerHTML=('./images/miss.png');
 };
 
 var changeTheColorOfGamePage = function(){
