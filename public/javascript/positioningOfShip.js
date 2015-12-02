@@ -1,7 +1,28 @@
+var alertId=function(self){
+	alert(self.id)
+};
+
 var fillBox=function(self){
 	var coordianteBox = document.getElementById('text');
 	coordianteBox.value = self.id;
 };
+
+var createPlayer = function(){
+	document.getElementsByTagName('button')[1].style.display='inline';
+	if(document.querySelector('#name').value=='')
+		alert('first enter your name')
+	else{
+		req = new XMLHttpRequest();
+		req.onreadystatechange = function() {
+			if(req.readyState == 4 && req.status ==200) {
+				console.log("welcome");
+				window.location.href = 'shipPlacingPage.html'
+			}
+		}
+		req.open('POST','player',true);
+		req.send('name='+document.querySelector('#name').value);
+	}
+}
 
 var sendToGamePage = function(){
 	var req = new XMLHttpRequest;
@@ -10,6 +31,7 @@ var sendToGamePage = function(){
 			console.log(req.responseText);
 			if(+req.responseText)
 				window.location.href='game.html';
+			document.getElementsByTagName('img')[0].style.visibility='visible'
 		}
 	}
 	req.open('GET',"makeReady",true);
@@ -50,6 +72,11 @@ var changingTheColor=function(clas,array,colour){
 	};
 };
 
+var printingImage=function(self){
+	var p=document.getElementById(self.id)
+		p.innerHTML=('./images/miss.png');
+};
+
 var changeTheColorOfGamePage = function(){
 	req=new XMLHttpRequest();
 	req.onreadystatechange=function(){
@@ -77,27 +104,12 @@ var isSecondPlayerReady = function() {
 }
 
 
-var createPlayer = function(){
-	document.getElementsByTagName('button')[1].style.display='inline';
-	if(document.querySelector('#name').value=='')
-		alert('first enter your name')
-	else{
-		req = new XMLHttpRequest();
-		req.onreadystatechange = function() {
-			if(req.readyState == 4 && req.status ==200) {
-				console.log("welcome");
-				window.location.href = 'shipPlacingPage.html'
-			}
-		}
-		req.open('POST','player',true);
-		req.send('name='+document.querySelector('#name').value);
-	}
-}
 
 var attack = function(point) {
+	console.log(point.id)
 	var req = new XMLHttpRequest();
 	req.onreadystatechange = function(){
-		if(req.readyState == 4 req.status ==200){
+		if(req.readyState == 4 && req.status ==200){
 			console.log(req.responseText)
 		}
 	}

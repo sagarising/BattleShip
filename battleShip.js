@@ -107,7 +107,7 @@ lib.makesCoordinates = function(ship,firstPoint,initialCharCode,initialColumnNum
 	return generatedCoordinates;
 };
 
-exports.hitOrMiss = function(attackPoint) {
-	var result = grid.usedCoordinates.indexOf(attackPoint)!==-1 && 'hit' || 'miss';
+exports.isHit = function(attackPoint,player) {
+	var result = player.grid.usedCoordinates.indexOf(attackPoint)!==-1 && 'hit' || 'miss';
 	return result;
 }

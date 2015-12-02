@@ -35,6 +35,7 @@ var requestHandler = function(req, res){
 	console.log(err);
 	res.end();
 	});
+	// console.log('urlll',req.url)
 	if(req.method == 'GET')
 		handle_all_get(req, res);
 	else if(req.method == 'POST')
