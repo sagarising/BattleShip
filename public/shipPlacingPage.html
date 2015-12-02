@@ -2,11 +2,11 @@
 <head>
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="./styles/style.css">
-	<script type="text/javascript" src = "javascript/positioningOfShip.js"></script>
+	<script type="text/javascript" src = "./javascript/positioningOfShip.js"></script>
 </head>
 <body >
     <hr><h1 align="center">BATTLESHIP</h1><hr><br>
-	<table border="1" id="table" value="own">
+	<table border="1" id="table" class="table" value="own">
 		<tr>
 			<td  width=60px  height=60px id="A1" onclick="fillBox(this)"></td>
 			<td  width=60px  height=60px id="A2" onclick="fillBox(this)"></td>
@@ -143,6 +143,7 @@
 		<input	type="text" size="35" maxlength="3" pattern="[a-zA-Z0-9]{0,100}" id="text" value="Select a point on grid to place ship" readonly="readonly"><br>
 		<button id="placeShipButton" onclick="checkAndSubmit()"> Place Ship</button>
 	</div>
+	<img src="./images/273.GIF" id="loading">
 	<h1>Please do not refresh this page</h1>
 
 </html>

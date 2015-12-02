@@ -9,7 +9,7 @@
      font-size: 20px;
      margin: -26.6em 0 0 50em;
 }
-td:hover{
+.table td:hover{
 	background-color: yellow;
 }
 body.firstpage{
@@ -28,13 +28,13 @@ button{
 button:hover{
     background-color: rgb(109,252,252);
 }
-div#loading{
+#loading{
     visibility: hidden;
     margin: 0 0 0 34cm;
     display: inline;
 }
-#enemy{
-    margin: -26.5em 0 0 30em;
+section div.enemy{
+    margin: -32.6em 0 0 30em;
 }
 section table#own{
     pointer-events:none;

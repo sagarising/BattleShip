@@ -31,10 +31,10 @@ var handle_all_get = function(req, res){
 };
 
 var requestHandler = function(req, res){
-	// process.on('uncaughtException',function(err){
-	// console.log(err);
-	// res.end();
-	// });
+	process.on('uncaughtException',function(err){
+	console.log(err);
+	res.end();
+	});
 	if(req.method == 'GET')
 		handle_all_get(req, res);
 	else if(req.method == 'POST')

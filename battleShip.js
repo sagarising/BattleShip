@@ -61,6 +61,7 @@ exports.Player = function(name){
 				 new lib.Ship(3,self),
 				 new lib.Ship(2,self)];
 	this.isReady = false;
+	this.turn = false;
 };
 
 function fillArrayWithNull(size,array){
@@ -148,6 +149,4 @@ lib.makesCoordinates = function(ship,firstPoint,initialCharCode,initialColumnNum
 	};
 	return generatedCoordinates;
 };
-
-
 
