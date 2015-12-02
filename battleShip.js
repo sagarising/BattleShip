@@ -3,6 +3,19 @@ var eventEmitter = new events.EventEmitter();
 var lib={};
 exports.lib = lib;
 exports.players = [];
+
+lib.isHit = function(groupOfCoordinates,attackPoint) {
+	return groupOfCoordinates.indexOf(attackPoint) !== -1;
+};
+
+lib.removingHitPointFromExistingCoordinates = function(existingCoordinates,hitPoint){
+	return existingCoordinates.filter(function(coordinate){
+		return coordinate != hitPoint;
+	});
+}
+
+
+
 lib.gridCreater = function (){
 	for (var i=65;i<75;i++){
 		this[String.fromCharCode(i)] = (function makeArray(){var arr=[];
@@ -13,23 +26,40 @@ lib.gridCreater = function (){
 	
 };
 
-lib.gridCreater.prototype = {
-	isUsedSpace : function(coordinates){
+lib.gridCreater.prototype = Object.create(eventEmitter);
+
+lib.gridCreater.prototype.isUsedSpace = function(coordinates){
 		var self = this;
 		return coordinates.some(function(coordinate){
-			return self.usedCoordinates.indexOf(coordinate)!=-1;
-		});
-	}
+			return self.usedCoordinates.indexOf(coordinate) !== -1;
+	});
 };
 
+lib.gridCreater.prototype.if_it_is_Hit = function(attackPoint,player){
+	if(lib.isHit(this.usedCoordinates,attackPoint)){
+		this.usedCoordinates = lib.removingHitPointFromExistingCoordinates(this.usedCoordinates,attackPoint);
+		if(this.usedCoordinates.length == 0)
+			return lib.gameOver();     // i will return empty array if game is over
+		else
+		this.emit('hit',attackPoint);
+	return [true]    // i have to return all 5 ships
+	};
+	return false;     // i have to return all 5 ships
+};
+
+
+
+
+
 exports.Player = function(name){
+	var self = this;
 	this.name = name;
-	this.ships = [new lib.Ship(5),
-				 new lib.Ship(4),
-				 new lib.Ship(3),
-				 new lib.Ship(3),
-				 new lib.Ship(2)];
 	this.grid = new lib.gridCreater();
+	this.ships = [new lib.Ship(5,self),
+				 new lib.Ship(4,self),
+				 new lib.Ship(3,self),
+				 new lib.Ship(3,self),
+				 new lib.Ship(2,self)];
 	this.isReady = false;
 };
 
@@ -41,10 +71,23 @@ function fillArrayWithNull(size,array){
 	return arr;
 };
 
-lib.Ship = function(size){
+lib.checkAndSwitchIsAlive = function(ship){
+	if(ship.coordinates.length == 0)
+		ship.isAlive = 0;
+}
+
+lib.Ship = function(size,player){
 	this.coordinates = fillArrayWithNull(size);
-	Object.defineProperty(this,'isAlive',{value:true,writable:true})
+	player.grid.on('hit',this.if_it_is_Hit);
+	Object.defineProperty(this,'isAlive',{value:1,writable:true})
 	
+};
+
+lib.Ship.prototype.if_it_is_Hit = function(attackPoint){
+	if(lib.isHit(this.coordinates,attackPoint)){
+		this.coordinates = lib.removingHitPointFromExistingCoordinates(this.coordinates,attackPoint);
+		lib.checkAndSwitchIsAlive(this);
+	};
 };
 
 // var carrier= new exports.Ship(5);
@@ -106,7 +149,5 @@ lib.makesCoordinates = function(ship,firstPoint,initialCharCode,initialColumnNum
 	return generatedCoordinates;
 };
 
-lib.hitOrMiss = function(attackPoint) {
-	var result = grid.usedCoordinates.indexOf(attackPoint)!==-1 && 'hit' || 'miss';
-	return result;
-}
+
+
