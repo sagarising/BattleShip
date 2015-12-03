@@ -1,3 +1,6 @@
+
+
+
 var alertId=function(self){
 	alert(self.id)
 };
@@ -72,10 +75,6 @@ var changingTheColor=function(clas,array,colour){
 	};
 };
 
-var printingImage=function(self){
-	var p=document.getElementById(self.id)
-		p.innerHTML=('./images/miss.png');
-};
 
 var changeTheColorOfGamePage = function(){
 	req=new XMLHttpRequest();
@@ -86,6 +85,12 @@ var changeTheColorOfGamePage = function(){
 	}
 	req.open('GET','usedSpace',true);
 	req.send();
+};
+
+var statusUpdate = function(clas,array){
+	array.forEach(function(each){
+		$('.'+clas)[0].children[0].children[1].children[each+1].innerHTML='Sunk'
+	})
 };
 
 var isSecondPlayerReady = function() {
@@ -108,7 +113,15 @@ var attack = function(point) {
 	var req = new XMLHttpRequest();
 	req.onreadystatechange = function(){
 		if(req.readyState == 4 && req.status ==200){
-			console.log(req.responseText)
+			var data = JSON.parse(req.responseText)
+			console.log(data.hit_miss)
+			if(data.hit_miss[0]==1)
+				changingTheColor('enemy',[point.id],'red')
+			else{
+				if(data.hit_miss[0]==0)
+					changingTheColor('enemy',[point.id],'green')	
+			}
+			if(data.sunkShips.length) statusUpdate('enemyStatusTable',data.sunkShips);
 		}
 	}
 	req.open('POST','attack',true);
