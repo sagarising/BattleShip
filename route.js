@@ -125,6 +125,15 @@ var fileNotFound = function(req, res){
 	res.end('Not Found');
 };
 
+var updates = function(req,res){
+	var mySelf = currentPlayer(lib.players,req.headers.cookie);
+	if(mySelf.turn)
+		res.end(JSON.stringify('your turn'));
+	else{
+		var statusOfShips = lib.lib.list_of_isAlive_of_each_ship(mySelf.ships);
+		res.end(JSON.stringify(statusOfShips));		
+	}
+};
 exports.post_handlers = [
 	{path: '^/player$', handler: createPlayer},
 	{path:'^/placingOfShip$',handler:checkAndSubmit},
@@ -133,7 +142,7 @@ exports.post_handlers = [
 ];
 
 exports.get_handlers = [
-
+	{path:'^/givingUpdate$',handler:updates},
 	{path: '^/$', handler: serveIndex},
 	{path: '^/show$', handler: showDetails},
 	{path: '^/usedSpace$',handler:usedSpace},
