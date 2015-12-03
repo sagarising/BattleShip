@@ -108,8 +108,15 @@ var attack = function(point) {
 	var req = new XMLHttpRequest();
 	req.onreadystatechange = function(){
 		if(req.readyState == 4 && req.status ==200){
-			console.log(req.responseText)
-		}
+			var serverResponse = req.responseText.split(',');
+			if(serverResponse.length == 1)
+				alert("not your turn");
+			else if(+serverResponse[0])
+				point.innerHTML = "hit";
+			else
+				point.innerHTML = "miss";
+			console.log(serverResponse);
+		};
 	}
 	req.open('POST','attack',true);
 	req.send(point.id);
