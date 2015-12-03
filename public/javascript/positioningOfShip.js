@@ -31,19 +31,20 @@ var sendToGamePage = function(){
 			console.log(req.responseText);
 			if(+req.responseText)
 				window.location.href='game.html';
-			document.getElementsByTagName('img')[0].style.visibility='visible'
+			document.getElementsByTagName('img')[0].style.visibility='visible';
+			document.getElementById('selectShip').style.visibility='hidden';
+			document.getElementsByTagName('table')[0].style.pointerEvents='none';
 		}
 	}
 	req.open('GET',"makeReady",true);
 	req.send();
- }
+}
 
 var checkAndSubmit = function(){
 	var req = new XMLHttpRequest();
 	var ship = document.getElementById("ship");
 	var shipName = ship.options[ship.selectedIndex].text;
 	var shipSize = document.getElementById("ship").value;
-	// var ship = new makeShip(shipName,shipSize);
 	var coordinateValue = document.getElementById("text").value;
 	var align = document.getElementById("horizontal").checked ? 'horizontal' :'vertical';	
 	req.onreadystatechange = function(){
@@ -63,7 +64,6 @@ var checkAndSubmit = function(){
 	req.open('POST','placingOfShip',true);
 	req.send(shipName+" "+shipSize+" "+coordinateValue+" "+align);
 };	
-
 
 var changingTheColor=function(clas,array,colour){
 	var p = document.querySelector('#'+clas).getElementsByTagName('td');
@@ -101,9 +101,7 @@ var isSecondPlayerReady = function() {
 		}
 	req.open('GET','ready',true);
 	req.send()
-}
-
-
+};
 
 var attack = function(point) {
 	console.log(point.id)
@@ -114,5 +112,5 @@ var attack = function(point) {
 		}
 	}
 	req.open('POST','attack',true);
-	req.send('point='+point.id	);
-}
+	req.send(point.id);
+};
