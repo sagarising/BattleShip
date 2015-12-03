@@ -12,21 +12,21 @@
 .table td:hover{
 	background-color: yellow;
 }
-body.firstpage{
+/*body.firstpage{
     background-image: url("../images/battleship.JPG");
     background-size: 1450px 820px;
-}
+}*/
 div.firstpagestart{
     margin: 10em 0 0 40em;
 }
 button{
-    background-color: rgb(78,181,181);
+    background-color: green;
     width: 50px;
     height:50px;
     border-radius: 50px;
 }
 button:hover{
-    background-color: rgb(109,252,252);
+    background-color: rgb(20,242,39);
 }
 #loading{
     visibility: hidden;
