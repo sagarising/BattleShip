@@ -98,6 +98,17 @@ var checkAttackedPoint = function(req,res) {
 	var result = "not your turn";
 	var mySelf = currentPlayer(lib.players,req.headers.cookie);
 	var enemy = enemyPlayer(lib.players,req.headers.cookie);
+<<<<<<< HEAD
+	if(mySelf.turn){
+		req.on('data',function(chunk){
+			attackPoint+=chunk;
+		})
+		emitter.emit(enemy.if_it_is_Hit(attackPoint,enemy))
+		mySelf.turn =false;
+		enemy.turn = true;
+	}
+	res.end()
+=======
 	req.on('data',function(chunk){
 		attackPoint+=chunk;
 	});
@@ -110,6 +121,7 @@ var checkAttackedPoint = function(req,res) {
 		}
 		res.end(result.toString());
 	});
+>>>>>>> c453889bec3ea7caf5a79bd0e85b86769cc1ba4c
 };
 
 var fileNotFound = function(req, res){

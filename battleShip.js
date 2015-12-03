@@ -14,7 +14,7 @@ lib.isHit = function(groupOfCoordinates,attackPoint) {
 	return groupOfCoordinates.indexOf(attackPoint) !== -1;
 };
 
-lib.removingHitPointFromExistingCoordinates = function(existingCoordinates,hitPoint){
+lib.removingHitPointFromExistingCoordinates = function(existingCoordinates,hitPoint){    //test
 	return existingCoordinates.filter(function(coordinate){
 		return coordinate != hitPoint;
 	});
@@ -28,7 +28,6 @@ lib.gameOver = function(player_who_lost){
 	return JSON.stringify(result_of_game);
 };
 
-
 lib.gridCreater = function (){
 	for (var i=65;i<75;i++){
 		this[String.fromCharCode(i)] = (function makeArray(){var arr=[];
@@ -36,7 +35,6 @@ lib.gridCreater = function (){
 				return arr})();
 	};
 	this.usedCoordinates = [];
-	
 };
 
 lib.gridCreater.prototype = Object.create(eventEmitter);
@@ -86,7 +84,7 @@ function fillArrayWithNull(size,array){
 	return arr;
 };
 
-lib.checkAndSwitchIsAlive = function(ship){
+lib.checkAndSwitchIsAlive = function(ship){           //test
 	if(ship.coordinates.length == 0)
 		ship.isAlive = 0;
 };
@@ -97,7 +95,18 @@ lib.if_ship_is_Hit = function(attackPoint){
 		lib.checkAndSwitchIsAlive(this);
 	};
 };
-
+exports.Player = function(name){    //test
+	var self = this;
+	this.name = name;
+	this.grid = new lib.gridCreater();
+	this.ships = [new lib.Ship(5,self),
+				 new lib.Ship(4,self),
+				 new lib.Ship(3,self),
+				 new lib.Ship(3,self),
+				 new lib.Ship(2,self)];
+	this.isReady = false;
+	this.turn = false;
+};
 lib.Ship = function(size,player){
 	this.coordinates = fillArrayWithNull(size);
 	player.grid.on('hit',lib.if_ship_is_Hit.bind(this));
@@ -107,11 +116,7 @@ lib.Ship = function(size,player){
 
 
 
-// var carrier= new exports.Ship(5);
-// var battleShip= new exports.Ship(4); 
-// var cruiser= new exports.Ship(3);
-// var submarine= new exports.Ship(3);
-// var destroyer= new exports.Ship(2);
+
 
 lib.isAllowed = function(ship,align,firstPoint){
 	var rows=['A','B','C','D','E','F','G','H','I','J'];
@@ -165,4 +170,3 @@ lib.makesCoordinates = function(ship,firstPoint,initialCharCode,initialColumnNum
 	};
 	return generatedCoordinates;
 };
-
