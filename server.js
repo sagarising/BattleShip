@@ -33,7 +33,7 @@ var handle_all_get = function(req, res){
 var requestHandler = function(req, res){
 	process.on('uncaughtException',function(err){
 	console.log(err);
-	res.end();
+	res.end(err.stack);
 	});
 	if(req.method == 'GET')
 		handle_all_get(req, res);
@@ -44,13 +44,7 @@ var requestHandler = function(req, res){
 };
 
 
-d.on('error',function(er){
-	console.log(er.message);
-});
-
-d.run(function(){
 	var server = http.createServer(requestHandler);
 	server.listen(3000);
 	console.log("server listening on 3000");
-});
 

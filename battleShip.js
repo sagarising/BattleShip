@@ -4,6 +4,12 @@ var lib={};
 exports.lib = lib;
 exports.players = [];
 
+lib.list_of_isAlive_of_each_ship = function(ships){
+	return ships.map(function(element){
+		return element.isAlive;
+	});
+};
+
 lib.isHit = function(groupOfCoordinates,attackPoint) {
 	return groupOfCoordinates.indexOf(attackPoint) !== -1;
 };
@@ -12,8 +18,11 @@ lib.removingHitPointFromExistingCoordinates = function(existingCoordinates,hitPo
 	return existingCoordinates.filter(function(coordinate){
 		return coordinate != hitPoint;
 	});
-}
+};
 
+lib.gameOver = function(){
+	return 'Game over';
+};
 
 
 lib.gridCreater = function (){
@@ -35,21 +44,19 @@ lib.gridCreater.prototype.isUsedSpace = function(coordinates){
 	});
 };
 
-lib.gridCreater.prototype.if_it_is_Hit = function(attackPoint,player){
-	if(lib.isHit(this.usedCoordinates,attackPoint)){
-		this.usedCoordinates = lib.removingHitPointFromExistingCoordinates(this.usedCoordinates,attackPoint);
-		if(this.usedCoordinates.length == 0)
+lib.if_it_is_Hit = function(attackPoint,player){
+	var isAliveList = lib.list_of_isAlive_of_each_ship(player.ships);
+	var usedCoordinates = player.grid.usedCoordinates
+	if(lib.isHit(usedCoordinates,attackPoint)){
+		usedCoordinates = lib.removingHitPointFromExistingCoordinates(usedCoordinates,attackPoint);
+		if(usedCoordinates.length == 0)
 			return lib.gameOver();     // i will return empty array if game is over
 		else
-		this.emit('hit',attackPoint);
-	return [true]    // i have to return all 5 ships
+		player.grid.emit('hit',attackPoint);
+	return [1].concat(isAliveList);    // i have to return all 5 ships
 	};
-	return false;     // i have to return all 5 ships
+	return [0].concat(isAliveList);     // i have to return all 5 ships
 };
-
-
-
-
 
 exports.Player = function(name){
 	var self = this;
@@ -75,21 +82,23 @@ function fillArrayWithNull(size,array){
 lib.checkAndSwitchIsAlive = function(ship){
 	if(ship.coordinates.length == 0)
 		ship.isAlive = 0;
-}
-
-lib.Ship = function(size,player){
-	this.coordinates = fillArrayWithNull(size);
-	player.grid.on('hit',this.if_it_is_Hit);
-	Object.defineProperty(this,'isAlive',{value:1,writable:true})
-	
 };
 
-lib.Ship.prototype.if_it_is_Hit = function(attackPoint){
+lib.if_ship_is_Hit = function(attackPoint){
 	if(lib.isHit(this.coordinates,attackPoint)){
 		this.coordinates = lib.removingHitPointFromExistingCoordinates(this.coordinates,attackPoint);
 		lib.checkAndSwitchIsAlive(this);
 	};
 };
+
+lib.Ship = function(size,player){
+	this.coordinates = fillArrayWithNull(size);
+	player.grid.on('hit',lib.if_ship_is_Hit.bind(this));
+	Object.defineProperty(this,'isAlive',{value:1,writable:true})
+	
+};
+
+
 
 // var carrier= new exports.Ship(5);
 // var battleShip= new exports.Ship(4); 
