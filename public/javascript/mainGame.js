@@ -10,9 +10,10 @@ var changeTheColorOfGamePage = function(){
 };
 
 var statusUpdate = function(clas,array){
-	array.forEach(function(each){
-		$('.'+clas)[0].children[0].children[1].children[each+1].innerHTML='Sunk'
-	})
+	array.forEach(function(each,index){
+		if(!each)
+			$('.'+clas)[0].children[0].children[1].children[index+1].innerHTML='Sunk';
+	});
 };
 var changingTheColor=function(clas,array,colour){
 	var p = document.querySelector('#'+clas).getElementsByTagName('td');
@@ -26,19 +27,15 @@ var attack = function(point) {
 		if(req.readyState == 4 && req.status ==200){
 			var data = JSON.parse(req.responseText);
 			console.log(data);
-			if(data.message){
+			if(!Array.isArray(data))
 				alert("not your turn");
-
-			}
-			else if(+data.hit_miss[0])
+			else if(data[0])
 				point.innerHTML = "hit";
 			else
 				point.innerHTML = "miss";
-			if(data.sunkShips.length)
-				 statusUpdate('enemyStatusTable',data.sunkShips);
-		}
-
-	}
+			statusUpdate('enemyStatusTable',data.slice(1));
+		};
+	};
 	req.open('POST','attack',true);
 	req.send(point.id);
 };

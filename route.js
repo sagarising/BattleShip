@@ -94,9 +94,9 @@ var routingToGame = function(req,res){
 };
 
 var checkAttackedPoint = function(req,res) {
-	var sunkShips=[]
+	var sunkShips=[];
 	var attackPoint = '';
-	var result = {message:'not your turn'};
+	var result = 'not your turn';
 	var mySelf = currentPlayer(lib.players,req.headers.cookie);
 	var enemy = enemyPlayer(lib.players,req.headers.cookie);
 	// var ships=['Carrier','Battleship','Cruiser','Submarine','Destroyer'];
@@ -109,12 +109,13 @@ var checkAttackedPoint = function(req,res) {
 			result = lib.lib.if_it_is_Hit(attackPoint,enemy);
 			mySelf.turn =false;
 			enemy.turn = true;
-			var hit_miss=result.splice(0,1);
-			result.forEach(function(each,i){
-				if(each==0) sunkShips.push(i);
-			});
-			res.end(JSON.stringify({hit_miss:hit_miss,sunkShips:sunkShips}));
-		}
+			// var hit_miss=result.splice(0,1);
+			// result.forEach(function(each,i){
+			// 	if(each==0) sunkShips.push(i);
+			// });
+			// res.end(JSON.stringify({hit_miss:hit_miss,sunkShips:sunkShips}));
+			res.end(JSON.stringify(result));
+		};
 		res.end(JSON.stringify(result));
 	});
 };
@@ -127,12 +128,8 @@ var fileNotFound = function(req, res){
 
 var updates = function(req,res){
 	var mySelf = currentPlayer(lib.players,req.headers.cookie);
-	if(mySelf.turn)
-		res.end(JSON.stringify('your turn'));
-	else{
-		var statusOfShips = lib.lib.list_of_isAlive_of_each_ship(mySelf.ships);
-		res.end(JSON.stringify(statusOfShips));		
-	}
+	var statusOfShips = lib.lib.list_of_isAlive_of_each_ship(mySelf.ships);
+	res.end(JSON.stringify(statusOfShips));		
 };
 exports.post_handlers = [
 	{path: '^/player$', handler: createPlayer},
