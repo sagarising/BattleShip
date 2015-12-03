@@ -109,20 +109,21 @@ var isSecondPlayerReady = function() {
 };
 
 var attack = function(point) {
-	console.log(point.id)
 	var req = new XMLHttpRequest();
 	req.onreadystatechange = function(){
 		if(req.readyState == 4 && req.status ==200){
-			var data = JSON.parse(req.responseText)
-			console.log(data.hit_miss)
-			if(data.hit_miss[0]==1)
-				changingTheColor('enemy',[point.id],'red')
-			else{
-				if(data.hit_miss[0]==0)
-					changingTheColor('enemy',[point.id],'green')	
+			var data = JSON.parse(req.responseText);
+			console.log(data);
+			if(data.message){
+				alert("not your turn");
 			}
+			else if(+data.hit_miss[0])
+				point.innerHTML = "hit";
+			else
+				point.innerHTML = "miss";
 			if(data.sunkShips.length) statusUpdate('enemyStatusTable',data.sunkShips);
 		}
+
 	}
 	req.open('POST','attack',true);
 	req.send(point.id);

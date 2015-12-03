@@ -96,7 +96,7 @@ var routingToGame = function(req,res){
 var checkAttackedPoint = function(req,res) {
 	var sunkShips=[]
 	var attackPoint = '';
-	var result = "not your turn";
+	var result = {message:'not your turn'};
 	var mySelf = currentPlayer(lib.players,req.headers.cookie);
 	var enemy = enemyPlayer(lib.players,req.headers.cookie);
 	// var ships=['Carrier','Battleship','Cruiser','Submarine','Destroyer'];
@@ -109,13 +109,13 @@ var checkAttackedPoint = function(req,res) {
 			result = lib.lib.if_it_is_Hit(attackPoint,enemy);
 			mySelf.turn =false;
 			enemy.turn = true;
+			var hit_miss=result.splice(0,1);
+			result.forEach(function(each,i){
+				if(each==0) sunkShips.push(i);
+			});
+			res.end(JSON.stringify({hit_miss:hit_miss,sunkShips:sunkShips}));
 		}
-		var hit_miss=result.splice(0,1);
-		result.forEach(function(each,i){
-			if(each==0) sunkShips.push(i);
-		})
-		console.log(result);
-		res.end(JSON.stringify({hit_miss:hit_miss,sunkShips:sunkShips}));
+		res.end(JSON.stringify(result));
 	});
 };
 
