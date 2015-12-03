@@ -105,7 +105,7 @@ var checkAttackedPoint = function(req,res) {
 		req.on('data',function(chunk){
 			attackPoint+=chunk;
 		})
-		emitter.emit(lib.isHit(attackPoint,enemy))
+		emitter.emit(enemy.if_it_is_Hit(attackPoint,enemy))
 		mySelf.turn =false;
 		enemy.turn = true;
 	}

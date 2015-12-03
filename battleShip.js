@@ -4,17 +4,22 @@ var lib={};
 exports.lib = lib;
 exports.players = [];
 
-lib.isHit = function(groupOfCoordinates,attackPoint) {
+lib.list_of_isAlive_of_each_ship = function(ships){ //test
+	return ships.map(function(element){
+		return element.isAlive;
+	})
+}
+
+
+lib.isHit = function(groupOfCoordinates,attackPoint) {   //test
 	return groupOfCoordinates.indexOf(attackPoint) !== -1;
 };
 
-lib.removingHitPointFromExistingCoordinates = function(existingCoordinates,hitPoint){
+lib.removingHitPointFromExistingCoordinates = function(existingCoordinates,hitPoint){    //test
 	return existingCoordinates.filter(function(coordinate){
 		return coordinate != hitPoint;
 	});
 }
-
-
 
 lib.gridCreater = function (){
 	for (var i=65;i<75;i++){
@@ -23,7 +28,6 @@ lib.gridCreater = function (){
 				return arr})();
 	};
 	this.usedCoordinates = [];
-	
 };
 
 lib.gridCreater.prototype = Object.create(eventEmitter);
@@ -35,33 +39,17 @@ lib.gridCreater.prototype.isUsedSpace = function(coordinates){
 	});
 };
 
-lib.gridCreater.prototype.if_it_is_Hit = function(attackPoint,player){
+lib.gridCreater.prototype.if_it_is_Hit = function(attackPoint,player){   //test
+	var isAliveList = lib.list_of_isAlive_of_each_ship(player.ships); 
 	if(lib.isHit(this.usedCoordinates,attackPoint)){
 		this.usedCoordinates = lib.removingHitPointFromExistingCoordinates(this.usedCoordinates,attackPoint);
 		if(this.usedCoordinates.length == 0)
 			return lib.gameOver();     // i will return empty array if game is over
 		else
 		this.emit('hit',attackPoint);
-	return [true]    // i have to return all 5 ships
+	return [1].concat(isAliveList);    // i have to return all 5 ships
 	};
-	return false;     // i have to return all 5 ships
-};
-
-
-
-
-
-exports.Player = function(name){
-	var self = this;
-	this.name = name;
-	this.grid = new lib.gridCreater();
-	this.ships = [new lib.Ship(5,self),
-				 new lib.Ship(4,self),
-				 new lib.Ship(3,self),
-				 new lib.Ship(3,self),
-				 new lib.Ship(2,self)];
-	this.isReady = false;
-	this.turn = false;
+	return [0].concat(isAliveList);     // i have to return all 5 ships
 };
 
 function fillArrayWithNull(size,array){
@@ -72,7 +60,7 @@ function fillArrayWithNull(size,array){
 	return arr;
 };
 
-lib.checkAndSwitchIsAlive = function(ship){
+lib.checkAndSwitchIsAlive = function(ship){           //test
 	if(ship.coordinates.length == 0)
 		ship.isAlive = 0;
 }
@@ -91,11 +79,18 @@ lib.Ship.prototype.if_it_is_Hit = function(attackPoint){
 	};
 };
 
-// var carrier= new exports.Ship(5);
-// var battleShip= new exports.Ship(4); 
-// var cruiser= new exports.Ship(3);
-// var submarine= new exports.Ship(3);
-// var destroyer= new exports.Ship(2);
+exports.Player = function(name){    //test
+	var self = this;
+	this.name = name;
+	this.grid = new lib.gridCreater();
+	this.ships = [new lib.Ship(5,self),
+				 new lib.Ship(4,self),
+				 new lib.Ship(3,self),
+				 new lib.Ship(3,self),
+				 new lib.Ship(2,self)];
+	this.isReady = false;
+	this.turn = false;
+};
 
 lib.isAllowed = function(ship,align,firstPoint){
 	var rows=['A','B','C','D','E','F','G','H','I','J'];
@@ -149,4 +144,3 @@ lib.makesCoordinates = function(ship,firstPoint,initialCharCode,initialColumnNum
 	};
 	return generatedCoordinates;
 };
-
