@@ -20,7 +20,7 @@ var currentPlayer = function(players,cookie){
 var enemyPlayer = function(players,cookie){
 	var index = +(!players.indexOf(currentPlayer(players,cookie)));
 	return players[index];
-}
+};
 
 var checkAndSubmit = function(req,res){
 	var data = '';
@@ -37,8 +37,7 @@ var checkAndSubmit = function(req,res){
 		lib.positionShip(player.ships[shipIndex],align,startingPoint,player.grid);
 		res.end(JSON.stringify(player.grid.usedCoordinates));
 	});
-}
-
+};
 
 var createPlayer = function(req, res){
 	var data = '';
@@ -61,7 +60,7 @@ var serveIndex = function(req, res, next){
 
 var showDetails = function(req,res) {
 	res.end(JSON.stringify(lib.players));
-}
+};
 
 var serveStaticFile = function(req, res, next){
 	var filePath = './public' + req.url;
@@ -70,10 +69,9 @@ var serveStaticFile = function(req, res, next){
 			res.statusCode = 200;
 			console.log(res.statusCode);
 			res.end(data);
-		}
-		else{
+		}else{
 			next();
-		}
+		};
 	});
 };
 
@@ -82,13 +80,11 @@ var usedSpace = function(req,res){
 	res.end(JSON.stringify(player.grid.usedCoordinates))
 };
 
-
 var areBothReady = function(){
 	return lib.players.every(function(player){
 		return player.isReady;
 	});	
 };
-
 
 var routingToGame = function(req,res){
 	var player = currentPlayer(lib.players,req.headers.cookie);
@@ -99,17 +95,21 @@ var routingToGame = function(req,res){
 
 var checkAttackedPoint = function(req,res) {
 	var attackPoint = '';
+	var result = "not your turn";
 	var mySelf = currentPlayer(lib.players,req.headers.cookie);
 	var enemy = enemyPlayer(lib.players,req.headers.cookie);
-	if(mySelf.turn){
-		req.on('data',function(chunk){
-			attackPoint+=chunk;
-		})
-		emitter.emit(lib.isHit(attackPoint,enemy))
-		mySelf.turn =false;
-		enemy.turn = true;
-	}
-	res.end()
+	req.on('data',function(chunk){
+		attackPoint+=chunk;
+	});
+	req.on('end', function(){
+		if(mySelf.turn){
+			console.log(attackPoint);
+			result = lib.lib.if_it_is_Hit(attackPoint,enemy);
+			mySelf.turn =false;
+			enemy.turn = true;
+		}
+		res.end(result.toString());
+	});
 };
 
 var fileNotFound = function(req, res){
@@ -124,6 +124,7 @@ exports.post_handlers = [
 	{path:'^/attack$',handler:checkAttackedPoint},
 	{path: '', handler: method_not_allowed}
 ];
+
 exports.get_handlers = [
 
 	{path: '^/$', handler: serveIndex},
