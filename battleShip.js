@@ -99,6 +99,7 @@ lib.if_ship_is_Hit = function(attackPoint){
 		lib.checkAndSwitchIsAlive(this);
 	};
 };
+
 exports.Player = function(name){    //test
 	var self = this;
 	this.name = name;
@@ -111,16 +112,13 @@ exports.Player = function(name){    //test
 	this.isReady = false;
 	this.turn = false;
 };
+
 lib.Ship = function(size,player){
 	this.coordinates = fillArrayWithNull(size);
 	player.grid.on('hit',lib.if_ship_is_Hit.bind(this));
 	Object.defineProperty(this,'isAlive',{value:1,writable:true})
 	
 };
-
-
-
-
 
 lib.isAllowed = function(ship,align,firstPoint){
 	var rows=['A','B','C','D','E','F','G','H','I','J'];

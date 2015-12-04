@@ -1,4 +1,6 @@
-
+var playerName= function(){
+	$('h3')[0].innerHTML=document.cookie;	
+};
 
 var fillBox=function(self){
 	var coordianteBox = document.getElementById('text');
@@ -163,6 +165,7 @@ var update = function(){
 
 
 var serveStatus = function(){
+	playerName();
 	changeTheColorOfGamePage();
 	setInterval(update,500);
 };

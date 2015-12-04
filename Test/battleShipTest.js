@@ -4,8 +4,6 @@ var lib = require('../battleShip.js');
 var test = {};
 exports.test = test; 
 
-
-
 describe('Ship',function(){
 	var player = new lib.Player('ram');
 	it('should initialize ship object',function(){	
@@ -17,13 +15,12 @@ describe('Ship',function(){
 });
 
 describe('isAllowed',function(){
+	var player = new lib.Player('ram');
 	it('should check if the firstpoint is valid for placing ship aligned vertical',function(){
-		var player = new lib.Player('ram');
 		assert.equal(true,lib.lib.isAllowed(player.ships[0],"vertical","B9",new lib.lib.gridCreater())); 
 		assert.equal(false,lib.lib.isAllowed(player.ships[0],"vertical","I9",new lib.lib.gridCreater())); 
 	});
 	it('should check if the firstpoint is valid for placing ship aligned horizontal',function(){
-		var player = new lib.Player('ram');
 		assert.equal(true,lib.lib.isAllowed(player.ships[0],"vertical","B9",new lib.lib.gridCreater())); 
 		assert.equal(false,lib.lib.isAllowed(player.ships[0],"vertical","I9",new lib.lib.gridCreater())); 
 	});
@@ -37,36 +34,32 @@ describe('gridCreater',function(){
 })
 
 describe('isUsedSpace',function(){
+	var grid = new lib.lib.gridCreater();
+	var player = new lib.Player('ram');
 	it('should return true if coordinate exists in used coordinates',function(){
-		var grid = new lib.lib.gridCreater();
 		grid.usedCoordinates = ['A1'];
-		var player = new lib.Player('ram');
 		player.ships[3].coordinates = ['A1','A2','A3'];
 		assert.equal(true,grid.isUsedSpace(player.ships[3].coordinates));
 	});
 	it('should return false if coordinate does not exists in used coordinates',function(){
-		var grid = new lib.lib.gridCreater();
 		grid.usedCoordinates = ['B2'];
-		var player = new lib.Player('ram');
 		assert.equal(false,grid.isUsedSpace(player.ships[0].coordinates));
 	});
 });
 
 describe('positionShip',function(){
+	var player = new lib.Player('ram');
+	var grid = new lib.lib.gridCreater();
 	it('should position the ship and return ship with some filled coordinates for vertical',function(){
-		var player = new lib.Player('ram');
 		var align='vertical';
 		firstpoint = 'A4';
-		var grid = new lib.lib.gridCreater();
 		var expected = {coordinates:['A4','B4','C4']}
 		lib.positionShip(player.ships[2],align,firstpoint,grid);
 		assert.equal(JSON.stringify(expected),JSON.stringify(player.ships[2]));
 	});
 	it('should position the ship and return ship with some filled coordinates for horizontal',function(){
-		var player = new lib.Player('ram');
 		var align='horizontal';
 		firstpoint = 'A1';
-		var grid = new lib.lib.gridCreater();
 		var expected = {coordinates:['A1','A2','A3']}
 		lib.positionShip(player.ships[3],align,firstpoint,grid);
 		assert.equal(JSON.stringify(expected),JSON.stringify(player.ships[3]));
@@ -75,15 +68,12 @@ describe('positionShip',function(){
 		var player = new lib.Player('ram');
 		var align='vertical';
 		firstpoint = 'I4';
-		var grid = new lib.lib.gridCreater();
 		var boundFunction = lib.positionShip.bind(null,player.ships[3],align,firstpoint,grid);
 		assert.throw(boundFunction,Error,'Cannot position ship here.');
 	});
 	it('should return error if the ship cannot be placed over used space and expect ship to be unchanged',function(){
-		var player = new lib.Player('ram');
 		var align='vertical';
 		firstpoint = 'B4';
-		var grid = new lib.lib.gridCreater();
 		grid.usedCoordinates = ['C4'];
 		var boundFunction = lib.positionShip.bind(null,player.ships[2],align,firstpoint,grid);
 		assert.throw(boundFunction,Error,'Cannot place over other ship.');
@@ -91,15 +81,14 @@ describe('positionShip',function(){
 	});
 });
 describe('makesCoordinate',function(){
+	var player = new lib.Player('ram');
 	it('should check when initilCharCode is undefined and gives new generated coordinates',function(){
-		var player = new lib.Player('ram');
 		firstpoint = 'A4';
 		var initilColumnNumber = firstpoint.slice(1);
 		var expected = ['A4','A5','A6'];
 		assert.equal(JSON.stringify(expected),JSON.stringify(lib.lib.makesCoordinates(player.ships[3],firstpoint,undefined,initilColumnNumber)));
 	})
 	it('should check when initilCharCode is defined and gives new generated coordinates',function(){
-		var player = new lib.Player('ram');
 		firstpoint = 'A4';
 		var initilCharCode = firstpoint.charCodeAt(0);
 		var initilColumnNumber = firstpoint.slice(1);
@@ -153,34 +142,31 @@ describe('removingHitPointFromExistingCoordinates',function(){
 });
 
 describe('CheckAndSwitchIsAlive',function(){
+	var player = new lib.Player('ram');
 	it('should change isAlive property of ship to 0 when the ship sunks',function(){
-		var player = new lib.Player('ram');
 		player.ships[0].coordinates.length = 0;
 		lib.lib.checkAndSwitchIsAlive(player.ships[0]);
 		assert.equal(0,player.ships[0].isAlive);
 	});
 	it('should not change isAlive property of ship if the ship has coordinates',function(){
-		var player = new lib.Player('ram');
 		lib.lib.checkAndSwitchIsAlive(player.ships[2]);
 		assert.equal(1,player.ships[2].isAlive);
 	});
 });
 
 describe('List_of_isAlive_of_each_ship',function(){
+	var player = new lib.Player('ramu');
 	it('should return an array with every ships alive property',function(){
-		var player = new lib.Player('ramu');
 		var result = lib.lib.list_of_isAlive_of_each_ship(player.ships);
 		assert.deepEqual([1,1,1,1,1],result);
 	});
 	it('should return an array which contains 0 when any of the ships sunk',function(){
-		var player = new lib.Player('rana');
 		player.ships[0].isAlive = 0;
 		player.ships[3].isAlive = 0;
 		var result = lib.lib.list_of_isAlive_of_each_ship(player.ships);
 		assert.deepEqual([0,1,1,0,1],result);
 	});
 	it('should return array of 0s when all ships sunk',function(){
-		var player = new lib.Player('rana');
 		player.ships[0].isAlive = 0;
 		player.ships[1].isAlive = 0;
 		player.ships[2].isAlive = 0;
@@ -191,6 +177,28 @@ describe('List_of_isAlive_of_each_ship',function(){
 	});
 });
 
+describe('gameOver',function(){
+	var player1 = new lib.Player('ram');
+	var player2 = new lib.Player('manu');
+	it('should return an object with player1 won and player2 lost when player2 loses the game',function(){
+		lib.players.push(player1);
+		lib.players.push(player2);
+		var result = lib.lib.gameOver(player2);
+		expect(result).to.equal('{"won":"ram","lost":"manu"}');
+	});
+	it('should return an object with player2 won and player1 lost when player1 loses the game',function(){
+		lib.players.push(player1);
+		lib.players.push(player2);
+		var result = lib.lib.gameOver(player1);
+		expect(result).to.equal('{"won":"manu","lost":"ram"}')
+	});
+	it('should remove players from players array after gameOver',function(){
+		lib.players.push(player1);
+		lib.players.push(player2);
+		lib.lib.gameOver(player1);
+		expect(lib.players.length).to.equal(0);
+	});
+});
 // describe('if_it_is_Hit',function(){
 // 	it('should remove attackPoint from existingCoordinates when is is a hit 
 // 		and also it changes isAlive property of ship if it is sunk',function(){
