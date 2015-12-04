@@ -143,9 +143,7 @@ exports.positionShip = function(ship,align,firstPoint,grid){
 		}   //don't put semi-colon here 
 		else if(align == 'horizontal'){
 			var initialColumnNumber = firstPoint.slice(1);
-			// console.log(initialColumnNumber);	
 			var tempCoordinates = lib.makesCoordinates(ship,firstPoint,initialCharCode,initialColumnNumber);
-			// console.log(tempCoordinates+"hello");
 		};
 		if(grid.isUsedSpace(tempCoordinates)){
 				throw new Error('Cannot place over other ship.');

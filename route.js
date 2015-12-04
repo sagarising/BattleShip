@@ -104,15 +104,9 @@ var checkAttackedPoint = function(req,res) {
 	});
 	req.on('end', function(){
 		if(mySelf.turn){
-			console.log(attackPoint);
 			result = lib.lib.if_it_is_Hit(attackPoint,enemy);
 			mySelf.turn =false;
 			enemy.turn = true;
-			// var hit_miss=result.splice(0,1);
-			// result.forEach(function(each,i){
-			// 	if(each==0) sunkShips.push(i);
-			// });
-			// res.end(JSON.stringify({hit_miss:hit_miss,sunkShips:sunkShips}));
 			res.end(JSON.stringify(result));
 		};
 		res.end(JSON.stringify(result));
