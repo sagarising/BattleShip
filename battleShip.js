@@ -10,6 +10,8 @@ lib.list_of_isAlive_of_each_ship = function(ships){
 	});
 };
 
+
+
 lib.isHit = function(groupOfCoordinates,attackPoint) {
 	return groupOfCoordinates.indexOf(attackPoint) !== -1;
 };
@@ -35,6 +37,7 @@ lib.gridCreater = function (){
 				return arr})();
 	};
 	this.usedCoordinates = [];
+	this.destroyed = [];
 };
 
 lib.gridCreater.prototype = Object.create(eventEmitter);
@@ -49,9 +52,10 @@ lib.gridCreater.prototype.isUsedSpace = function(coordinates){
 lib.if_it_is_Hit = function(attackPoint,player){
 	var isAliveList = lib.list_of_isAlive_of_each_ship(player.ships);
 	if(lib.isHit(player.grid.usedCoordinates,attackPoint)){
+		console.log(player.grid.usedCoordinates,player.name,'used coordinates');
 		player.grid.usedCoordinates = lib.removingHitPointFromExistingCoordinates(player.grid.usedCoordinates,attackPoint);
-		console.log(player.grid.usedCoordinates,'used coordinates');
-		console.log(player.grid.usedCoordinates,"after removing original");
+		player.grid.destroyed.push(attackPoint);
+		console.log(player.grid.usedCoordinates,player.name,"after removing original");
 
 		if(player.grid.usedCoordinates.length == 0)
 			return lib.gameOver(player);     // i will return empty array if game is over

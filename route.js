@@ -120,9 +120,17 @@ var fileNotFound = function(req, res){
 };
 
 var updates = function(req,res){
+	var update = [];
 	var mySelf = currentPlayer(lib.players,req.headers.cookie);
-	var statusOfShips = lib.lib.list_of_isAlive_of_each_ship(mySelf.ships);
-	res.end(JSON.stringify(statusOfShips));		
+	var enemy = lib.players[+(!lib.players.indexOf(mySelf))];
+	// var gameOver = lib.lib.if_it_is_Hit()
+	// update.myStatus = lib.lib.list_of_isAlive_of_each_ship(mySelf.ships);
+	// update.enemyStatus = lib.lib.list_of_isAlive_of_each_ship(enemy.ships);
+	// update.destroyedPoints = mySelf.grid.destroyed;
+	update.push({table:'ownStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(mySelf.ships)});
+	update.push({table:'enemyStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(enemy.ships)});
+	update.push({table:'own',stat:mySelf.grid.destroyed});
+	res.end(JSON.stringify(update));		
 };
 exports.post_handlers = [
 	{path: '^/player$', handler: createPlayer},
@@ -132,11 +140,11 @@ exports.post_handlers = [
 ];
 
 exports.get_handlers = [
-	{path:'^/givingUpdate$',handler:updates},
 	{path: '^/$', handler: serveIndex},
 	{path: '^/show$', handler: showDetails},
 	{path: '^/usedSpace$',handler:usedSpace},
 	{path:'^/makeReady$',handler:routingToGame},
+	{path:'^/givingUpdate$',handler:updates},
 	{path: '', handler: serveStaticFile},
 	{path: '', handler: fileNotFound}
 ];

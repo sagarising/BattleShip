@@ -50,9 +50,8 @@ var checkAndSubmit = function(){
 			var shipCoordinate = JSON.parse(req.responseText); 
 			var ship = document.querySelector('#ship');
 			ship.remove(ship.selectedIndex);
-			if(ship.children.length==0){
+			if(ship.children.length==0)
 				setInterval(sendToGamePage,20); 
-			}
 			shipCoordinate.map(function(element){
 			var cell = document.getElementById(element);
 			cell.bgColor ='grey';
@@ -63,6 +62,24 @@ var checkAndSubmit = function(){
 	req.send(shipName+" "+shipSize+" "+coordinateValue+" "+align);
 };	
 
+var updateForShipPlacing = function(){
+	var req =new XMLHttpRequest();
+	req.onreadystatechange = function(){
+		if(req.readyState==4 && req.status==200){
+			var shipCoordinate = JSON.parse(req.responseText); 
+			var ship = document.querySelector('#ship');
+				ship.remove(ship.selectedIndex);
+				if(ship.children.length==0)
+					setInterval(sendToGamePage,20); 
+				shipCoordinate.map(function(element){
+				var cell = document.getElementById(element);
+				cell.bgColor ='grey';
+				});
+			}
+		}
+	req.open('GET','placingOfShip',true);
+	req.send();
+};
 
 
 
@@ -81,9 +98,13 @@ var changeTheColorOfGamePage = function(){
 };
 
 var statusUpdate = function(clas,array){
+	console.log('enteredddd----')
 	array.forEach(function(each,index){
-		if(!each)
-			$('.'+clas)[0].children[0].children[1].children[index+1].innerHTML='Sunk';
+		if(!each){
+			var ship = $('.'+clas+' tr')[1].children[index+1];
+			ship.style.color = "red";
+			ship.innerHTML = "Sunk";
+		}
 	});
 };
 var changingTheColor=function(clas,array,colour){
@@ -104,12 +125,20 @@ var attack = function(point) {
 				point.innerHTML = "hit";
 			else
 				point.innerHTML = "miss";
-			statusUpdate('enemyStatusTable',data.slice(1));
+			// statusUpdate('enemyStatusTable',data.slice(1));
 		};
 	};
 	req.open('POST','attack',true);
 	req.send(point.id);
 };
+
+// var displayOwnHitPoints = function(clas,coordinates){
+// 	console.log(coordinates,'coordinates saala')
+// 	coordinates.forEach(function(coordinate){
+// 		$("."+clas+" [id='"+coordinate+"']").css('background-color','red');
+// 	});
+// }
+
 
 
 var update = function(){
@@ -117,10 +146,17 @@ var update = function(){
 	req.onreadystatechange = function(){
 		if(req.readyState == 4 && req.status == 200) {
 			console.log(req.responseText)
-			var shipStatus = JSON.parse(req.responseText);
-			statusUpdate('ownStatusTable',shipStatus);		
-		}
-	}
+			var updates = JSON.parse(req.responseText);
+			// statusUpdate('ownStatusTable',updates.statusOfShips);
+			// displayOwnHitPoints("own",updates.destroyedPoints)
+			var ownHitPoint = updates.splice(2,1);
+			// console.log(ownHitPoint[0].stat,'own hit point.stat')
+			updates.forEach(function(eachPlayer){
+				statusUpdate(eachPlayer.table,eachPlayer.stat);
+			});
+			changingTheColor(ownHitPoint[0].table,ownHitPoint[0].stat,'red')
+		};
+	};
 	req.open('GET','givingUpdate',true);
 	req.send();
 };
