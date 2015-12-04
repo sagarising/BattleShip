@@ -96,7 +96,6 @@ var routingToGame = function(req,res){
 var checkAttackedPoint = function(req,res) {
 	var sunkShips=[];
 	var attackPoint = '';
-	var result = 'not your turn';
 	var mySelf = currentPlayer(lib.players,req.headers.cookie);
 	var enemy = enemyPlayer(lib.players,req.headers.cookie);
 	req.on('data',function(chunk){
@@ -105,11 +104,16 @@ var checkAttackedPoint = function(req,res) {
 	req.on('end', function(){
 		if(mySelf.turn){
 			result = lib.lib.if_it_is_Hit(attackPoint,enemy);
+			if(result)
+				mySelf.hits.push(attackPoint);
+			else
+				mySelf.misses.push(attackPoint);
+			console.log(mySelf.hits)
 			mySelf.turn =false;
 			enemy.turn = true;
-			res.end(JSON.stringify(result));
+			res.end();
 		};
-		res.end(JSON.stringify(result));
+		res.end(JSON.stringify(0));
 	});
 };
 
@@ -123,13 +127,12 @@ var updates = function(req,res){
 	var update = [];
 	var mySelf = currentPlayer(lib.players,req.headers.cookie);
 	var enemy = lib.players[+(!lib.players.indexOf(mySelf))];
-	// var gameOver = lib.lib.if_it_is_Hit()
-	// update.myStatus = lib.lib.list_of_isAlive_of_each_ship(mySelf.ships);
-	// update.enemyStatus = lib.lib.list_of_isAlive_of_each_ship(enemy.ships);
-	// update.destroyedPoints = mySelf.grid.destroyed;
+
 	update.push({table:'ownStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(mySelf.ships)});
 	update.push({table:'enemyStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(enemy.ships)});
-	update.push({table:'own',stat:mySelf.grid.destroyed});
+	update.push({table:'own',stat:mySelf.grid.destroyed,color:"red"});
+	update.push({table:"enemy",stat:mySelf.misses,color:"khaki"});
+	update.push({table:"enemy",stat:mySelf.hits,color:"red"});
 	res.end(JSON.stringify(update));		
 };
 exports.post_handlers = [

@@ -92,7 +92,7 @@ var changeTheColorOfGamePage = function(){
 	req=new XMLHttpRequest();
 	req.onreadystatechange=function(){
 		if(req.readyState==4 && req.status==200){
-			changingTheColor('own',JSON.parse(req.responseText),'grey')
+			changingTheColorOfGrid('own',JSON.parse(req.responseText),'grey')
 		}
 	}
 	req.open('GET','usedSpace',true);
@@ -109,7 +109,7 @@ var statusUpdate = function(clas,array){
 		}
 	});
 };
-var changingTheColor=function(clas,array,colour){
+var changingTheColorOfGrid=function(clas,array,colour){
 	var p = document.querySelector('#'+clas).getElementsByTagName('td');
 	for(var i=0;i<array.length;i++){
 		p[array[i]].setAttribute("style","background-color:"+colour);
@@ -121,13 +121,8 @@ var attack = function(point) {
 		if(req.readyState == 4 && req.status ==200){
 			var data = JSON.parse(req.responseText);
 			console.log(data);
-			if(!Array.isArray(data))
+			if(!data)
 				alert("not your turn");
-			else if(data[0])
-				point.innerHTML = "hit";
-			else
-				point.innerHTML = "miss";
-			// statusUpdate('enemyStatusTable',data.slice(1));
 		};
 	};
 	req.open('POST','attack',true);
@@ -149,14 +144,18 @@ var update = function(){
 		if(req.readyState == 4 && req.status == 200) {
 			console.log(req.responseText)
 			var updates = JSON.parse(req.responseText);
+			console.log(updates[2].stat)
 			// statusUpdate('ownStatusTable',updates.statusOfShips);
 			// displayOwnHitPoints("own",updates.destroyedPoints)
-			var ownHitPoint = updates.splice(2,1);
-			// console.log(ownHitPoint[0].stat,'own hit point.stat')
-			updates.forEach(function(eachPlayer){
+			var shipStatus = updates.splice(0,2);
+			// changingTheColorOfGrid	(ownHitPoint[0].table,ownHitPoint[0].stat,'red');
+			shipStatus.forEach(function(eachPlayer){
 				statusUpdate(eachPlayer.table,eachPlayer.stat);
 			});
-			changingTheColor(ownHitPoint[0].table,ownHitPoint[0].stat,'red')
+			updates.forEach(function(clas){
+				changingTheColorOfGrid(clas.table,clas.stat,clas.color)
+			})
+			// changingTheColorOfGrid()
 		};
 	};
 	req.open('GET','givingUpdate',true);

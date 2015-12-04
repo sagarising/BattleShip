@@ -50,21 +50,18 @@ lib.gridCreater.prototype.isUsedSpace = function(coordinates){
 };
 
 lib.if_it_is_Hit = function(attackPoint,player){
-	var isAliveList = lib.list_of_isAlive_of_each_ship(player.ships);
 	if(lib.isHit(player.grid.usedCoordinates,attackPoint)){
 		console.log(player.grid.usedCoordinates,player.name,'used coordinates');
 		player.grid.usedCoordinates = lib.removingHitPointFromExistingCoordinates(player.grid.usedCoordinates,attackPoint);
 		player.grid.destroyed.push(attackPoint);
 		console.log(player.grid.usedCoordinates,player.name,"after removing original");
-
-		if(player.grid.usedCoordinates.length == 0)
-			return lib.gameOver(player);     // i will return empty array if game is over
-		else
+		// if(player.grid.usedCoordinates.length == 0)
+		// 	return lib.gameOver(player);     // i will return empty array if game is over
+		// else
 			player.grid.emit('hit',attackPoint);
-		var updated_isAliveList = lib.list_of_isAlive_of_each_ship(player.ships);
-		return [1].concat(updated_isAliveList);    // i have to return all 5 ships
+		return 1;
 	};
-	return [0].concat(isAliveList);     // i have to return all 5 ships
+	return 0;     // i have to return all 5 ships
 };
 
 exports.Player = function(name){
@@ -76,6 +73,8 @@ exports.Player = function(name){
 				 new lib.Ship(3,self),
 				 new lib.Ship(3,self),
 				 new lib.Ship(2,self)];
+	this.misses = [];
+	this.hits = [];
 	this.isReady = false;
 	this.turn = false;
 };
@@ -98,19 +97,6 @@ lib.if_ship_is_Hit = function(attackPoint){
 		this.coordinates = lib.removingHitPointFromExistingCoordinates(this.coordinates,attackPoint);
 		lib.checkAndSwitchIsAlive(this);
 	};
-};
-
-exports.Player = function(name){    //test
-	var self = this;
-	this.name = name;
-	this.grid = new lib.gridCreater();
-	this.ships = [new lib.Ship(5,self),
-				 new lib.Ship(4,self),
-				 new lib.Ship(3,self),
-				 new lib.Ship(3,self),
-				 new lib.Ship(2,self)];
-	this.isReady = false;
-	this.turn = false;
 };
 
 lib.Ship = function(size,player){
