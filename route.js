@@ -99,7 +99,6 @@ var checkAttackedPoint = function(req,res) {
 	var result = {message:'not your turn'};
 	var mySelf = currentPlayer(lib.players,req.headers.cookie);
 	var enemy = enemyPlayer(lib.players,req.headers.cookie);
-	// var ships=['Carrier','Battleship','Cruiser','Submarine','Destroyer'];
 	req.on('data',function(chunk){
 		attackPoint+=chunk;
 	});
