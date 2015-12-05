@@ -3,13 +3,12 @@ var playerName= function(){
 };
 
 var fillBox=function(self){
-	var coordianteBox = document.getElementById('text');
+	var coordianteBox = $('#text')[0];
 	coordianteBox.value = self.id;
 };
 
 var createPlayer = function(){
-	document.getElementsByTagName('button')[1].style.display='inline';
-	if(document.querySelector('#name').value=='')
+	if($('#name')[0].value=='')
 		alert('first enter your name')
 	else{
 		req = new XMLHttpRequest();
@@ -20,7 +19,7 @@ var createPlayer = function(){
 			}
 		}
 		req.open('POST','player',true);
-		req.send('name='+document.querySelector('#name').value);
+		req.send('name='+$('#name')[0].value);
 	}
 }
 
@@ -31,9 +30,9 @@ var sendToGamePage = function(){
 			console.log(req.responseText);
 			if(+req.responseText)
 				window.location.href='game.html';
-			document.getElementsByTagName('img')[0].style.visibility='visible';
-			document.getElementById('selectShip').style.visibility='hidden';
-			document.getElementsByTagName('table')[0].style.pointerEvents='none';
+			$('img')[0].style.visibility='visible';
+			$('#selectShip')[0].style.visibility='hidden';
+			$('table')[0].style.pointerEvents='none';
 		}
 	}
 	req.open('GET',"makeReady",true);
@@ -42,20 +41,20 @@ var sendToGamePage = function(){
 
 var checkAndSubmit = function(){
 	var req = new XMLHttpRequest();
-	var ship = document.getElementById("ship");
+	var ship = $('#ship')[0];
 	var shipName = ship.options[ship.selectedIndex].text;
-	var shipSize = document.getElementById("ship").value;
-	var coordinateValue = document.getElementById("text").value;
-	var align = document.getElementById("horizontal").checked ? 'horizontal' :'vertical';	
+	var shipSize = $('#ship')[0].value;
+	var coordinateValue = $("#text")[0].value;
+	var align = $("#horizontal")[0].checked ? 'horizontal' :'vertical';	
 	req.onreadystatechange = function(){
 		if(req.readyState==4 && req.status==200){
 			var shipCoordinate = JSON.parse(req.responseText); 
-			var ship = document.querySelector('#ship');
+			var ship = $('#ship')[0];
 			ship.remove(ship.selectedIndex);
 			if(ship.children.length==0)
 				setInterval(sendToGamePage,20); 
 			shipCoordinate.map(function(element){
-			var cell = document.getElementById(element);
+			var cell = $('#'+element)[0];
 			cell.bgColor ='grey';
 			});
 		}
@@ -69,12 +68,12 @@ var updateForShipPlacing = function(){
 	req.onreadystatechange = function(){
 		if(req.readyState==4 && req.status==200){
 			var shipCoordinate = JSON.parse(req.responseText); 
-			var ship = document.querySelector('#ship');
+			var ship = $('#ship')[0];
 				ship.remove(ship.selectedIndex);
 				if(ship.children.length==0)
 					setInterval(sendToGamePage,20); 
 				shipCoordinate.map(function(element){
-				var cell = document.getElementById(element);
+				var cell = $('#'+element)[0];
 				cell.bgColor ='grey';
 				});
 			}
@@ -109,12 +108,13 @@ var statusUpdate = function(clas,array){
 		}
 	});
 };
+
 var changingTheColorOfGrid=function(clas,array,colour){
-	var p = document.querySelector('#'+clas).getElementsByTagName('td');
-	for(var i=0;i<array.length;i++){
-		p[array[i]].setAttribute("style","background-color:"+colour);
-	};
+	array.forEach(function(eachCoordinate){
+		$('.'+clas+' [id='+eachCoordinate+']')[0].style.backgroundColor=colour;
+	});
 };
+
 var attack = function(point) {
 	var req = new XMLHttpRequest();
 	req.onreadystatechange = function(){
@@ -129,33 +129,19 @@ var attack = function(point) {
 	req.send(point.id);
 };
 
-// var displayOwnHitPoints = function(clas,coordinates){
-// 	console.log(coordinates,'coordinates saala')
-// 	coordinates.forEach(function(coordinate){
-// 		$("."+clas+" [id='"+coordinate+"']").css('background-color','red');
-// 	});
-// }
-
-
 
 var update = function(){
 	var req = new XMLHttpRequest();
 	req.onreadystatechange = function(){
 		if(req.readyState == 4 && req.status == 200) {
-			console.log(req.responseText)
 			var updates = JSON.parse(req.responseText);
-			console.log(updates[2].stat)
-			// statusUpdate('ownStatusTable',updates.statusOfShips);
-			// displayOwnHitPoints("own",updates.destroyedPoints)
 			var shipStatus = updates.splice(0,2);
-			// changingTheColorOfGrid	(ownHitPoint[0].table,ownHitPoint[0].stat,'red');
 			shipStatus.forEach(function(eachPlayer){
 				statusUpdate(eachPlayer.table,eachPlayer.stat);
 			});
 			updates.forEach(function(clas){
 				changingTheColorOfGrid(clas.table,clas.stat,clas.color)
 			})
-			// changingTheColorOfGrid()
 		};
 	};
 	req.open('GET','givingUpdate',true);
