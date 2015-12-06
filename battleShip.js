@@ -1,5 +1,4 @@
-var events = require('events');
-var eventEmitter = new events.EventEmitter();
+
 var lib={};
 exports.lib = lib;
 exports.players = [];
@@ -16,7 +15,7 @@ lib.isHit = function(groupOfCoordinates,attackPoint) {
 	return groupOfCoordinates.indexOf(attackPoint) !== -1;
 };
 
-lib.removingHitPointFromExistingCoordinates = function(existingCoordinates,hitPoint){    //test
+lib.removingHitPointFromExistingCoordinates = function(existingCoordinates,hitPoint){    
 	return existingCoordinates.filter(function(coordinate){
 		return coordinate != hitPoint;
 	});
@@ -40,8 +39,6 @@ lib.gridCreater = function (){
 	this.destroyed = [];
 };
 
-lib.gridCreater.prototype = Object.create(eventEmitter);
-
 lib.gridCreater.prototype.isUsedSpace = function(coordinates){
 		var self = this;
 		return coordinates.some(function(coordinate){
@@ -60,7 +57,7 @@ lib.if_it_is_Hit = function(attackPoint,player){
 		});
 		return 1;
 	};
-	return 0;     // i have to return all 5 ships
+	return 0;     
 };
 
 exports.Player = function(name){
@@ -86,7 +83,7 @@ function fillArrayWithNull(size,array){
 	return arr;
 };
 
-lib.checkAndSwitchIsAlive = function(ship){           //test
+lib.checkAndSwitchIsAlive = function(ship){           
 	if(ship.coordinates.length == 0)
 		ship.isAlive = 0;
 };
@@ -100,7 +97,6 @@ lib.if_ship_is_Hit = function(ship,attackPoint){
 
 lib.Ship = function(size,player){
 	this.coordinates = fillArrayWithNull(size);
-	// player.grid.on('hit',lib.if_ship_is_Hit.bind(this));
 	Object.defineProperty(this,'isAlive',{value:1,writable:true})
 	
 };

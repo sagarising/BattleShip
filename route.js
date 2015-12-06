@@ -111,7 +111,7 @@ var checkAttackedPoint = function(req,res) {
 			console.log(mySelf.hits)
 			mySelf.turn =false;
 			enemy.turn = true;
-			res.end();
+			res.end(JSON.stringify(1));
 		};
 		res.end(JSON.stringify(0));
 	});
