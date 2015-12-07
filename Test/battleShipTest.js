@@ -103,7 +103,7 @@ describe('PlayerCreator',function(){
 		expect(player).to.be.a('object')
 	});
 	it('player object should have some properties',function(){
-		expect(player).to.have.all.keys('name','ships','grid','isReady','turn')
+		expect(player).to.have.all.keys('name','ships','grid','isReady','turn','hits','misses');
 	});
 	it('player object initially should have "isReady" as false',function(){
 		assert.equal(false,player.isReady);

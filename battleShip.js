@@ -1,5 +1,4 @@
-var events = require('events');
-var eventEmitter = new events.EventEmitter();
+
 var lib={};
 exports.lib = lib;
 exports.players = [];
@@ -16,7 +15,7 @@ lib.isHit = function(groupOfCoordinates,attackPoint) {
 	return groupOfCoordinates.indexOf(attackPoint) !== -1;
 };
 
-lib.removingHitPointFromExistingCoordinates = function(existingCoordinates,hitPoint){    //test
+lib.removingHitPointFromExistingCoordinates = function(existingCoordinates,hitPoint){    
 	return existingCoordinates.filter(function(coordinate){
 		return coordinate != hitPoint;
 	});
@@ -40,8 +39,6 @@ lib.gridCreater = function (){
 	this.destroyed = [];
 };
 
-lib.gridCreater.prototype = Object.create(eventEmitter);
-
 lib.gridCreater.prototype.isUsedSpace = function(coordinates){
 		var self = this;
 		return coordinates.some(function(coordinate){
@@ -55,24 +52,23 @@ lib.if_it_is_Hit = function(attackPoint,player){
 		player.grid.usedCoordinates = lib.removingHitPointFromExistingCoordinates(player.grid.usedCoordinates,attackPoint);
 		player.grid.destroyed.push(attackPoint);
 		console.log(player.grid.usedCoordinates,player.name,"after removing original");
-		// if(player.grid.usedCoordinates.length == 0)
-		// 	return lib.gameOver(player);     // i will return empty array if game is over
-		// else
-			player.grid.emit('hit',attackPoint);
+		player.ships.forEach(function(ship){
+			lib.if_ship_is_Hit(ship,attackPoint);
+		});
 		return 1;
 	};
-	return 0;     // i have to return all 5 ships
+	return 0;     
 };
 
 exports.Player = function(name){
 	var self = this;
 	this.name = name;
 	this.grid = new lib.gridCreater();
-	this.ships = [new lib.Ship(5,self),
-				 new lib.Ship(4,self),
-				 new lib.Ship(3,self),
-				 new lib.Ship(3,self),
-				 new lib.Ship(2,self)];
+	this.ships = [new lib.Ship(5),
+				 new lib.Ship(4),
+				 new lib.Ship(3),
+				 new lib.Ship(3),
+				 new lib.Ship(2)];
 	this.misses = [];
 	this.hits = [];
 	this.isReady = false;
@@ -87,21 +83,20 @@ function fillArrayWithNull(size,array){
 	return arr;
 };
 
-lib.checkAndSwitchIsAlive = function(ship){           //test
+lib.checkAndSwitchIsAlive = function(ship){           
 	if(ship.coordinates.length == 0)
 		ship.isAlive = 0;
 };
 
-lib.if_ship_is_Hit = function(attackPoint){
-	if(lib.isHit(this.coordinates,attackPoint)){
-		this.coordinates = lib.removingHitPointFromExistingCoordinates(this.coordinates,attackPoint);
-		lib.checkAndSwitchIsAlive(this);
+lib.if_ship_is_Hit = function(ship,attackPoint){
+	if(lib.isHit(ship.coordinates,attackPoint)){
+		ship.coordinates = lib.removingHitPointFromExistingCoordinates(ship.coordinates,attackPoint);
+		lib.checkAndSwitchIsAlive(ship);
 	};
 };
 
 lib.Ship = function(size,player){
 	this.coordinates = fillArrayWithNull(size);
-	player.grid.on('hit',lib.if_ship_is_Hit.bind(this));
 	Object.defineProperty(this,'isAlive',{value:1,writable:true})
 	
 };
