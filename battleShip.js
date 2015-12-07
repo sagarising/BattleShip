@@ -1,5 +1,4 @@
-var events = require('events');
-var eventEmitter = new events.EventEmitter();
+
 var lib={};
 exports.lib = lib;
 exports.players = [];
@@ -14,7 +13,7 @@ lib.isHit = function(groupOfCoordinates,attackPoint) {
 	return groupOfCoordinates.indexOf(attackPoint) !== -1;
 };
 
-lib.removingHitPointFromExistingCoordinates = function(existingCoordinates,hitPoint){   
+lib.removingHitPointFromExistingCoordinates = function(existingCoordinates,hitPoint){    
 	return existingCoordinates.filter(function(coordinate){
 		return coordinate != hitPoint;
 	});
@@ -82,7 +81,7 @@ function fillArrayWithNull(size,array){
 	return arr;
 };
 
-lib.checkAndSwitchIsAlive = function(ship){          
+lib.checkAndSwitchIsAlive = function(ship){           
 	if(ship.coordinates.length == 0)
 		ship.isAlive = 0;
 };
@@ -96,7 +95,7 @@ lib.if_ship_is_Hit = function(ship,attackPoint){
 
 lib.Ship = function(size,player){
 	this.coordinates = fillArrayWithNull(size);
-	Object.defineProperty(this,'isAlive',{value:1,writable:true})	
+	Object.defineProperty(this,'isAlive',{value:1,writable:true})
 };
 
 lib.isAllowed = function(ship,align,firstPoint){

@@ -94,6 +94,7 @@ var routingToGame = function(req,res){
 };
 
 var checkAttackedPoint = function(req,res) {
+	var allHits = [];
 	var sunkShips=[];
 	var attackPoint = '';
 	var mySelf = currentPlayer(lib.players,req.headers.cookie);
@@ -108,10 +109,10 @@ var checkAttackedPoint = function(req,res) {
 				mySelf.hits.push(attackPoint);
 			else
 				mySelf.misses.push(attackPoint);
-			console.log(mySelf.hits)
 			mySelf.turn =false;
 			enemy.turn = true;
-			res.end();
+			allHits.push(mySelf.hits,enemy.hits)
+			res.end(JSON.stringify(allHits));
 		};
 		res.end(JSON.stringify(0));
 	});

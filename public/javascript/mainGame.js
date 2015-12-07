@@ -99,7 +99,6 @@ var changeTheColorOfGamePage = function(){
 };
 
 var statusUpdate = function(clas,array){
-	console.log('enteredddd----')
 	array.forEach(function(each,index){
 		if(!each){
 			var ship = $('.'+clas+' tr')[1].children[index+1];
@@ -120,7 +119,7 @@ var attack = function(point) {
 	req.onreadystatechange = function(){
 		if(req.readyState == 4 && req.status ==200){
 			var data = JSON.parse(req.responseText);
-			console.log(data);
+			if(data[0].length==17 || data[1].length==17) window.location.href='result.html';
 			if(!data)
 				alert("not your turn");
 		};
