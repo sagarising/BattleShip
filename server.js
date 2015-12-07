@@ -32,7 +32,7 @@ var handle_all_get = function(req, res){
 
 var requestHandler = function(req, res){
 	process.on('uncaughtException',function(err){
-	console.log(err);
+	console.log(err.stack);
 	res.end(err.stack);
 	});
 	if(req.method == 'GET')

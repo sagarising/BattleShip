@@ -111,8 +111,7 @@ var checkAttackedPoint = function(req,res) {
 				mySelf.misses.push(attackPoint);
 			mySelf.turn =false;
 			enemy.turn = true;
-			allHits.push(mySelf.hits,enemy.hits)
-			res.end(JSON.stringify(allHits));
+			res.end(JSON.stringify(1));
 		};
 		res.end(JSON.stringify(0));
 	});
@@ -124,17 +123,26 @@ var fileNotFound = function(req, res){
 	res.end('Not Found');
 };
 
+var if_a_player_dies = function(players){
+	players.forEach(lib.lib.if_all_ship_sunk);
+	return players.some(function(player){
+		return player.isAlive == false ;
+	});
+};
+
 var updates = function(req,res){
 	var update = [];
 	var mySelf = currentPlayer(lib.players,req.headers.cookie);
-	var enemy = lib.players[+(!lib.players.indexOf(mySelf))];
-
+	var enemy = enemyPlayer(lib.players,req.headers.cookie);
 	update.push({table:'ownStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(mySelf.ships)});
 	update.push({table:'enemyStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(enemy.ships)});
 	update.push({table:'own',stat:mySelf.grid.destroyed,color:"red"});
 	update.push({table:"enemy",stat:mySelf.misses,color:"paleturquoise"});
 	update.push({table:"enemy",stat:mySelf.hits,color:"red"});
-	res.end(JSON.stringify(update));		
+	update.push(false);
+	if(if_a_player_dies(lib.players))
+		update[5] = true;
+	res.end(JSON.stringify(update));	
 };
 exports.post_handlers = [
 	{path: '^/player$', handler: createPlayer},

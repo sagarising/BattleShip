@@ -46,10 +46,8 @@ lib.gridCreater.prototype.isUsedSpace = function(coordinates){
 
 lib.if_it_is_Hit = function(attackPoint,player){
 	if(lib.isHit(player.grid.usedCoordinates,attackPoint)){
-		console.log(player.grid.usedCoordinates,player.name,'used coordinates');
 		player.grid.usedCoordinates = lib.removingHitPointFromExistingCoordinates(player.grid.usedCoordinates,attackPoint);
 		player.grid.destroyed.push(attackPoint);
-		console.log(player.grid.usedCoordinates,player.name,"after removing original");
 		player.ships.forEach(function(ship){
 			lib.if_ship_is_Hit(ship,attackPoint);
 		});
@@ -57,6 +55,15 @@ lib.if_it_is_Hit = function(attackPoint,player){
 	};
 	return 0;    
 };
+
+lib.if_all_ship_sunk = function(player){
+	var check_if_all_ship_sunk = lib.list_of_isAlive_of_each_ship(player.ships).every(function(status){
+		return status == 0;
+	});
+	if(check_if_all_ship_sunk)
+		player.isAlive = false;
+};
+
 
 exports.Player = function(name){
 	var self = this;
@@ -69,6 +76,7 @@ exports.Player = function(name){
 				 new lib.Ship(2)];
 	this.misses = [];
 	this.hits = [];
+	this.isAlive = true;
 	this.isReady = false;
 	this.turn = false;
 };

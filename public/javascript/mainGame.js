@@ -27,7 +27,6 @@ var sendToGamePage = function(){
 	var req = new XMLHttpRequest;
 	req.onreadystatechange = function(){
 		if(req.readyState==4 && req.status==200){
-			console.log(req.responseText);
 			if(+req.responseText)
 				window.location.href='game.html';
 			$('img')[0].style.visibility='visible';
@@ -84,9 +83,6 @@ var updateForShipPlacing = function(){
 
 
 
-
-
-
 var changeTheColorOfGamePage = function(){
 	req=new XMLHttpRequest();
 	req.onreadystatechange=function(){
@@ -119,7 +115,6 @@ var attack = function(point) {
 	req.onreadystatechange = function(){
 		if(req.readyState == 4 && req.status ==200){
 			var data = JSON.parse(req.responseText);
-			if(data[0].length==17 || data[1].length==17) window.location.href='result.html';
 			if(!data)
 				alert("not your turn");
 		};
@@ -138,9 +133,12 @@ var update = function(){
 			shipStatus.forEach(function(eachPlayer){
 				statusUpdate(eachPlayer.table,eachPlayer.stat);
 			});
-			updates.forEach(function(clas){
+			var gridStatus = updates.splice(0,3)
+			gridStatus.forEach(function(clas){
 				changingTheColorOfGrid(clas.table,clas.stat,clas.color)
-			})
+			});
+			if(updates[0])
+				window.location.href = "result.html";
 		};
 	};
 	req.open('GET','givingUpdate',true);
