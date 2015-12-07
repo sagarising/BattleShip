@@ -131,7 +131,7 @@ var updates = function(req,res){
 	update.push({table:'ownStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(mySelf.ships)});
 	update.push({table:'enemyStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(enemy.ships)});
 	update.push({table:'own',stat:mySelf.grid.destroyed,color:"red"});
-	update.push({table:"enemy",stat:mySelf.misses,color:"khaki"});
+	update.push({table:"enemy",stat:mySelf.misses,color:"paleturquoise"});
 	update.push({table:"enemy",stat:mySelf.hits,color:"red"});
 	res.end(JSON.stringify(update));		
 };

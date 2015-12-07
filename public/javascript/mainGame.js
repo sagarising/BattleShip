@@ -55,7 +55,7 @@ var checkAndSubmit = function(){
 				setInterval(sendToGamePage,20); 
 			shipCoordinate.map(function(element){
 			var cell = $('#'+element)[0];
-			cell.bgColor ='grey';
+			cell.bgColor ='darkslategrey';
 			});
 		}
 	}

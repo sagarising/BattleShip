@@ -1,7 +1,17 @@
 
-#table {
-    /*pointer-events:none;*/
+body{
+    background: lavender;
+}
+
+
+#shipDeployment{
     margin: 0em 0 0 10em;
+    border: none;
+}
+
+.grid tbody{
+    border: white;
+    background-color: lightsteelblue;
 }
 
 #selectShip {
@@ -9,15 +19,20 @@
      font-size: 20px;
      margin: -26.6em 0 0 50em;
 }
-.table td:hover{
-	background-color: yellow;
+.grid td:hover{
+	background-color: lightgrey;
 }
 /*body.firstpage{
     background-image: url("../images/battleship.JPG");
     background-size: 1450px 820px;
 }*/
-div.firstpagestart{
-    margin: 10em 0 0 40em;
+.firstpagestart{
+    margin: 10em 30em 0 30em;
+    border-style: double;
+    padding: 25px;
+    border-radius: 25px;
+    font-size: larger;
+    background: linear-gradient(rgba(0,0,255,0), rgba(0,0,155,0.2));
 }
 button{
     background-color: green;
