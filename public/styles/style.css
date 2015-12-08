@@ -19,13 +19,12 @@ body{
      font-size: 20px;
      margin: -26.6em 0 0 50em;
 }
+
 .grid td:hover{
 	background-color: lightgrey;
+    cursor: pointer;
 }
-/*body.firstpage{
-    background-image: url("../images/battleship.JPG");
-    background-size: 1450px 820px;
-}*/
+
 .firstpagestart{
     margin: 10em 30em 0 30em;
     border-style: double;
@@ -35,22 +34,46 @@ body{
     background: linear-gradient(rgba(0,0,255,0), rgba(0,0,155,0.2));
 }
 button{
-    background-color: green;
+    background-color: lightblue;
+    padding:2px;
     width: 50px;
     height:50px;
     border-radius: 50px;
 }
 button:hover{
-    background-color: rgb(20,242,39);
+    transform:scaleX(1.2) ;
+    font-weight: bold;
+    cursor: pointer;
 }
 #loading{
     visibility: hidden;
-    margin: 0 0 0 34cm;
     display: inline;
 }
+
+#controller{
+    height: 500px;
+    width: 400px;
+    float: right;
+    background: linear-gradient(rgba(170,170,170,1), rgba(200,200,200,0.2));
+}
 section div.enemy{
-    margin: -32.6em 0 0 30em;
+    display: inline-table;
+    margin:5px;
+}
+section div.own{
+    display: inline-table;
 }
 section table#own{
     pointer-events:none;
 }
+#ready{
+    pointer-events:none;
+    opacity: 0.5;
+}
+
+
+
+
+
+
+

@@ -72,6 +72,12 @@ var routingToGame = function(req,res){
 	res.end(Number(lib.lib.areBothReady()&&lib.players.length == 2).toString());
 };
 
+var serveShipPlacingPage = function(req,res){
+	var mySelf = lib.lib.currentPlayer(lib.players,req.headers.cookie)
+	mySelf.grid.usedCoordinates = [];
+	serveStaticFile(req,res);
+};
+
 var checkAttackedPoint = function(req,res) {
 	var allHits = [];
 	var sunkShips=[];
@@ -129,6 +135,7 @@ exports.get_handlers = [
 	{path: '^/usedSpace$',handler:usedSpace},
 	{path:'^/makeReady$',handler:routingToGame},
 	{path:'^/givingUpdate$',handler:updates},
+	{path:'^/shipPlacingPage.html$',handler:serveShipPlacingPage},
 	{path: '', handler: serveStaticFile},
 	{path: '', handler: fileNotFound}
 ];
