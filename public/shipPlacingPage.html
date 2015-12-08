@@ -8,6 +8,7 @@
 </head>
 <body onload="playerName()">
     <hr><h3 style="margin:0em 0em 0em 70em;font-family:fantasy;" >name</h3><h1 align="center" style="margin:0em 0em 0em 0em">BATTLESHIP</h1><hr><br>
+    <img src="./images/273.GIF" id="loading">
 	<table id="shipDeployment" class="grid" value="own">
 		<tr>
 			<td  width=60px  height=60px id="A1" onclick="fillBox(this)"></td>
@@ -130,7 +131,7 @@
 			<td  width=60px  height=60px id="J10" onclick="fillBox(this)"></td>
 		</tr>
 	</table>
-	<img src="./images/273.GIF" id="loading">
+	
 	<div id="selectShip">
 	Ships<br>
 	<select id="ship">
@@ -144,8 +145,9 @@
 		<input type="radio" id="horizontal" name="group1" value="horizontal" checked> Horizontal<br>
 		<input type="radio" id="vertical" name="group1" value="vertical"> Vertical<br><br>
 		<input	type="text" size="40" style="margin:5px" id="text" value="Select a point on grid to place ship" readonly="readonly"><br>
-		<button id="placeShipButton" onclick="checkAndSubmit()"> Place Ship</button><br>
+		<button id="placeShip" onclick="checkAndSubmit()"> Place Ship</button><br>
 		<button id="reset" onclick="window.location.reload()"> Reset</button>
+		<button id="ready" onclick="setInterval(sendToGamePage,20)"> Ready </button>
 	</div>
 
 </html>

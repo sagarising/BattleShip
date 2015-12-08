@@ -50,38 +50,19 @@ var checkAndSubmit = function(){
 			var shipCoordinate = JSON.parse(req.responseText); 
 			var ship = $('#ship')[0];
 			ship.remove(ship.selectedIndex);
-			if(ship.children.length==0)
-				setInterval(sendToGamePage,20); 
+			if(ship.children.length==0){
+				$('#ready').css({"pointer-events":"auto","opacity":"1"}); 
+				$('#placeShip').css({"pointer-events":"none","opacity":"0.5"});
+			};
 			shipCoordinate.map(function(element){
-			var cell = $('#'+element)[0];
-			cell.bgColor ='darkslategrey';
+				var cell = $('#'+element)[0];
+				cell.bgColor ='darkslategrey';
 			});
 		}
 	}
 	req.open('POST','placingOfShip',true);
 	req.send(shipName+" "+shipSize+" "+coordinateValue+" "+align);
 };	
-
-var updateForShipPlacing = function(){
-	var req =new XMLHttpRequest();
-	req.onreadystatechange = function(){
-		if(req.readyState==4 && req.status==200){
-			var shipCoordinate = JSON.parse(req.responseText); 
-			var ship = $('#ship')[0];
-				ship.remove(ship.selectedIndex);
-				if(ship.children.length==0)
-					setInterval(sendToGamePage,20); 
-				shipCoordinate.map(function(element){
-				var cell = $('#'+element)[0];
-				cell.bgColor ='grey';
-				});
-			}
-		}
-	req.open('GET','placingOfShip',true);
-	req.send();
-};
-
-
 
 var changeTheColorOfGamePage = function(){
 	req=new XMLHttpRequest();
@@ -144,7 +125,6 @@ var update = function(){
 	req.open('GET','givingUpdate',true);
 	req.send();
 };
-
 
 var serveStatus = function(){
 	playerName();

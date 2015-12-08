@@ -73,7 +73,7 @@ var routingToGame = function(req,res){
 };
 
 var serveShipPlacingPage = function(req,res){
-	var mySelf = currentPlayer(lib.players,req.headers.cookie)
+	var mySelf = lib.lib.currentPlayer(lib.players,req.headers.cookie)
 	mySelf.grid.usedCoordinates = [];
 	serveStaticFile(req,res);
 };
