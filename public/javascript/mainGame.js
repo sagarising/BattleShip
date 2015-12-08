@@ -8,46 +8,27 @@ var fillBox=function(self){
 };
 
 var createPlayer = function(){
-	if($('#name')[0].value=='')
+	if($('#name').val() =='')
 		alert('first enter your name')
 	else{
-		req = new XMLHttpRequest();
-		req.onreadystatechange = function() {
-			if(req.readyState == 4 && req.status ==200) {
-				console.log("welcome");
-				window.location.href = 'shipPlacingPage.html'
-			}
-		}
-		req.open('POST','player',true);
-		req.send('name='+$('#name')[0].value);
+		$.post('player',{ name : $('#name').val()},
+		function(data){
+			window.location.href = 'shipPlacingPage.html';
+		});
 	}
-}
-
-var sendToGamePage = function(){
-	var req = new XMLHttpRequest;
-	req.onreadystatechange = function(){
-		if(req.readyState==4 && req.status==200){
-			if(+req.responseText)
-				window.location.href='game.html';
-			$('img')[0].style.visibility='visible';
-			$('#selectShip')[0].style.visibility='hidden';
-			$('table')[0].style.pointerEvents='none';
-		}
-	}
-	req.open('GET',"makeReady",true);
-	req.send();
 }
 
 var checkAndSubmit = function(){
-	var req = new XMLHttpRequest();
-	var ship = $('#ship')[0];
-	var shipName = ship.options[ship.selectedIndex].text;
-	var shipSize = $('#ship')[0].value;
-	var coordinateValue = $("#text")[0].value;
+	var ship = $("#ship");
+	var shipName = ship[0].options[ship[0].selectedIndex].text;
+	var shipSize = ship.val();
+	var coordinateValue = $("#text").val();
 	var align = $("#horizontal")[0].checked ? 'horizontal' :'vertical';	
-	req.onreadystatechange = function(){
-		if(req.readyState==4 && req.status==200){
-			var shipCoordinate = JSON.parse(req.responseText); 
+	$.post('placingOfShip',{shipName:shipName,shipSize:shipSize,
+		coordinate:coordinateValue,align:align
+		},
+		function(data){
+			var shipCoordinate = JSON.parse(data); 
 			var ship = $('#ship')[0];
 			ship.remove(ship.selectedIndex);
 			if(ship.children.length==0){
@@ -57,22 +38,46 @@ var checkAndSubmit = function(){
 			shipCoordinate.map(function(element){
 				var cell = $('#'+element)[0];
 				cell.bgColor ='darkslategrey';
-			});
-		}
-	}
-	req.open('POST','placingOfShip',true);
-	req.send(shipName+" "+shipSize+" "+coordinateValue+" "+align);
-};	
+		});
+	})
+};
+
+var updateForShipPlacing = function(){
+	$.get('placingOfShip',function(data){
+		var shipCoordinate = JSON.parse(data); 
+		var ship = $('#ship')[0];
+		ship.remove(ship.selectedIndex);
+		if(ship.children.length==0)
+			setInterval(sendToGamePage,20); 
+		shipCoordinate.map(function(element){
+		var cell = $('#'+element)[0];
+		cell.bgColor ='grey';
+		});
+	})
+};
+
+var sendToGamePage = function(){
+	$.get('makeReady',function(data){
+		if(+data)
+			window.location.href = "game.html";
+		$('img').css('visibility','visible');
+		$('#selectShip').css('visibility','hidden');
+		$('table').css('pointerEvents','none');
+	})
+}
 
 var changeTheColorOfGamePage = function(){
-	req=new XMLHttpRequest();
-	req.onreadystatechange=function(){
-		if(req.readyState==4 && req.status==200){
-			changingTheColorOfGrid('own',JSON.parse(req.responseText),'grey')
-		}
-	}
-	req.open('GET','usedSpace',true);
-	req.send();
+	$.get('usedSpace',function(data){
+		console.log(data);
+		placesWhereShipArePlaced = JSON.parse(data);
+		changingTheColorOfGrid('own',placesWhereShipArePlaced,'grey');
+	})
+};
+
+var changingTheColorOfGrid=function(clas,usedSpace,colour){
+	usedSpace.forEach(function(eachCoordinate){
+		$('.'+clas+' [id='+eachCoordinate+']').css("background-color",colour);
+	});
 };
 
 var statusUpdate = function(id,array){
@@ -85,45 +90,29 @@ var statusUpdate = function(id,array){
 	});
 };
 
-var changingTheColorOfGrid=function(clas,array,colour){
-	array.forEach(function(eachCoordinate){
-		$('.'+clas+' [id='+eachCoordinate+']')[0].style.backgroundColor=colour;
-	});
-};
 
 var attack = function(point) {
-	var req = new XMLHttpRequest();
-	req.onreadystatechange = function(){
-		if(req.readyState == 4 && req.status ==200){
-			var data = JSON.parse(req.responseText);
-			if(!data)
-				alert("not your turn");
-		};
-	};
-	req.open('POST','attack',true);
-	req.send(point.id);
+	$.post('attack',{point:point.id},function(data){
+		if(!JSON.parse(data))
+			alert("not your turn");
+	})
 };
 
 
 var update = function(){
-	var req = new XMLHttpRequest();
-	req.onreadystatechange = function(){
-		if(req.readyState == 4 && req.status == 200) {
-			var updates = JSON.parse(req.responseText);
-			var shipStatus = updates.splice(0,2);
-			shipStatus.forEach(function(eachPlayer){
-				statusUpdate(eachPlayer.table,eachPlayer.stat);
-			});
-			var gridStatus = updates.splice(0,3)
-			gridStatus.forEach(function(clas){
-				changingTheColorOfGrid(clas.table,clas.stat,clas.color)
-			});
-			if(updates[0])
-				window.location.href = "result.html";
-		};
-	};
-	req.open('GET','givingUpdate',true);
-	req.send();
+	$.get('givingUpdate',function(data){
+		var updates = JSON.parse(data);
+		var shipStatus = updates.splice(0,2);
+		shipStatus.forEach(function(eachPlayer){
+			statusUpdate(eachPlayer.table,eachPlayer.stat);
+		});
+		var gridStatus = updates.splice(0,3)
+		gridStatus.forEach(function(clas){
+			changingTheColorOfGrid(clas.table,clas.stat,clas.color)
+		});
+		if(updates[0])
+			window.location.href = "result.html";
+	})
 };
 
 var serveStatus = function(){

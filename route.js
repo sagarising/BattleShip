@@ -7,17 +7,18 @@ var method_not_allowed = function(req, res){
 	res.end('Method is not allowed');
 };
 
+
 var checkAndSubmit = function(req,res){
 	var data = '';
 	req.on('data', function(chunk){
 		data += chunk;
 	});
 	req.on('end', function(){
-		var args = data.split(" ");
-		var name = args[0];
-		var shipIndex = args[1];
-		var startingPoint = args[2];
-		var align = args[3];
+		var placingInfo = querystring.parse(data);
+		var name = placingInfo.shipName;
+		var shipIndex = placingInfo.shipSize;
+		var startingPoint = placingInfo.coordinate;
+		var align = placingInfo.align;
 		var player = lib.lib.currentPlayer(lib.players,req.headers.cookie);
 		lib.positionShip(player.ships[shipIndex],align,startingPoint,player.grid);
 		res.end(JSON.stringify(player.grid.usedCoordinates));
@@ -85,15 +86,16 @@ var checkAttackedPoint = function(req,res) {
 	var mySelf = lib.lib.currentPlayer(lib.players,req.headers.cookie);
 	var enemy = lib.lib.enemyPlayer(lib.players,req.headers.cookie);
 	req.on('data',function(chunk){
-		attackPoint+=chunk;
+		attackPoint += chunk;
 	});
 	req.on('end', function(){
+		var point = querystring.parse(attackPoint).point;
 		if(mySelf.turn){
-			result = lib.lib.if_it_is_Hit(attackPoint,enemy);
+			result = lib.lib.if_it_is_Hit(point,enemy);
 			if(result)
-				mySelf.hits.push(attackPoint);
+				mySelf.hits.push(point);
 			else
-				mySelf.misses.push(attackPoint);
+				mySelf.misses.push(point);
 			mySelf.turn =false;
 			enemy.turn = true;
 			res.end(JSON.stringify(1));
