@@ -7,7 +7,7 @@
 	
 </head>
 <body onload="playerName()">
-    <hr><h3 style="margin:0em 0em 0em 70em;font-family:fantasy;" >name</h3><h1 align="center" style="margin:0em 0em 0em 0em">BATTLESHIP</h1><hr><br>
+    <h3 style="margin:0em 0em 0em 70em;font-family:fantasy;" >name</h3><h1 align="center" style="margin:0em 0em 0em 0em">BATTLESHIP</h1><br>
     <img src="./images/273.GIF" id="loading">
 	<table id="shipDeployment" class="grid" value="own">
 		<tr>
@@ -132,7 +132,7 @@
 		</tr>
 	</table>
 	
-	<div id="selectShip">
+	<div id="selectShip" class = "controller">
 	Ships<br>
 	<select id="ship">
 		<option value="0">Carrier</option>
@@ -140,10 +140,11 @@
 		<option value="2">Cruiser</option>
 		<option value="3">Submarine</option>
 		<option value="4">Destroyer</option>
-	</select><br><br>
+	</select>
+	<br>
 	Alignment<br>
 		<input type="radio" id="horizontal" name="group1" value="horizontal" checked> Horizontal<br>
-		<input type="radio" id="vertical" name="group1" value="vertical"> Vertical<br><br>
+		<input type="radio" id="vertical" name="group1" value="vertical"> Vertical<br>
 		<input	type="text" size="40" style="margin:5px" id="text" value="Select a point on grid to place ship" readonly="readonly"><br>
 		<button id="placeShip" onclick="checkAndSubmit()"> Place Ship</button><br>
 		<button id="reset" onclick="window.location.reload()"> Reset</button>

@@ -26,7 +26,9 @@ body{
 }
 
 .firstpagestart{
-    margin: 10em 30em 0 30em;
+    margin: 10px;
+    height: 100px;
+    width: 300px;
     border-style: double;
     padding: 25px;
     border-radius: 25px;
@@ -50,11 +52,13 @@ button:hover{
     display: inline;
 }
 
-#controller{
+.controller{
+    border-radius: 25px;
     height: 500px;
     width: 400px;
     float: right;
     background: linear-gradient(rgba(170,170,170,1), rgba(200,200,200,0.2));
+    padding: 20px;
 }
 section div.enemy{
     display: inline-table;
