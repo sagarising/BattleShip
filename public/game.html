@@ -6,7 +6,10 @@
 	<title>BATTLESHIP</title>
 </head>
 <body onload="serveStatus()" class="player1">
-<hr><h3 style="margin:0em 0em 0em 70em;font-family:fantasy;" >name</h3><h1 align="center" style="margin:-1em 0em 0em 0em">BATTLESHIP</h1><hr style="margin:2em 0em 0em 0em"><br>
+<hr><h3 style="margin:0em 0em 0em 70em;font-family:fantasy;" >name</h3>
+
+<h1 align="center" style="margin:-1em 0em 0em 0em">BATTLESHIP</h1>
+<hr style="margin:2em 0em 0em 0em"><br>
 	<section class="gamePage">
 		<div class="own">
 			<h2 style="margin:0em 0em 0em 5em">OWN'S GRID</h2>
@@ -133,7 +136,7 @@
 				</tr>
 			</table>
 
-			<table style="margin:1em 0em 0em 0em" border="1" class="ownStatusTable" >
+			<table style="margin:1em 0em 0em 0em" border="1" id="ownStatusTable" >
 				<tr>
 					<td>Ships</td>
 					<td>Carrier</td>
@@ -153,7 +156,6 @@
 			</table>
 		</div>
 		<div class="enemy">
-		<hr style="width:1px; height:500px; position: absolute; left: 480px;"/>
 			<h2 style="margin:0em 0em 0em 5em">ENEMY'S GRID</h2>
 			<table class="grid" id="enemy" value="own">
 				<tr>
@@ -278,8 +280,7 @@
 				</tr>
 			</table>
 
-
-			<table style="margin:1em 0em 0em 0em" border="1" class="enemyStatusTable" >
+			<table style="margin:1em 0em 0em 0em" border="1" id="enemyStatusTable" >
 				<tr>
 					<td>Ships</td>
 					<td>Carrier</td>
@@ -297,6 +298,8 @@
 					<td id="destroyer">Alive</td>
 				</tr>
 			</table>	
+		</div>
+		<div id = "controller">
 		</div>
 	</section>
 </body>

@@ -94,10 +94,10 @@ var changeTheColorOfGamePage = function(){
 	req.send();
 };
 
-var statusUpdate = function(clas,array){
+var statusUpdate = function(id,array){
 	array.forEach(function(each,index){
 		if(!each){
-			var ship = $('.'+clas+' tr')[1].children[index+1];
+			var ship = $('#'+id+' tr')[1].children[index+1];
 			ship.style.color = "red";
 			ship.innerHTML = "Sunk";
 		}

@@ -130,6 +130,7 @@
 			<td  width=60px  height=60px id="J10" onclick="fillBox(this)"></td>
 		</tr>
 	</table>
+	<img src="./images/273.GIF" id="loading">
 	<div id="selectShip">
 	Ships<br>
 	<select id="ship">
@@ -142,11 +143,10 @@
 	Alignment<br>
 		<input type="radio" id="horizontal" name="group1" value="horizontal" checked> Horizontal<br>
 		<input type="radio" id="vertical" name="group1" value="vertical"> Vertical<br><br>
-		<input	type="text" size="35" maxlength="3" pattern="[a-zA-Z0-9]{0,100}" id="text" value="Select a point on grid to place ship" readonly="readonly"><br>
-		<button id="placeShipButton" onclick="checkAndSubmit()"> Place Ship</button>
+		<input	type="text" size="40" style="margin:5px" id="text" value="Select a point on grid to place ship" readonly="readonly"><br>
+		<button id="placeShipButton" onclick="checkAndSubmit()"> Place Ship</button><br>
+		<button id="reset" onclick="window.location.reload()"> Reset</button>
 	</div>
-	<img src="./images/273.GIF" id="loading">
-	<h1>Please do not refresh this page</h1>
 
 </html>
 
