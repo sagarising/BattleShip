@@ -110,10 +110,19 @@ var update = function(){
 		gridStatus.forEach(function(clas){
 			changingTheColorOfGrid(clas.table,clas.stat,clas.color)
 		});
-		if(updates[0])
+		if(updates[0].status){
 			window.location.href = "result.html";
+		}
 	})
 };
+
+var winnerAndLoser = function(update){
+	$.get('givingUpdate',function(data){
+		var updates = JSON.parse(data);
+		$('div').html("<h2 align='center'>Winner ->  "+updates[5].winner+"</h2><br><h2>Looser ->  "+updates[5].looser+"</h2>")
+	})
+
+}
 
 var serveStatus = function(){
 	playerName();

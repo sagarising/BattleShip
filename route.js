@@ -120,8 +120,11 @@ var updates = function(req,res){
 	update.push({table:"enemy",stat:mySelf.misses,color:"paleturquoise"});
 	update.push({table:"enemy",stat:mySelf.hits,color:"red"});
 	update.push(false);
-	if(lib.lib.if_a_player_dies(lib.players))
-		update[5] = true;
+	if(lib.lib.if_a_player_dies(lib.players)){
+		if(!mySelf.isAlive)
+			update[5] = {status:true,winner:enemy.name,looser:mySelf.name};
+		else update[5] = {status:true,winner:mySelf.name,looser:enemy.name};
+	}
 	res.end(JSON.stringify(update));	
 };
 exports.post_handlers = [
