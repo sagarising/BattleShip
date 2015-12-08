@@ -87,15 +87,15 @@ describe('makesCoordinate',function(){
 		var initilColumnNumber = firstpoint.slice(1);
 		var expected = ['A4','A5','A6'];
 		assert.equal(JSON.stringify(expected),JSON.stringify(lib.lib.makesCoordinates(player.ships[3],firstpoint,undefined,initilColumnNumber)));
-	})
+	});
 	it('should check when initilCharCode is defined and gives new generated coordinates',function(){
 		firstpoint = 'A4';
 		var initilCharCode = firstpoint.charCodeAt(0);
 		var initilColumnNumber = firstpoint.slice(1);
 		var expected = ['A4','B4','C4'];
 		assert.equal(JSON.stringify(expected),JSON.stringify(lib.lib.makesCoordinates(player.ships[2],firstpoint,initilCharCode,initilColumnNumber)));
-	})
-})
+	});
+});
 
 describe('PlayerCreator',function(){
 	var player = new lib.Player('ram');
@@ -181,28 +181,184 @@ describe('gameOver',function(){
 	var player1 = new lib.Player('ram');
 	var player2 = new lib.Player('manu');
 	it('should return an object with player1 won and player2 lost when player2 loses the game',function(){
-		lib.players.push(player1);
-		lib.players.push(player2);
+		lib.players[0] = player1;
+		lib.players[1] = player2;
 		var result = lib.lib.gameOver(player2);
 		expect(result).to.equal('{"won":"ram","lost":"manu"}');
 	});
 	it('should return an object with player2 won and player1 lost when player1 loses the game',function(){
-		lib.players.push(player1);
-		lib.players.push(player2);
+		lib.players[0] = player1;
+		lib.players[1] = player2;
 		var result = lib.lib.gameOver(player1);
 		expect(result).to.equal('{"won":"manu","lost":"ram"}')
 	});
 	it('should remove players from players array after gameOver',function(){
-		lib.players.push(player1);
-		lib.players.push(player2);
+		lib.players[0] = player1;
+		lib.players[1] = player2;
 		lib.lib.gameOver(player1);
 		expect(lib.players.length).to.equal(0);
 	});
 });
-// describe('if_it_is_Hit',function(){
-// 	it('should remove attackPoint from existingCoordinates when is is a hit 
-// 		and also it changes isAlive property of ship if it is sunk',function(){
-// 			var player = new lib.Player('ram');
-// 			var 
-// 		})
-// })
+
+describe('if_it_is_Hit',function(){
+	var player = new lib.Player('ram');
+	player.ships[0].coordinates = ['A1','A2','A3','A4','A5'];
+	player.ships[1].coordinates = ['D6','D7','D8','D9'];
+	player.ships[2].coordinates = ['B5','C5','D5'];
+	player.ships[3].coordinates = ['E3','E4','E5'];
+	player.ships[4].coordinates = ['H1','H2'];
+	player.grid.usedCoordinates = ['A1','A2','A3','A4','A5','D6','D7','D8','D9','B5','C5','D5','E3','E4','E5','H1','H2'];
+	it('should return 1 if it is hit',function(){
+		var result = lib.lib.if_it_is_Hit('A2',player);
+		expect(result).to.equal(1);
+	});
+	it('should return 0 if it is not hit',function(){
+		var result = lib.lib.if_it_is_Hit('J1',player);
+		expect(result).to.equal(0);
+	});
+	it('should remove attackPoint from uesdCoordinates when is is a hit',function(){
+		lib.lib.if_it_is_Hit('A1',player);
+		var expected = ['A3','A4','A5','D6','D7','D8','D9','B5','C5','D5','E3','E4','E5','H1','H2'];
+		assert.deepEqual(player.grid.usedCoordinates,expected);	
+	});
+	it('should not remove any coordinate from usedCoordinates if it is not a hit',function(){
+		lib.lib.if_it_is_Hit('B7',player);
+		var expected = ['A3','A4','A5','D6','D7','D8','D9','B5','C5','D5','E3','E4','E5','H1','H2'];
+		assert.deepEqual(player.grid.usedCoordinates,expected);	
+	});
+	it('should push the coordinate to destroyed field if it is a hit',function(){
+		lib.lib.if_it_is_Hit('A4',player);
+		var result = player.grid.destroyed;
+		var expected = ['A2','A1','A4'];
+		assert.deepEqual(result,expected);
+	});
+	it('should not push the coordinate to destroyed field if it is not a hit',function(){
+		lib.lib.if_it_is_Hit('J10',player);
+		var result = player.grid.destroyed;
+		var expected = ['A2','A1','A4'];
+		assert.deepEqual(result,expected);
+	});
+});
+
+describe('if_ship_is_Hit',function(){
+	var player = new lib.Player('ram');
+	player.ships[0].coordinates = ['A1','A2','A3','A4','A5'];
+	player.ships[1].coordinates = ['D6','D7','D8','D9'];
+	player.ships[2].coordinates = ['B5','C5','D5'];
+	player.ships[3].coordinates = ['E3','E4','E5'];
+	player.ships[4].coordinates = ['H1','H2'];
+	it('should remove the attackpoint from coordinates of ship when it is a hit',function(){
+		lib.lib.if_ship_is_Hit(player.ships[0],'A1');
+		var result = player.ships[0].coordinates;
+		assert.deepEqual(result,['A2','A3','A4','A5']);
+	});
+	it('should not remove any coordinates when it is not a hit',function(){
+		lib.lib.if_ship_is_Hit(player.ships[3],'A1');
+		var result = player.ships[3].coordinates;
+		assert.deepEqual(result,['E3','E4','E5']);
+	});
+	it('should change isAlive property to false when the ship sunk',function(){
+		lib.lib.if_ship_is_Hit(player.ships[4],'H1');
+		lib.lib.if_ship_is_Hit(player.ships[4],'H2');
+		var result = player.ships[4].isAlive;
+		expect(result).to.equal(0);
+	});
+	it('should not change isAlive property when ship is not sunk',function(){
+		lib.lib.if_ship_is_Hit(player.ships[2],'D6');
+		var result = player.ships[2].isAlive;
+		expect(result).to.equal(1);
+	});
+});
+
+describe('if_all_ship_sunk',function(){
+	var player = new lib.Player('ram');
+	it('should not change isAlive of player even one ship is not sunk',function(){
+		lib.lib.if_all_ship_sunk(player);
+		var result = player.isAlive;
+		expect(player.isAlive).to.equal(true);
+	});
+	it('should change isAlive of player to false when every ship sunks',function(){
+		player.ships[0].isAlive = 0;
+		player.ships[1].isAlive = 0;
+		player.ships[2].isAlive = 0;
+		player.ships[3].isAlive = 0;
+		player.ships[4].isAlive = 0;
+		lib.lib.if_all_ship_sunk(player);
+		var result = player.isAlive;
+		expect(player.isAlive).to.equal(false);
+	});
+});
+
+describe('currentPlayer',function(){
+	var player1 = new lib.Player('ram');
+	var player2 = new lib.Player('manu');
+	it('should return the player who has the turn to play',function(){
+		lib.players[0] = player1;
+		lib.players[1] = player2;
+		var result = lib.lib.currentPlayer(lib.players,'ram');
+		expect(result).to.equal(player1);
+	});
+});
+
+describe('enemyPlayer',function(){
+	var player1 = new lib.Player('ram');
+	var player2 = new lib.Player('manu');
+	it('should return the player who is waiting to the turn to play',function(){
+		lib.players[0] = player1;
+		lib.players[1] = player2;
+		var result = lib.lib.enemyPlayer(lib.players,'manu');
+		expect(JSON.stringify(result)).to.equal(JSON.stringify(player1));
+	});
+});
+
+describe('areBothReady',function(){
+	var player1 = new lib.Player('ram');
+	var player2 = new lib.Player('manu');
+	it('should return false when both players are not ready',function(){
+		lib.players[0] = player1;
+		lib.players[1] = player2;
+		var result = lib.lib.areBothReady();
+		expect(result).to.equal(false);
+	});
+	it('should return false when anyone is not ready',function(){
+		lib.players[0] = player1;
+		lib.players[1] = player2;
+		player1.isReady = true;
+		var result = lib.lib.areBothReady();
+		expect(result).to.equal(false);
+	});
+	it('should return true when both players are ready',function(){
+		lib.players[0] = player1;
+		lib.players[1] = player2;
+		player1.isReady = true;
+		player2.isReady = true;
+		var result = lib.lib.areBothReady();
+		expect(result).to.equal(true);
+	});
+});
+
+describe('if_a_player_dies',function(){
+	var player1 = new lib.Player('ram');
+	var player2 = new lib.Player('manu');
+	it('should return false when both players are alive',function(){
+		lib.players[0] = player1;
+		lib.players[1] = player2;
+		var result = lib.lib.if_a_player_dies(lib.players);
+		expect(result).to.equal(false);
+ 	});
+ 	it('should return true even one player dies',function(){
+ 		lib.players[0] = player1;
+		lib.players[1] = player2;
+ 		player1.isAlive = false;
+ 		var result = lib.lib.if_a_player_dies(lib.players);
+ 		expect(result).to.equal(true);
+ 	});
+ 	it('should return true when both player are died',function(){
+ 		lib.players[0] = player1;
+		lib.players[1] = player2;
+ 		player1.isAlive = false;
+ 		player2.isAlive = false;
+ 		var result = lib.lib.if_a_player_dies(lib.players);
+ 		expect(result).to.equal(true);
+ 	});
+});

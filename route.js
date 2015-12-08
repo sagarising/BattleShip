@@ -7,20 +7,6 @@ var method_not_allowed = function(req, res){
 	res.end('Method is not allowed');
 };
 
-var currentPlayer = function(players,cookie){
-	var player_who_requested;
-	players.forEach(function(element){
-		if(element.name == cookie){
-			player_who_requested = element;
-		};
-	});
-	return player_who_requested;
-};
-
-var enemyPlayer = function(players,cookie){
-	var index = +(!players.indexOf(currentPlayer(players,cookie)));
-	return players[index];
-};
 
 var checkAndSubmit = function(req,res){
 	var data = '';
@@ -33,7 +19,7 @@ var checkAndSubmit = function(req,res){
 		var shipIndex = placingInfo.shipSize;
 		var startingPoint = placingInfo.coordinate;
 		var align = placingInfo.align;
-		var player = currentPlayer(lib.players,req.headers.cookie);
+		var player = lib.lib.currentPlayer(lib.players,req.headers.cookie);
 		lib.positionShip(player.ships[shipIndex],align,startingPoint,player.grid);
 		res.end(JSON.stringify(player.grid.usedCoordinates));
 	});
@@ -76,33 +62,32 @@ var serveStaticFile = function(req, res, next){
 };
 
 var usedSpace = function(req,res){
-	var player=currentPlayer(lib.players,req.headers.cookie);
+	var player=lib.lib.currentPlayer(lib.players,req.headers.cookie);
 	res.end(JSON.stringify(player.grid.usedCoordinates))
 };
 
-var areBothReady = function(){
-	return lib.players.every(function(player){
-		return player.isReady;
-	});	
-};
-
 var routingToGame = function(req,res){
-	var player = currentPlayer(lib.players,req.headers.cookie);
+	var player = lib.lib.currentPlayer(lib.players,req.headers.cookie);
 	player.isReady=true;
 	lib.players[0].turn = true;
-	res.end(Number(areBothReady()&&lib.players.length == 2).toString());
+	res.end(Number(lib.lib.areBothReady()&&lib.players.length == 2).toString());
+};
+
+var serveShipPlacingPage = function(req,res){
+	var mySelf = lib.lib.currentPlayer(lib.players,req.headers.cookie)
+	mySelf.grid.usedCoordinates = [];
+	serveStaticFile(req,res);
 };
 
 var checkAttackedPoint = function(req,res) {
 	var allHits = [];
 	var sunkShips=[];
-	var attackPoint="";
-	var mySelf = currentPlayer(lib.players,req.headers.cookie);
-	var enemy = enemyPlayer(lib.players,req.headers.cookie);
+	var attackPoint = '';
+	var mySelf = lib.lib.currentPlayer(lib.players,req.headers.cookie);
+	var enemy = lib.lib.enemyPlayer(lib.players,req.headers.cookie);
 	req.on('data',function(chunk){
 		attackPoint += chunk;
 	});
-	// console.log(attackPoint)
 	req.on('end', function(){
 		var point = querystring.parse(attackPoint).point;
 		if(mySelf.turn){
@@ -125,24 +110,17 @@ var fileNotFound = function(req, res){
 	res.end('Not Found');
 };
 
-var if_a_player_dies = function(players){
-	players.forEach(lib.lib.if_all_ship_sunk);
-	return players.some(function(player){
-		return player.isAlive == false ;
-	});
-};
-
 var updates = function(req,res){
 	var update = [];
-	var mySelf = currentPlayer(lib.players,req.headers.cookie);
-	var enemy = enemyPlayer(lib.players,req.headers.cookie);
+	var mySelf = lib.lib.currentPlayer(lib.players,req.headers.cookie);
+	var enemy = lib.lib.enemyPlayer(lib.players,req.headers.cookie);
 	update.push({table:'ownStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(mySelf.ships)});
 	update.push({table:'enemyStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(enemy.ships)});
 	update.push({table:'own',stat:mySelf.grid.destroyed,color:"red"});
 	update.push({table:"enemy",stat:mySelf.misses,color:"paleturquoise"});
 	update.push({table:"enemy",stat:mySelf.hits,color:"red"});
 	update.push(false);
-	if(if_a_player_dies(lib.players))
+	if(lib.lib.if_a_player_dies(lib.players))
 		update[5] = true;
 	res.end(JSON.stringify(update));	
 };
@@ -159,6 +137,7 @@ exports.get_handlers = [
 	{path: '^/usedSpace$',handler:usedSpace},
 	{path:'^/makeReady$',handler:routingToGame},
 	{path:'^/givingUpdate$',handler:updates},
+	{path:'^/shipPlacingPage.html$',handler:serveShipPlacingPage},
 	{path: '', handler: serveStaticFile},
 	{path: '', handler: fileNotFound}
 ];

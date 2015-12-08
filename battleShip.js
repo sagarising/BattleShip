@@ -156,3 +156,36 @@ lib.makesCoordinates = function(ship,firstPoint,initialCharCode,initialColumnNum
 	};
 	return generatedCoordinates;
 };
+
+lib.currentPlayer = function(players,cookie){
+	var player_who_requested;
+	players.forEach(function(element){
+		if(element.name == cookie){
+			player_who_requested = element;
+		};
+	});
+	return player_who_requested;
+};
+
+lib.enemyPlayer = function(players,cookie){
+	var index = +(!players.indexOf(lib.currentPlayer(players,cookie)));
+	return players[index];
+};
+
+lib.areBothReady = function(){
+	return exports.players.every(function(player){
+		return player.isReady;
+	});	
+};
+
+
+lib.if_a_player_dies = function(players){
+	players.forEach(lib.if_all_ship_sunk);
+	return players.some(function(player){
+		return player.isAlive == false ;
+	});
+};
+
+var player = new exports.Player('ram');
+	player.ships[0].coordinates = ['A1','A2','A3','A4','A5'];
+console.log(lib.if_it_is_Hit('A1',player));

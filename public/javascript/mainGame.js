@@ -28,13 +28,16 @@ var checkAndSubmit = function(){
 		coordinate:coordinateValue,align:align
 		},
 		function(data){
-			var shipCoordinate = JSON.parse(data);
-			ship[0].remove(ship.selectedIndex);
-			if(ship[0].children.length==0)
-				setInterval(sendToGamePage,20); 
+			var shipCoordinate = JSON.parse(data); 
+			var ship = $('#ship')[0];
+			ship.remove(ship.selectedIndex);
+			if(ship.children.length==0){
+				$('#ready').css({"pointer-events":"auto","opacity":"1"}); 
+				$('#placeShip').css({"pointer-events":"none","opacity":"0.5"});
+			};
 			shipCoordinate.map(function(element){
-			var cell = $('#'+element)[0];
-			cell.bgColor ='darkslategrey';
+				var cell = $('#'+element)[0];
+				cell.bgColor ='darkslategrey';
 		});
 	})
 };
@@ -63,7 +66,6 @@ var sendToGamePage = function(){
 	})
 }
 
-
 var changeTheColorOfGamePage = function(){
 	$.get('usedSpace',function(data){
 		console.log(data);
@@ -78,10 +80,10 @@ var changingTheColorOfGrid=function(clas,usedSpace,colour){
 	});
 };
 
-var statusUpdate = function(clas,array){
+var statusUpdate = function(id,array){
 	array.forEach(function(each,index){
 		if(!each){
-			var ship = $('.'+clas+' tr')[1].children[index+1];
+			var ship = $('#'+id+' tr')[1].children[index+1];
 			ship.style.color = "red";
 			ship.innerHTML = "Sunk";
 		}
@@ -112,7 +114,6 @@ var update = function(){
 			window.location.href = "result.html";
 	})
 };
-
 
 var serveStatus = function(){
 	playerName();
