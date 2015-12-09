@@ -1,4 +1,3 @@
-
 var lib={};
 exports.lib = lib;
 exports.players = [];
@@ -63,7 +62,6 @@ lib.if_all_ship_sunk = function(player){
 	if(check_if_all_ship_sunk)
 		player.isAlive = false;
 };
-
 
 exports.Player = function(name){
 	var self = this;
@@ -178,14 +176,9 @@ lib.areBothReady = function(){
 	});	
 };
 
-
 lib.if_a_player_dies = function(players){
 	players.forEach(lib.if_all_ship_sunk);
 	return players.some(function(player){
 		return player.isAlive == false ;
 	});
 };
-
-var player = new exports.Player('ram');
-	player.ships[0].coordinates = ['A1','A2','A3','A4','A5'];
-console.log(lib.if_it_is_Hit('A1',player));

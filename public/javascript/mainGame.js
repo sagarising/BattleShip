@@ -15,8 +15,8 @@ var createPlayer = function(){
 		function(data){
 			window.location.href = 'shipPlacingPage.html';
 		});
-	}
-}
+	};
+};
 
 var checkAndSubmit = function(){
 	var ship = $("#ship");
@@ -39,7 +39,7 @@ var checkAndSubmit = function(){
 				var cell = $('#'+element)[0];
 				cell.bgColor ='darkslategrey';
 		});
-	})
+	});
 };
 
 var updateForShipPlacing = function(){
@@ -53,7 +53,7 @@ var updateForShipPlacing = function(){
 		var cell = $('#'+element)[0];
 		cell.bgColor ='grey';
 		});
-	})
+	});
 };
 
 var sendToGamePage = function(){
@@ -63,15 +63,15 @@ var sendToGamePage = function(){
 		$('img').css('visibility','visible');
 		$('#selectShip').css('visibility','hidden');
 		$('table').css('pointerEvents','none');
-	})
-}
+	});
+};
 
 var changeTheColorOfGamePage = function(){
 	$.get('usedSpace',function(data){
 		console.log(data);
 		placesWhereShipArePlaced = JSON.parse(data);
 		changingTheColorOfGrid('own',placesWhereShipArePlaced,'grey');
-	})
+	});
 };
 
 var changingTheColorOfGrid=function(clas,usedSpace,colour){
@@ -86,43 +86,43 @@ var statusUpdate = function(id,array){
 			var ship = $('#'+id+' tr')[1].children[index+1];
 			ship.style.color = "red";
 			ship.innerHTML = "Sunk";
-		}
+		};
 	});
 };
-
 
 var attack = function(point) {
 	$.post('attack',{point:point.id},function(data){
 		if(!JSON.parse(data))
 			alert("not your turn");
-	})
+	});
 };
-
 
 var update = function(){
 	$.get('givingUpdate',function(data){
+		var shipStatus = [];
+		var gridStatus = [];
 		var updates = JSON.parse(data);
-		var shipStatus = updates.splice(0,2);
+		shipStatus = [updates.ownStatusTable,updates.enemyStatusTable];
 		shipStatus.forEach(function(eachPlayer){
 			statusUpdate(eachPlayer.table,eachPlayer.stat);
 		});
-		var gridStatus = updates.splice(0,3)
+		var gridStatus = [updates.ownHit,updates.enemyMiss,updates.enemyHit];
 		gridStatus.forEach(function(clas){
 			changingTheColorOfGrid(clas.table,clas.stat,clas.color)
 		});
-		if(updates[0].status){
+		if(updates.result.status){
 			window.location.href = "result.html";
-		}
-	})
+		};
+	});
 };
 
 var winnerAndLoser = function(update){
 	$.get('givingUpdate',function(data){
 		var updates = JSON.parse(data);
-		$('div').html("<h2 align='center'>Winner ->  "+updates[5].winner+"</h2><br><h2>Looser ->  "+updates[5].looser+"</h2>")
-	})
+		$('div').html("<h2 align='center'>Winner ->  "+updates.result.winner+"</h2><br><h2>Looser ->  "+updates.result.looser+"</h2>")
+	});
 
-}
+};
 
 var serveStatus = function(){
 	playerName();
