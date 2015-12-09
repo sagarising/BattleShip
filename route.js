@@ -68,9 +68,15 @@ var usedSpace = function(req,res){
 
 var routingToGame = function(req,res){
 	var player = lib.lib.currentPlayer(lib.players,req.headers.cookie);
+	console.log(player.grid.usedCoordinates.length==17)
+	if (player.grid.usedCoordinates.length==17) {
 	player.isReady=true;
 	lib.players[0].turn = true;
-	res.end(Number(lib.lib.areBothReady()&&lib.players.length == 2).toString());
+	res.end(JSON.stringify(lib.lib.areBothReady()&&lib.players.length == 2));	
+	}
+	else{
+		res.end(JSON.stringify('select more ships'));
+	}
 };
 
 var serveShipPlacingPage = function(req,res){

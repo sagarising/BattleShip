@@ -58,11 +58,19 @@ var updateForShipPlacing = function(){
 
 var sendToGamePage = function(){
 	$.get('makeReady',function(data){
-		if(+data)
-			window.location.href = "game.html";
-		$('img').css('visibility','visible');
-		$('#selectShip').css('visibility','hidden');
-		$('table').css('pointerEvents','none');
+		console.log(data);
+		data = JSON.parse(data);
+		console.log(data===true);
+		if(data==='select more ships'){
+			$('#alert').show();
+		}
+		else{
+			if(data===true)
+				window.location.href = "game.html";
+			$('img').css('visibility','visible');
+			$('#selectShip').css('visibility','hidden');
+			$('table').css('pointerEvents','none');
+		}
 	})
 }
 
