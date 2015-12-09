@@ -1,5 +1,5 @@
 var playerName= function(){
-	$('h3')[0].innerHTML=document.cookie;	
+	$('h3').append(document.cookie);	
 };
 
 var fillBox=function(self){
