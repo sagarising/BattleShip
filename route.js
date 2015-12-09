@@ -1,12 +1,12 @@
 var fs = require('fs');
 var querystring = require('querystring');
 var lib = require('./battleShip.js');
+
 var method_not_allowed = function(req, res){
 	res.statusCode = 405;
 	console.log(res.statusCode);
 	res.end('Method is not allowed');
 };
-
 
 var checkAndSubmit = function(req,res){
 	var data = '';
@@ -117,20 +117,21 @@ var fileNotFound = function(req, res){
 };
 
 var updates = function(req,res){
-	var update = [];
+	var update = {};
 	var mySelf = lib.lib.currentPlayer(lib.players,req.headers.cookie);
 	var enemy = lib.lib.enemyPlayer(lib.players,req.headers.cookie);
-	update.push({table:'ownStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(mySelf.ships)});
-	update.push({table:'enemyStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(enemy.ships)});
-	update.push({table:'own',stat:mySelf.grid.destroyed,color:"red"});
-	update.push({table:"enemy",stat:mySelf.misses,color:"paleturquoise"});
-	update.push({table:"enemy",stat:mySelf.hits,color:"red"});
-	update.push(false);
+	update['ownStatusTable'] = {table:'ownStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(mySelf.ships)};
+	update['enemyStatusTable'] = {table:'enemyStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(enemy.ships)};
+	update['ownHit'] = {table:'own',stat:mySelf.grid.destroyed,color:"red"};
+	update['enemyMiss'] = {table:"enemy",stat:mySelf.misses,color:"paleturquoise"};
+	update['enemyHit'] = {table:"enemy",stat:mySelf.hits,color:"red"};
+	update['result'] = {status:false};
+	update['isTurn'] = mySelf.turn;
 	if(lib.lib.if_a_player_dies(lib.players)){
 		if(!mySelf.isAlive)
-			update[5] = {status:true,winner:enemy.name,looser:mySelf.name};
-		else update[5] = {status:true,winner:mySelf.name,looser:enemy.name};
-	}
+			update['result'] = {status:true,winner:enemy.name,looser:mySelf.name};
+		else update['result'] = {status:true,winner:mySelf.name,looser:enemy.name};
+	};
 	res.end(JSON.stringify(update));	
 };
 exports.post_handlers = [

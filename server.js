@@ -1,20 +1,22 @@
 var http = require('http');
 var EventEmitter = require('events').EventEmitter;
 var routes = require('./route.js');
-var d = require('domain').create();
 var get_handlers = routes.get_handlers;
 var post_handlers = routes.post_handlers;
 var rEmitter = new EventEmitter();
+
 var matchHandler = function(url){
 	return function(ph){
 		return url.match(new RegExp(ph.path));
 	};
 };
+
 rEmitter.on('next', function(handlers, req, res, next){
 	if(handlers.length == 0) return;
 	var ph = handlers.shift();
 	ph.handler(req, res, next);
 });
+
 var handle_all_post = function(req, res){
 	var handlers = post_handlers.filter(matchHandler(req.url));
 	var next = function(){
@@ -22,6 +24,7 @@ var handle_all_post = function(req, res){
 	};
 	next();
 }; 
+
 var handle_all_get = function(req, res){
 	var handlers = get_handlers.filter(matchHandler(req.url));
 	var next = function(){
@@ -43,8 +46,7 @@ var requestHandler = function(req, res){
 		method_not_allowed(req, res);
 };
 
-
-	var server = http.createServer(requestHandler);
-	server.listen(3000);
-	console.log("server listening on 3000");
+var server = http.createServer(requestHandler);
+server.listen(3000);
+console.log("server listening on 3000");
 
