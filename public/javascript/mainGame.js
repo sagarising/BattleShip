@@ -97,11 +97,24 @@ var attack = function(point) {
 	});
 };
 
+var displayTurn = function(turn){
+	if(turn == true){
+		$( ".controller" ).html( "<p>Your turn</p>" );
+		$("#enemy").css("pointer-events","auto");
+	}
+	else{
+		$( ".controller" ).html( "<p>Enemy's turn</p>" );
+		$("#enemy").css("pointer-events","none");
+	};
+};
+
 var update = function(){
 	$.get('givingUpdate',function(data){
 		var shipStatus = [];
 		var gridStatus = [];
 		var updates = JSON.parse(data);
+		var playerTurn = updates.isTurn;
+		displayTurn(playerTurn);
 		shipStatus = [updates.ownStatusTable,updates.enemyStatusTable];
 		shipStatus.forEach(function(eachPlayer){
 			statusUpdate(eachPlayer.table,eachPlayer.stat);

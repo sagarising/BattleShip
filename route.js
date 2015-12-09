@@ -120,6 +120,7 @@ var updates = function(req,res){
 	update['enemyMiss'] = {table:"enemy",stat:mySelf.misses,color:"paleturquoise"};
 	update['enemyHit'] = {table:"enemy",stat:mySelf.hits,color:"red"};
 	update['result'] = {status:false};
+	update['isTurn'] = mySelf.turn;
 	if(lib.lib.if_a_player_dies(lib.players)){
 		if(!mySelf.isAlive)
 			update['result'] = {status:true,winner:enemy.name,looser:mySelf.name};
