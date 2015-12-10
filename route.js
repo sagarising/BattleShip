@@ -127,14 +127,28 @@ var updates = function(req,res){
 	update['enemyHit'] = {table:"enemy",stat:mySelf.hits,color:"red"};
 	update['result'] = {status:false};
 	update['isTurn'] = mySelf.turn;
-	update['players'] = {mySelf:lib.players[0],enemy:lib.players[1]}
 	if(lib.lib.if_a_player_dies(lib.players)){
-		if(!mySelf.isAlive)
-			update['result'] = {status:true,winner:enemy.name,loser:mySelf.name};
-		else update['result'] = {status:true,winner:mySelf.name,loser:enemy.name};
+		update['result'] = {status:true}
 	};
 	res.end(JSON.stringify(update));	
 };
+
+var gameOver = function(req,res) {
+	var player1 = lib.players[0],
+		player2 = lib.players[1],
+		winner,looser;
+		if(player1.isAlive){
+			winner = player1;
+			loser = player2;
+		}
+		else{
+			winner = player2;
+			loser = player1;
+		}
+		var winnerStatus = lib.lib.list_of_isAlive_of_each_ship(winner.ships);
+		var gameSummary = {winner:winner,loser:loser,shipsStatus:winnerStatus};
+		res.end(JSON.stringify(gameSummary));
+}
 
 exports.post_handlers = [
 	{path: '^/player$', handler: createPlayer},
@@ -149,6 +163,7 @@ exports.get_handlers = [
 	{path: '^/usedSpace$',handler:usedSpace},
 	{path:'^/makeReady$',handler:routingToGame},
 	{path:'^/givingUpdate$',handler:updates},
+	{path:'^/gameOver$',handler:gameOver},
 	{path:'^/shipPlacingPage.html$',handler:serveShipPlacingPage},
 	{path: '', handler: serveStaticFile},
 	{path: '', handler: fileNotFound}
