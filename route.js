@@ -1,12 +1,12 @@
 var fs = require('fs');
 var querystring = require('querystring');
 var lib = require('./battleShip.js');
+
 var method_not_allowed = function(req, res){
 	res.statusCode = 405;
 	console.log(res.statusCode);
 	res.end('Method is not allowed');
 };
-
 
 var checkAndSubmit = function(req,res){
 	var data = '';
@@ -68,9 +68,15 @@ var usedSpace = function(req,res){
 
 var routingToGame = function(req,res){
 	var player = lib.lib.currentPlayer(lib.players,req.headers.cookie);
+	console.log(player.grid.usedCoordinates.length==17)
+	if (player.grid.usedCoordinates.length==17) {
 	player.isReady=true;
 	lib.players[0].turn = true;
-	res.end(Number(lib.lib.areBothReady()&&lib.players.length == 2).toString());
+	res.end(JSON.stringify(lib.lib.areBothReady()&&lib.players.length == 2));	
+	}
+	else{
+		res.end(JSON.stringify('select more ships'));
+	}
 };
 
 var serveShipPlacingPage = function(req,res){
@@ -111,21 +117,22 @@ var fileNotFound = function(req, res){
 };
 
 var updates = function(req,res){
-	var update = [];
+	var update = {};
 	var mySelf = lib.lib.currentPlayer(lib.players,req.headers.cookie);
 	var enemy = lib.lib.enemyPlayer(lib.players,req.headers.cookie);
-	update.push({table:'ownStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(mySelf.ships)});
-	update.push({table:'enemyStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(enemy.ships)});
-	update.push({table:'own',stat:mySelf.grid.destroyed,color:"red"});
-	update.push({table:"enemy",stat:mySelf.misses,color:"paleturquoise"});
-	update.push({table:"enemy",stat:mySelf.hits,color:"red"});
-	update.push(false);
-	update.push({mySelf:lib.players[0],enemy:lib.players[1]})
+	update['ownStatusTable'] = {table:'ownStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(mySelf.ships)};
+	update['enemyStatusTable'] = {table:'enemyStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(enemy.ships)};
+	update['ownHit'] = {table:'own',stat:mySelf.grid.destroyed,color:"red"};
+	update['enemyMiss'] = {table:"enemy",stat:mySelf.misses,color:"paleturquoise"};
+	update['enemyHit'] = {table:"enemy",stat:mySelf.hits,color:"red"};
+	update['result'] = {status:false};
+	update['isTurn'] = mySelf.turn;
+	update['players'] = {mySelf:lib.players[0],enemy:lib.players[1]}
 	if(lib.lib.if_a_player_dies(lib.players)){
 		if(!mySelf.isAlive)
-			update[5] = {status:true,winner:enemy.name,loser:mySelf.name};
-		else update[5] = {status:true,winner:mySelf.name,loser:enemy.name};
-	}
+			update['result'] = {status:true,winner:enemy.name,loser:mySelf.name};
+		else update['result'] = {status:true,winner:mySelf.name,loser:enemy.name};
+	};
 	res.end(JSON.stringify(update));	
 };
 
