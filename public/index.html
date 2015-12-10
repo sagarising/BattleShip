@@ -13,7 +13,10 @@
 		Please enter your name:<br>
 		<input type="text" id="name" name = "name">
 		<button id = "start" onclick = "createPlayer()">Start</button>
-		<button onclick="window.location.href='options.html'">Options</button>
+		<button onclick="soundPlay();window.location.href='options.html';">Options</button>
+		<audio id="mysoundclip" preload="auto">
+    		<source src="tick.wav"></source>
+		</audio>
 	</div>
 	</center>
 </body>

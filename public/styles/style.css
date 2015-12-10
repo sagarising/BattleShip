@@ -16,7 +16,8 @@ h3 {
     border: none;
 }
 
-.banner{    
+.banner{   
+    top: 0px; 
     text-align: center;
     position: fixed;
     display: flex;

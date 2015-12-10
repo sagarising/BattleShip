@@ -2,12 +2,20 @@ var playerName= function(){
 	$('h3').append(document.cookie);	
 };
 
+
+var soundPlay=function(){
+	var audio = $("#mysoundclip")[0];
+		audio.play();
+};
+
 var fillBox=function(self){
+	soundPlay();
 	var coordianteBox = $('#text')[0];
 	coordianteBox.value = self.id;
 };
 
 var createPlayer = function(){
+	soundPlay();
 	if($('#name').val() =='')
 		alert('first enter your name')
 	else{
@@ -66,7 +74,7 @@ var sendToGamePage = function(){
 		else{
 			if(data===true)
 				window.location.href = "game.html";
-			$('img').css('visibility','visible');
+			$('#loading').css('visibility','visible');
 			$('#selectShip').css('visibility','hidden');
 			$('table').css('pointerEvents','none');
 		}
@@ -102,6 +110,7 @@ var attack = function(point) {
 		if(!JSON.parse(data))
 			alert("not your turn");
 	});
+	soundPlay();
 };
 
 var displayTurn = function(turn){
@@ -155,6 +164,7 @@ var winnerAndLoser = function(update){
 		changingTheColorOfGrid('enemy',players.mySelf.grid.usedCoordinates,'grey')
 		changingTheColorOfGrid('own',players.enemy.grid.usedCoordinates,'grey')
 	})
+	soundPlay();
 };
 
 var serveStatus = function(){
