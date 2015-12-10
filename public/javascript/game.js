@@ -163,6 +163,6 @@ var winnerAndLoser = function(update){
 var serveStatus = function(){
 	playerName();
 	changeTheColorOfGamePage();
-	setInterval(update,500);
+	setInterval(update,120);
 };
 

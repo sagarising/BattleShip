@@ -1,6 +1,5 @@
 var lib={};
 exports.lib = lib;
-exports.players = [];
 
 lib.isHit = function(groupOfCoordinates,attackPoint) {
 	return groupOfCoordinates.indexOf(attackPoint) !== -1;
@@ -10,14 +9,6 @@ lib.removingHitPointFromExistingCoordinates = function(existingCoordinates,hitPo
 	return existingCoordinates.filter(function(coordinate){
 		return coordinate != hitPoint;
 	});
-};
-
-lib.gameOver = function(player_who_lost){
-	var index_of_player_who_lost = exports.players.indexOf(player_who_lost);
-	var player_who_won = exports.players[+!index_of_player_who_lost];
-	var result_of_game = {won:player_who_won.name,lost:player_who_lost.name}
-	exports.players.length = 0;
-	return JSON.stringify(result_of_game);
 };
 
 lib.gridCreater = function (){
@@ -36,6 +27,53 @@ lib.gridCreater.prototype.isUsedSpace = function(coordinates){
 			return self.usedCoordinates.indexOf(coordinate) !== -1;
 	});
 };
+
+exports.Game = function(){
+	this.players=[];
+}
+
+exports.Game.prototype.addPlayer = function(player){
+	this.players.push(player);
+}
+
+exports.Game.prototype.gameOver = function(){
+	var player_who_lost = this.players[0].isAlive? this.players[1]: this.players[0];
+	var player_who_won = this.players[0].isAlive? this.players[0]: this.players[1];
+	var result_of_game = {won:player_who_won.name,lost:player_who_lost.name}
+	this.players.length = 0;
+	return JSON.stringify(result_of_game);
+};
+
+exports.Game.prototype.canStartPlaying = function(){
+	var areAllPlayersReady = this.players.every(function(player){
+		return player.isReady;
+	});	
+
+	return areAllPlayersReady && this.players.length == 2;
+};
+
+exports.Game.prototype.currentPlayer = function(cookie){
+	var player_who_requested;
+	this.players.forEach(function(element){
+		if(element.name == cookie){
+			player_who_requested = element;
+		};
+	});
+	return player_who_requested;
+};
+
+exports.Game.prototype.enemyPlayer = function(cookie){
+	var index = +(!this.players.indexOf(this.currentPlayer(cookie)));
+	return this.players[index];
+};
+
+
+exports.Game.prototype.if_a_player_dies = function(){
+	return this.players.some(function(player){
+		return player.isAlive == false ;
+	});
+};
+
 
 exports.Player = function(name){
 	var self = this;
@@ -154,31 +192,4 @@ lib.makesCoordinates = function(ship,firstPoint,initialCharCode,initialColumnNum
 		generatedCoordinates.push(coordinateToBePushed);
 	};
 	return generatedCoordinates;
-};
-
-lib.currentPlayer = function(players,cookie){
-	var player_who_requested;
-	players.forEach(function(element){
-		if(element.name == cookie){
-			player_who_requested = element;
-		};
-	});
-	return player_who_requested;
-};
-
-lib.enemyPlayer = function(players,cookie){
-	var index = +(!players.indexOf(lib.currentPlayer(players,cookie)));
-	return players[index];
-};
-
-lib.areBothReady = function(){
-	return exports.players.every(function(player){
-		return player.isReady;
-	});	
-};
-
-lib.if_a_player_dies = function(players){
-	return players.some(function(player){
-		return player.isAlive == false ;
-	});
 };

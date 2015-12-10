@@ -1,7 +1,7 @@
 var fs = require('fs');
 var querystring = require('querystring');
 var lib = require('./battleShip.js');
-
+game = new lib.Game();
 var method_not_allowed = function(req, res){
 	res.statusCode = 405;
 	console.log(res.statusCode);
@@ -19,7 +19,7 @@ var checkAndSubmit = function(req,res){
 		var shipIndex = placingInfo.shipSize;
 		var startingPoint = placingInfo.coordinate;
 		var align = placingInfo.align;
-		var player = lib.lib.currentPlayer(lib.players,req.headers.cookie);
+		var player = game.currentPlayer(req.headers.cookie);
 		lib.positionShip(player.ships[shipIndex],align,startingPoint,player.grid);
 		res.end(JSON.stringify(player.grid.usedCoordinates));
 	});
@@ -31,8 +31,10 @@ var createPlayer = function(req, res){
 		data += chunk;
 	});
 	req.on('end', function(){
+		debugger;
 		var entry = querystring.parse(data);
-		lib.players.push(new lib.Player(entry.name));
+		game.addPlayer(new lib.Player(entry.name));
+		
 		res.writeHead(200,
 			{'Set-Cookie':entry.name});
 		res.end(JSON.stringify(entry.name))
@@ -45,7 +47,7 @@ var serveIndex = function(req, res, next){
 };
 
 var showDetails = function(req,res) {
-	res.end(JSON.stringify(lib.players));
+	res.end(JSON.stringify(game.players));
 };
 
 var serveStaticFile = function(req, res, next){
@@ -62,17 +64,16 @@ var serveStaticFile = function(req, res, next){
 };
 
 var usedSpace = function(req,res){
-	var player=lib.lib.currentPlayer(lib.players,req.headers.cookie);
+	var player=game.currentPlayer(req.headers.cookie);
 	res.end(JSON.stringify(player.grid.usedCoordinates))
 };
 
 var routingToGame = function(req,res){
-	var player = lib.lib.currentPlayer(lib.players,req.headers.cookie);
-	console.log(player.grid.usedCoordinates.length==17)
+	var player = game.currentPlayer(req.headers.cookie);
 	if (player.grid.usedCoordinates.length==17) {
-	player.isReady=true;
-	lib.players[0].turn = true;
-	res.end(JSON.stringify(lib.lib.areBothReady()&&lib.players.length == 2));	
+		player.isReady=true;
+		game.players[0].turn = true;
+		res.end(JSON.stringify(game.canStartPlaying()));	
 	}
 	else{
 		res.end(JSON.stringify('select more ships'));
@@ -80,7 +81,8 @@ var routingToGame = function(req,res){
 };
 
 var serveShipPlacingPage = function(req,res){
-	var mySelf = lib.lib.currentPlayer(lib.players,req.headers.cookie)
+	debugger;
+	var mySelf = game.currentPlayer(req.headers.cookie);
 	mySelf.grid.usedCoordinates = [];
 	serveStaticFile(req,res);
 };
@@ -89,8 +91,9 @@ var checkAttackedPoint = function(req,res) {
 	var allHits = [];
 	var sunkShips=[];
 	var attackPoint = '';
-	var mySelf = lib.lib.currentPlayer(lib.players,req.headers.cookie);
-	var enemy = lib.lib.enemyPlayer(lib.players,req.headers.cookie);
+	var mySelf = game.currentPlayer(req.headers.cookie);
+	var enemy = game.enemyPlayer(req.headers.cookie);
+
 	req.on('data',function(chunk){
 		attackPoint += chunk;
 	});
@@ -118,8 +121,9 @@ var fileNotFound = function(req, res){
 
 var updates = function(req,res){
 	var update = {};
-	var mySelf = lib.lib.currentPlayer(lib.players,req.headers.cookie);
-	var enemy = lib.lib.enemyPlayer(lib.players,req.headers.cookie);
+	var mySelf = game.currentPlayer(req.headers.cookie);
+	var enemy = game.enemyPlayer(req.headers.cookie);
+
 	update['ownStatusTable'] = {table:'ownStatusTable',stat:mySelf.list_of_isAlive_of_each_ship()};
 	update['enemyStatusTable'] = {table:'enemyStatusTable',stat:enemy.list_of_isAlive_of_each_ship()};
 	update['ownHit'] = {table:'own',stat:mySelf.grid.destroyed,color:"red"};
@@ -127,15 +131,15 @@ var updates = function(req,res){
 	update['enemyHit'] = {table:"enemy",stat:mySelf.hits,color:"red"};
 	update['result'] = {status:false};
 	update['isTurn'] = mySelf.turn;
-	if(lib.lib.if_a_player_dies(lib.players)){
+	if(game.if_a_player_dies()){
 		update['result'] = {status:true}
 	};
 	res.end(JSON.stringify(update));	
 };
 
 var gameOver = function(req,res) {
-	var player1 = lib.players[0],
-		player2 = lib.players[1],
+	var player1 = game.players[0],
+		player2 = game.players[1],
 		winner,looser;
 		if(player1.isAlive){
 			winner = player1;

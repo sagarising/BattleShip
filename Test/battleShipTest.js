@@ -17,12 +17,12 @@ describe('Ship',function(){
 describe('isAllowed',function(){
 	var player = new lib.Player('ram');
 	it('should check if the firstpoint is valid for placing ship aligned vertical',function(){
-		assert.equal(true,lib.lib.isAllowed(player.ships[0],"vertical","B9",new lib.lib.gridCreater())); 
-		assert.equal(false,lib.lib.isAllowed(player.ships[0],"vertical","I9",new lib.lib.gridCreater())); 
+		assert.equal(true,lib.lib.isAllowedToBePlaced(player.ships[0],"vertical","B9")); 
+		assert.equal(false,lib.lib.isAllowedToBePlaced(player.ships[0],"vertical","I9")); 
 	});
 	it('should check if the firstpoint is valid for placing ship aligned horizontal',function(){
-		assert.equal(true,lib.lib.isAllowed(player.ships[0],"vertical","B9",new lib.lib.gridCreater())); 
-		assert.equal(false,lib.lib.isAllowed(player.ships[0],"vertical","I9",new lib.lib.gridCreater())); 
+		assert.equal(true,lib.lib.isAllowedToBePlaced(player.ships[0],"vertical","B9")); 
+		assert.equal(false,lib.lib.isAllowedToBePlaced(player.ships[0],"vertical","I9")); 
 	});
 });
 
@@ -178,25 +178,40 @@ describe('List_of_isAlive_of_each_ship',function(){
 });
 
 describe('gameOver',function(){
+	var game = new lib.Game();
 	var player1 = new lib.Player('ram');
+
 	var player2 = new lib.Player('manu');
+
 	it('should return an object with player1 won and player2 lost when player2 loses the game',function(){
-		lib.players[0] = player1;
-		lib.players[1] = player2;
-		var result = lib.lib.gameOver(player2);
+		player1.isAlive = true;
+		player2.isAlive = false;
+
+		game.addPlayer(player1);
+		game.addPlayer(player2);
+
+		var result = game.gameOver();
 		expect(result).to.equal('{"won":"ram","lost":"manu"}');
 	});
 	it('should return an object with player2 won and player1 lost when player1 loses the game',function(){
-		lib.players[0] = player1;
-		lib.players[1] = player2;
-		var result = lib.lib.gameOver(player1);
+		player1.isAlive = false;
+		player2.isAlive = true;
+
+		game.addPlayer(player1);
+		game.addPlayer(player2);
+
+		var result = game.gameOver();
 		expect(result).to.equal('{"won":"manu","lost":"ram"}')
 	});
 	it('should remove players from players array after gameOver',function(){
-		lib.players[0] = player1;
-		lib.players[1] = player2;
-		lib.lib.gameOver(player1);
-		expect(lib.players.length).to.equal(0);
+		player1.isAlive = false;
+		player2.isAlive = true;
+
+		game.addPlayer(player1);
+		game.addPlayer(player2);
+
+		game.gameOver();
+		expect(game.players.length).to.equal(0);
 	});
 });
 
@@ -290,75 +305,75 @@ describe('if_all_ship_sunk',function(){
 });
 
 describe('currentPlayer',function(){
+	var game = new lib.Game();
 	var player1 = new lib.Player('ram');
 	var player2 = new lib.Player('manu');
 	it('should return the player who has the turn to play',function(){
-		lib.players[0] = player1;
-		lib.players[1] = player2;
-		var result = lib.lib.currentPlayer(lib.players,'ram');
+		game.addPlayer(player1);
+		game.addPlayer(player2);
+		var result = game.currentPlayer('ram');
 		expect(result).to.equal(player1);
 	});
 });
 
 describe('enemyPlayer',function(){
+	var game = new lib.Game();
 	var player1 = new lib.Player('ram');
+	game.addPlayer(player1);
+
 	var player2 = new lib.Player('manu');
+	game.addPlayer(player2);
+
 	it('should return the player who is waiting to the turn to play',function(){
-		lib.players[0] = player1;
-		lib.players[1] = player2;
-		var result = lib.lib.enemyPlayer(lib.players,'manu');
+		var result = game.enemyPlayer('manu');
 		expect(JSON.stringify(result)).to.equal(JSON.stringify(player1));
 	});
 });
 
-describe('areBothReady',function(){
+describe('can players start playing',function(){
+	var game = new lib.Game();
 	var player1 = new lib.Player('ram');
 	var player2 = new lib.Player('manu');
+	game.addPlayer(player1);
+	game.addPlayer(player2);
 	it('should return false when both players are not ready',function(){
-		lib.players[0] = player1;
-		lib.players[1] = player2;
-		var result = lib.lib.areBothReady();
+		var result = game.canStartPlaying();
 		expect(result).to.equal(false);
 	});
 	it('should return false when anyone is not ready',function(){
-		lib.players[0] = player1;
-		lib.players[1] = player2;
 		player1.isReady = true;
-		var result = lib.lib.areBothReady();
+		var result = game.canStartPlaying();
 		expect(result).to.equal(false);
 	});
 	it('should return true when both players are ready',function(){
-		lib.players[0] = player1;
-		lib.players[1] = player2;
 		player1.isReady = true;
 		player2.isReady = true;
-		var result = lib.lib.areBothReady();
+		var result = game.canStartPlaying();
 		expect(result).to.equal(true);
 	});
 });
 
 describe('if_a_player_dies',function(){
+	var game = new lib.Game();
 	var player1 = new lib.Player('ram');
+	game.addPlayer(player1);
+
 	var player2 = new lib.Player('manu');
+	game.addPlayer(player2);
+
 	it('should return false when both players are alive',function(){
-		lib.players[0] = player1;
-		lib.players[1] = player2;
-		var result = lib.lib.if_a_player_dies(lib.players);
+		var result = game.if_a_player_dies(lib.players);
 		expect(result).to.equal(false);
  	});
  	it('should return true even one player dies',function(){
- 		lib.players[0] = player1;
-		lib.players[1] = player2;
  		player1.isAlive = false;
- 		var result = lib.lib.if_a_player_dies(lib.players);
+ 		var result = game.if_a_player_dies(lib.players);
  		expect(result).to.equal(true);
  	});
  	it('should return true when both player are died',function(){
- 		lib.players[0] = player1;
-		lib.players[1] = player2;
  		player1.isAlive = false;
  		player2.isAlive = false;
- 		var result = lib.lib.if_a_player_dies(lib.players);
+ 		var result = game.if_a_player_dies(lib.players);
  		expect(result).to.equal(true);
  	});
 });
