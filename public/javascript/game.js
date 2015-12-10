@@ -65,9 +65,7 @@ var updateForShipPlacing = function(){
 
 var sendToGamePage = function(){
 	$.get('makeReady',function(data){
-		console.log(data);
 		data = JSON.parse(data);
-		console.log(data===true);
 		if(data==='select more ships'){
 			$('#alert').show();
 		}
@@ -83,7 +81,6 @@ var sendToGamePage = function(){
 
 var changeTheColorOfGamePage = function(){
 	$.get('usedSpace',function(data){
-		console.log(data);
 		placesWhereShipArePlaced = JSON.parse(data);
 		changingTheColorOfGrid('own',placesWhereShipArePlaced,'grey');
 	});
@@ -148,7 +145,6 @@ var update = function(){
 var winnerAndLoser = function(update){
 	$.get('gameOver',function(data){
 		var updates = JSON.parse(data);
-		console.log(updates)
 		var winnerShipsSunk = updates.shipsStatus.filter(function(ele){return ele==0}).length;
 		var context = {winner:updates.winner.name,loser:updates.loser.name,winnerStatus:winnerShipsSunk+'/5',loserStatus:'5/5'};
 		var source = $('#declare').html();

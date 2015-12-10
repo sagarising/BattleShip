@@ -97,7 +97,7 @@ var checkAttackedPoint = function(req,res) {
 	req.on('end', function(){
 		var point = querystring.parse(attackPoint).point;
 		if(mySelf.turn){
-			result = lib.lib.if_it_is_Hit(point,enemy);
+			result = enemy.if_it_is_Hit(point);
 			if(result)
 				mySelf.hits.push(point);
 			else
@@ -120,8 +120,8 @@ var updates = function(req,res){
 	var update = {};
 	var mySelf = lib.lib.currentPlayer(lib.players,req.headers.cookie);
 	var enemy = lib.lib.enemyPlayer(lib.players,req.headers.cookie);
-	update['ownStatusTable'] = {table:'ownStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(mySelf.ships)};
-	update['enemyStatusTable'] = {table:'enemyStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(enemy.ships)};
+	update['ownStatusTable'] = {table:'ownStatusTable',stat:mySelf.list_of_isAlive_of_each_ship()};
+	update['enemyStatusTable'] = {table:'enemyStatusTable',stat:enemy.list_of_isAlive_of_each_ship()};
 	update['ownHit'] = {table:'own',stat:mySelf.grid.destroyed,color:"red"};
 	update['enemyMiss'] = {table:"enemy",stat:mySelf.misses,color:"paleturquoise"};
 	update['enemyHit'] = {table:"enemy",stat:mySelf.hits,color:"red"};
@@ -145,7 +145,7 @@ var gameOver = function(req,res) {
 			winner = player2;
 			loser = player1;
 		}
-		var winnerStatus = lib.lib.list_of_isAlive_of_each_ship(winner.ships);
+		var winnerStatus = winner.list_of_isAlive_of_each_ship();
 		var gameSummary = {winner:winner,loser:loser,shipsStatus:winnerStatus};
 		res.end(JSON.stringify(gameSummary));
 }

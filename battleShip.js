@@ -2,12 +2,6 @@ var lib={};
 exports.lib = lib;
 exports.players = [];
 
-lib.list_of_isAlive_of_each_ship = function(ships){
-	return ships.map(function(element){
-		return element.isAlive;
-	});
-};
-
 lib.isHit = function(groupOfCoordinates,attackPoint) {
 	return groupOfCoordinates.indexOf(attackPoint) !== -1;
 };
@@ -43,26 +37,6 @@ lib.gridCreater.prototype.isUsedSpace = function(coordinates){
 	});
 };
 
-lib.if_it_is_Hit = function(attackPoint,player){
-	if(lib.isHit(player.grid.usedCoordinates,attackPoint)){
-		player.grid.usedCoordinates = lib.removingHitPointFromExistingCoordinates(player.grid.usedCoordinates,attackPoint);
-		player.grid.destroyed.push(attackPoint);
-		player.ships.forEach(function(ship){
-			lib.if_ship_is_Hit(ship,attackPoint);
-		});
-		return 1;
-	};
-	return 0;    
-};
-
-lib.if_all_ship_sunk = function(player){
-	var check_if_all_ship_sunk = lib.list_of_isAlive_of_each_ship(player.ships).every(function(status){
-		return status == 0;
-	});
-	if(check_if_all_ship_sunk)
-		player.isAlive = false;
-};
-
 exports.Player = function(name){
 	var self = this;
 	this.name = name;
@@ -79,6 +53,33 @@ exports.Player = function(name){
 	this.turn = false;
 };
 
+exports.Player.prototype.list_of_isAlive_of_each_ship = function(){
+	return this.ships.map(function(element){
+		return element.isAlive;
+	});
+};
+
+exports.Player.prototype.if_all_ship_sunk = function(){
+	var check_if_all_ship_sunk = this.list_of_isAlive_of_each_ship().every(function(status){
+		return status == 0;
+	});
+	if(check_if_all_ship_sunk)
+		this.isAlive = false;
+};
+
+exports.Player.prototype.if_it_is_Hit = function(attackPoint){
+	if(lib.isHit(this.grid.usedCoordinates,attackPoint)){
+		this.grid.usedCoordinates = lib.removingHitPointFromExistingCoordinates(this.grid.usedCoordinates,attackPoint);
+		this.grid.destroyed.push(attackPoint);
+		this.ships.forEach(function(ship){
+			ship.if_ship_is_Hit(attackPoint);
+		});
+		return 1;
+	};
+	return 0;    
+};
+
+
 function fillArrayWithNull(size,array){
  	var arr = array||[];
 	arr.push(null);
@@ -87,24 +88,24 @@ function fillArrayWithNull(size,array){
 	return arr;
 };
 
-lib.checkAndSwitchIsAlive = function(ship){           
-	if(ship.coordinates.length == 0)
-		ship.isAlive = 0;
-};
-
-lib.if_ship_is_Hit = function(ship,attackPoint){
-	if(lib.isHit(ship.coordinates,attackPoint)){
-		ship.coordinates = lib.removingHitPointFromExistingCoordinates(ship.coordinates,attackPoint);
-		lib.checkAndSwitchIsAlive(ship);
-	};
-};
-
 lib.Ship = function(size,player){
 	this.coordinates = fillArrayWithNull(size);
 	Object.defineProperty(this,'isAlive',{value:1,writable:true})
 };
 
-lib.isAllowed = function(ship,align,firstPoint){
+lib.Ship.prototype.if_ship_is_Hit = function(attackPoint){
+	if(lib.isHit(this.coordinates,attackPoint)){
+		this.coordinates = lib.removingHitPointFromExistingCoordinates(this.coordinates,attackPoint);
+		this.checkAndSwitchIsAlive();
+	};
+};
+
+lib.Ship.prototype.checkAndSwitchIsAlive = function(){           
+	if(this.coordinates.length == 0)
+		this.isAlive = 0;
+};
+
+lib.isAllowedToBePlaced = function(ship,align,firstPoint){
 	var rows=['A','B','C','D','E','F','G','H','I','J'];
 	var shipsize = ship.coordinates.length;
 	if(align == "vertical"){
@@ -122,7 +123,7 @@ lib.isAllowed = function(ship,align,firstPoint){
 };
 
 exports.positionShip = function(ship,align,firstPoint,grid){
-	if(lib.isAllowed(ship,align,firstPoint)){
+	if(lib.isAllowedToBePlaced(ship,align,firstPoint)){
 		if(align=='vertical'){
 			var initialCharCode = firstPoint.charCodeAt(0);
 			var tempCoordinates = lib.makesCoordinates(ship,firstPoint,initialCharCode);
@@ -177,7 +178,6 @@ lib.areBothReady = function(){
 };
 
 lib.if_a_player_dies = function(players){
-	players.forEach(lib.if_all_ship_sunk);
 	return players.some(function(player){
 		return player.isAlive == false ;
 	});
