@@ -1,5 +1,5 @@
 var playerName= function(){
-	$('h3')[0].innerHTML=document.cookie;	
+	$('h3').html(document.cookie);	
 };
 
 var fillBox=function(self){
@@ -36,8 +36,7 @@ var checkAndSubmit = function(){
 				$('#placeShip').css({"pointer-events":"none","opacity":"0.5"});
 			};
 			shipCoordinate.map(function(element){
-				var cell = $('#'+element)[0];
-				cell.bgColor ='darkslategrey';
+				$('#'+element).css("background-color","darkslategrey");
 		});
 	})
 };
@@ -119,7 +118,21 @@ var update = function(){
 var winnerAndLoser = function(update){
 	$.get('givingUpdate',function(data){
 		var updates = JSON.parse(data);
-		$('div').html("<h2 align='center'>Winner ->  "+updates[5].winner+"</h2><br><h2>Looser ->  "+updates[5].looser+"</h2>")
+		var players = updates[6];
+		var myShipsSunk = updates[0].stat.filter(function(ele){return ele==0}).length;
+		var enemyShipsSunk = updates[1].stat.filter(function(ele){return ele==0}).length;
+		if(enemyShipsSunk<myShipsSunk)
+			var context = {winner:updates[5].winner,loser:updates[5].loser,winnerStatus:enemyShipsSunk+'/5',loserStatus:myShipsSunk+'/5'};
+		var context = {winner:updates[5].winner,loser:updates[5].loser,winnerStatus:myShipsSunk+'/5',loserStatus:enemyShipsSunk+'/5'};
+		var source = $('#declare').html();
+		var template = Handlebars.compile(source);
+		$('#result').html(template(context));
+		changingTheColorOfGrid('own',players.mySelf.misses,'#ccfff4')
+		changingTheColorOfGrid('own',players.mySelf.hits,'red')
+		changingTheColorOfGrid('enemy',players.enemy.misses,'#ccfff4')
+		changingTheColorOfGrid('enemy',players.enemy.hits,'red')
+		changingTheColorOfGrid('enemy',players.mySelf.grid.usedCoordinates,'grey')
+		changingTheColorOfGrid('own',players.enemy.grid.usedCoordinates,'grey')
 	})
 
 }
