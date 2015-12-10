@@ -2,12 +2,20 @@ var playerName= function(){
 	$('h3').append(document.cookie);	
 };
 
+
+var soundPlay=function(){
+	var audio = $("#mysoundclip")[0];
+		audio.play();
+};
+
 var fillBox=function(self){
+	soundPlay();
 	var coordianteBox = $('#text')[0];
 	coordianteBox.value = self.id;
 };
 
 var createPlayer = function(){
+	soundPlay();
 	if($('#name').val() =='')
 		alert('first enter your name')
 	else{
@@ -57,16 +65,14 @@ var updateForShipPlacing = function(){
 
 var sendToGamePage = function(){
 	$.get('makeReady',function(data){
-		console.log(data);
 		data = JSON.parse(data);
-		console.log(data===true);
 		if(data==='select more ships'){
 			$('#alert').show();
 		}
 		else{
 			if(data===true)
 				window.location.href = "game.html";
-			$('img').css('visibility','visible');
+			$('#loading').css('visibility','visible');
 			$('#selectShip').css('visibility','hidden');
 			$('table').css('pointerEvents','none');
 		}
@@ -75,7 +81,6 @@ var sendToGamePage = function(){
 
 var changeTheColorOfGamePage = function(){
 	$.get('usedSpace',function(data){
-		console.log(data);
 		placesWhereShipArePlaced = JSON.parse(data);
 		changingTheColorOfGrid('own',placesWhereShipArePlaced,'grey');
 	});
@@ -102,6 +107,7 @@ var attack = function(point) {
 		if(!JSON.parse(data))
 			alert("not your turn");
 	});
+	soundPlay();
 };
 
 var displayTurn = function(turn){
@@ -137,24 +143,21 @@ var update = function(){
 };
 
 var winnerAndLoser = function(update){
-	$.get('givingUpdate',function(data){
+	$.get('gameOver',function(data){
 		var updates = JSON.parse(data);
-		var players = updates['players'];
-		var myShipsSunk = updates['enemyStatusTable'].stat.filter(function(ele){return ele==0}).length;
-		var enemyShipsSunk = updates['ownStatusTable'].stat.filter(function(ele){return ele==0}).length;
-		if(enemyShipsSunk<myShipsSunk)
-			var context = {winner:updates['result'].winner,loser:updates['result'].loser,winnerStatus:enemyShipsSunk+'/5',loserStatus:myShipsSunk+'/5'};
-		var context = {winner:updates['result'].winner,loser:updates['result'].loser,winnerStatus:myShipsSunk+'/5',loserStatus:enemyShipsSunk+'/5'};
+		var winnerShipsSunk = updates.shipsStatus.filter(function(ele){return ele==0}).length;
+		var context = {winner:updates.winner.name,loser:updates.loser.name,winnerStatus:winnerShipsSunk+'/5',loserStatus:'5/5'};
 		var source = $('#declare').html();
 		var template = Handlebars.compile(source);
 		$('#result').html(template(context));
-		changingTheColorOfGrid('own',players.mySelf.misses,'#ccfff4')
-		changingTheColorOfGrid('own',players.mySelf.hits,'red')
-		changingTheColorOfGrid('enemy',players.enemy.misses,'#ccfff4')
-		changingTheColorOfGrid('enemy',players.enemy.hits,'red')
-		changingTheColorOfGrid('enemy',players.mySelf.grid.usedCoordinates,'grey')
-		changingTheColorOfGrid('own',players.enemy.grid.usedCoordinates,'grey')
+		changingTheColorOfGrid('enemy',updates.winner.misses,'#ccfff4')
+		changingTheColorOfGrid('enemy',updates.winner.hits,'red')
+		changingTheColorOfGrid('own',updates.winner.grid.usedCoordinates,'grey')
+		changingTheColorOfGrid('own',updates.loser.misses,'#ccfff4')
+		changingTheColorOfGrid('own',updates.loser.hits,'red')
+		changingTheColorOfGrid('enemy',updates.loser.grid.usedCoordinates,'grey')
 	})
+	soundPlay();
 };
 
 var serveStatus = function(){

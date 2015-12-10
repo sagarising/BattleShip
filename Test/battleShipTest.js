@@ -145,11 +145,11 @@ describe('CheckAndSwitchIsAlive',function(){
 	var player = new lib.Player('ram');
 	it('should change isAlive property of ship to 0 when the ship sunks',function(){
 		player.ships[0].coordinates.length = 0;
-		lib.lib.checkAndSwitchIsAlive(player.ships[0]);
+		player.ships[0].checkAndSwitchIsAlive();
 		assert.equal(0,player.ships[0].isAlive);
 	});
 	it('should not change isAlive property of ship if the ship has coordinates',function(){
-		lib.lib.checkAndSwitchIsAlive(player.ships[2]);
+		player.ships[2].checkAndSwitchIsAlive();
 		assert.equal(1,player.ships[2].isAlive);
 	});
 });
@@ -157,13 +157,13 @@ describe('CheckAndSwitchIsAlive',function(){
 describe('List_of_isAlive_of_each_ship',function(){
 	var player = new lib.Player('ramu');
 	it('should return an array with every ships alive property',function(){
-		var result = lib.lib.list_of_isAlive_of_each_ship(player.ships);
+		var result = player.list_of_isAlive_of_each_ship();
 		assert.deepEqual([1,1,1,1,1],result);
 	});
 	it('should return an array which contains 0 when any of the ships sunk',function(){
 		player.ships[0].isAlive = 0;
 		player.ships[3].isAlive = 0;
-		var result = lib.lib.list_of_isAlive_of_each_ship(player.ships);
+		var result = player.list_of_isAlive_of_each_ship();
 		assert.deepEqual([0,1,1,0,1],result);
 	});
 	it('should return array of 0s when all ships sunk',function(){
@@ -172,7 +172,7 @@ describe('List_of_isAlive_of_each_ship',function(){
 		player.ships[2].isAlive = 0;
 		player.ships[3].isAlive = 0;
 		player.ships[4].isAlive = 0;
-		var result = lib.lib.list_of_isAlive_of_each_ship(player.ships);
+		var result = player.list_of_isAlive_of_each_ship();
 		assert.deepEqual([0,0,0,0,0],result);
 	});
 });
@@ -209,31 +209,31 @@ describe('if_it_is_Hit',function(){
 	player.ships[4].coordinates = ['H1','H2'];
 	player.grid.usedCoordinates = ['A1','A2','A3','A4','A5','D6','D7','D8','D9','B5','C5','D5','E3','E4','E5','H1','H2'];
 	it('should return 1 if it is hit',function(){
-		var result = lib.lib.if_it_is_Hit('A2',player);
+		var result = player.if_it_is_Hit('A2');
 		expect(result).to.equal(1);
 	});
 	it('should return 0 if it is not hit',function(){
-		var result = lib.lib.if_it_is_Hit('J1',player);
+		var result = player.if_it_is_Hit('J1');
 		expect(result).to.equal(0);
 	});
 	it('should remove attackPoint from uesdCoordinates when is is a hit',function(){
-		lib.lib.if_it_is_Hit('A1',player);
+		player.if_it_is_Hit('A1');
 		var expected = ['A3','A4','A5','D6','D7','D8','D9','B5','C5','D5','E3','E4','E5','H1','H2'];
 		assert.deepEqual(player.grid.usedCoordinates,expected);	
 	});
 	it('should not remove any coordinate from usedCoordinates if it is not a hit',function(){
-		lib.lib.if_it_is_Hit('B7',player);
+		player.if_it_is_Hit('B7');
 		var expected = ['A3','A4','A5','D6','D7','D8','D9','B5','C5','D5','E3','E4','E5','H1','H2'];
 		assert.deepEqual(player.grid.usedCoordinates,expected);	
 	});
 	it('should push the coordinate to destroyed field if it is a hit',function(){
-		lib.lib.if_it_is_Hit('A4',player);
+		player.if_it_is_Hit('A4');
 		var result = player.grid.destroyed;
 		var expected = ['A2','A1','A4'];
 		assert.deepEqual(result,expected);
 	});
 	it('should not push the coordinate to destroyed field if it is not a hit',function(){
-		lib.lib.if_it_is_Hit('J10',player);
+		player.if_it_is_Hit('J10');
 		var result = player.grid.destroyed;
 		var expected = ['A2','A1','A4'];
 		assert.deepEqual(result,expected);
@@ -248,23 +248,23 @@ describe('if_ship_is_Hit',function(){
 	player.ships[3].coordinates = ['E3','E4','E5'];
 	player.ships[4].coordinates = ['H1','H2'];
 	it('should remove the attackpoint from coordinates of ship when it is a hit',function(){
-		lib.lib.if_ship_is_Hit(player.ships[0],'A1');
+		player.ships[0].if_ship_is_Hit('A1');
 		var result = player.ships[0].coordinates;
 		assert.deepEqual(result,['A2','A3','A4','A5']);
 	});
 	it('should not remove any coordinates when it is not a hit',function(){
-		lib.lib.if_ship_is_Hit(player.ships[3],'A1');
+		player.ships[3].if_ship_is_Hit('A1');
 		var result = player.ships[3].coordinates;
 		assert.deepEqual(result,['E3','E4','E5']);
 	});
 	it('should change isAlive property to false when the ship sunk',function(){
-		lib.lib.if_ship_is_Hit(player.ships[4],'H1');
-		lib.lib.if_ship_is_Hit(player.ships[4],'H2');
+		player.ships[4].if_ship_is_Hit('H1');
+		player.ships[4].if_ship_is_Hit('H2');
 		var result = player.ships[4].isAlive;
 		expect(result).to.equal(0);
 	});
 	it('should not change isAlive property when ship is not sunk',function(){
-		lib.lib.if_ship_is_Hit(player.ships[2],'D6');
+		player.ships[2].if_ship_is_Hit('D6');
 		var result = player.ships[2].isAlive;
 		expect(result).to.equal(1);
 	});
@@ -273,7 +273,7 @@ describe('if_ship_is_Hit',function(){
 describe('if_all_ship_sunk',function(){
 	var player = new lib.Player('ram');
 	it('should not change isAlive of player even one ship is not sunk',function(){
-		lib.lib.if_all_ship_sunk(player);
+		player.if_all_ship_sunk();
 		var result = player.isAlive;
 		expect(player.isAlive).to.equal(true);
 	});
@@ -283,7 +283,7 @@ describe('if_all_ship_sunk',function(){
 		player.ships[2].isAlive = 0;
 		player.ships[3].isAlive = 0;
 		player.ships[4].isAlive = 0;
-		lib.lib.if_all_ship_sunk(player);
+		player.if_all_ship_sunk();
 		var result = player.isAlive;
 		expect(player.isAlive).to.equal(false);
 	});

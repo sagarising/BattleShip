@@ -3,7 +3,7 @@
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="./styles/style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script type="text/javascript" src = "./javascript/mainGame.js"></script>
+	<script type="text/javascript" src = "./javascript/game.js"></script>
 	
 </head>
 <body onload="playerName()">
@@ -11,7 +11,6 @@
 		<img src="./images/battle_ship_logo.png" width="100px">
     	<h3></h3>
     </div>
-    <img src="./images/273.GIF" id="loading">
 	<table id="shipDeployment" class="grid" value="own">
 		<tr>
 			<td  width=60px  height=60px id="A1" onclick="fillBox(this)"></td>
@@ -134,7 +133,9 @@
 			<td  width=60px  height=60px id="J10" onclick="fillBox(this)"></td>
 		</tr>
 	</table>
-	
+	<audio id="mysoundclip" preload="auto">
+    		<source src="tick.wav"></source>
+	</audio>
 	<div id="selectShip" class = "controller">
 	<center><h1>Control Panel</h1></center>
 	<select id="ship">
@@ -149,10 +150,13 @@
 		<input type="radio" id="horizontal" name="group1" value="horizontal" checked> Horizontal<br>
 		<input type="radio" id="vertical" name="group1" value="vertical"> Vertical<br>
 		<input	type="text" size="40" style="margin:5px" id="text" value="Select a point on grid to place ship" readonly="readonly"><br>
-		<button id="placeShip" onclick="checkAndSubmit()"> Place Ship</button><br>
-		<button id="reset" onclick="window.location.reload()"> Reset</button>
-		<button id="ready" onclick="setInterval(sendToGamePage,20)"> Ready </button>
+		<button id="placeShip" onclick="checkAndSubmit();soundPlay();"> Place Ship</button><br>
+		<button id="reset" onclick="window.location.reload();soundPlay();"> Reset</button>
+		<button id="ready" onclick="setInterval(sendToGamePage,20);soundPlay();"> Ready </button>
 		<div id = "alert"> please place all ships</div>
+	</div>
+	<div id="loading">
+		<img src="./images/loading.GIF"><p style="margin:-1em 0em 0em 11em">WAITING FOR ENEMY.</p>
 	</div>
 
 </html>

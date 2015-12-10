@@ -1,11 +1,14 @@
 <html>
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script type="text/javascript" src= './javascript/mainGame.js'></script>
+	<script type="text/javascript" src= './javascript/game.js'></script>
 	<link rel="stylesheet" href="./styles/style.css">
 	<title>BATTLESHIP</title>
 </head>
 <body onload="serveStatus()" class="player1">
+	<audio id="mysoundclip" preload="auto">
+    		<source src="hit.wav"></source>
+	</audio>
 	<div class="banner">
 		<img src="./images/battle_ship_logo.png" width="100px">
     	<h3></h3>

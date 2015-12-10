@@ -4,7 +4,7 @@
 	<title>Battleship</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="./styles/style.css">
-	<script type="text/javascript" src= './javascript/mainGame.js'></script>
+	<script type="text/javascript" src= './javascript/game.js'></script>
 </head>
 <body class="firstpage">
 	<center><img src="./images/battle_ship_logo.png"></center>
@@ -13,7 +13,10 @@
 		Please enter your name:<br>
 		<input type="text" id="name" name = "name">
 		<button id = "start" onclick = "createPlayer()">Start</button>
-		<button onclick="window.location.href='options.html'">Options</button>
+		<button onclick="soundPlay();window.location.href='options.html';">Options</button>
+		<audio id="mysoundclip" preload="auto">
+    		<source src="tick.wav"></source>
+		</audio>
 	</div>
 	</center>
 </body>

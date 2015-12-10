@@ -97,7 +97,7 @@ var checkAttackedPoint = function(req,res) {
 	req.on('end', function(){
 		var point = querystring.parse(attackPoint).point;
 		if(mySelf.turn){
-			result = lib.lib.if_it_is_Hit(point,enemy);
+			result = enemy.if_it_is_Hit(point);
 			if(result)
 				mySelf.hits.push(point);
 			else
@@ -120,21 +120,35 @@ var updates = function(req,res){
 	var update = {};
 	var mySelf = lib.lib.currentPlayer(lib.players,req.headers.cookie);
 	var enemy = lib.lib.enemyPlayer(lib.players,req.headers.cookie);
-	update['ownStatusTable'] = {table:'ownStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(mySelf.ships)};
-	update['enemyStatusTable'] = {table:'enemyStatusTable',stat:lib.lib.list_of_isAlive_of_each_ship(enemy.ships)};
+	update['ownStatusTable'] = {table:'ownStatusTable',stat:mySelf.list_of_isAlive_of_each_ship()};
+	update['enemyStatusTable'] = {table:'enemyStatusTable',stat:enemy.list_of_isAlive_of_each_ship()};
 	update['ownHit'] = {table:'own',stat:mySelf.grid.destroyed,color:"red"};
 	update['enemyMiss'] = {table:"enemy",stat:mySelf.misses,color:"paleturquoise"};
 	update['enemyHit'] = {table:"enemy",stat:mySelf.hits,color:"red"};
 	update['result'] = {status:false};
 	update['isTurn'] = mySelf.turn;
-	update['players'] = {mySelf:lib.players[0],enemy:lib.players[1]}
 	if(lib.lib.if_a_player_dies(lib.players)){
-		if(!mySelf.isAlive)
-			update['result'] = {status:true,winner:enemy.name,loser:mySelf.name};
-		else update['result'] = {status:true,winner:mySelf.name,loser:enemy.name};
+		update['result'] = {status:true}
 	};
 	res.end(JSON.stringify(update));	
 };
+
+var gameOver = function(req,res) {
+	var player1 = lib.players[0],
+		player2 = lib.players[1],
+		winner,looser;
+		if(player1.isAlive){
+			winner = player1;
+			loser = player2;
+		}
+		else{
+			winner = player2;
+			loser = player1;
+		}
+		var winnerStatus = winner.list_of_isAlive_of_each_ship();
+		var gameSummary = {winner:winner,loser:loser,shipsStatus:winnerStatus};
+		res.end(JSON.stringify(gameSummary));
+}
 
 exports.post_handlers = [
 	{path: '^/player$', handler: createPlayer},
@@ -149,6 +163,7 @@ exports.get_handlers = [
 	{path: '^/usedSpace$',handler:usedSpace},
 	{path:'^/makeReady$',handler:routingToGame},
 	{path:'^/givingUpdate$',handler:updates},
+	{path:'^/gameOver$',handler:gameOver},
 	{path:'^/shipPlacingPage.html$',handler:serveShipPlacingPage},
 	{path: '', handler: serveStaticFile},
 	{path: '', handler: fileNotFound}
