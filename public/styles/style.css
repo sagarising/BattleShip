@@ -107,8 +107,39 @@ section table#own{
     100% {transform:scale(1.2)}
 }
 
+#resultBox {
+    border: solid;
+    height: 500px;
+    width: 1415px;
+    padding-top: 25px;
+}
 
+#hits {
+    float: left;
+    display: inherit;
+    margin-left: 100px;
+    border: 1px solid;
+    width: 40px;   
+    height: 40px;  
+    background-color: red;
+}
 
+#miss {
+    float: left;
+    display: inherit;
+    margin-left: 100px;
+    border: 1px solid;
+    width: 40px;   
+    height: 40px;  
+    background-color: #ccfff4;   
+}
 
-
-
+#shipsLeft {
+    float: left;
+    display: inherit;
+    margin-left: 100px;
+    border: 1px solid;
+    width: 40px;   
+    height: 40px;  
+    background-color: grey;      
+}

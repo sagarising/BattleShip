@@ -127,13 +127,15 @@ var updates = function(req,res){
 	update['enemyHit'] = {table:"enemy",stat:mySelf.hits,color:"red"};
 	update['result'] = {status:false};
 	update['isTurn'] = mySelf.turn;
+	update['players'] = {mySelf:lib.players[0],enemy:lib.players[1]}
 	if(lib.lib.if_a_player_dies(lib.players)){
 		if(!mySelf.isAlive)
-			update['result'] = {status:true,winner:enemy.name,looser:mySelf.name};
-		else update['result'] = {status:true,winner:mySelf.name,looser:enemy.name};
+			update['result'] = {status:true,winner:enemy.name,loser:mySelf.name};
+		else update['result'] = {status:true,winner:mySelf.name,loser:enemy.name};
 	};
 	res.end(JSON.stringify(update));	
 };
+
 exports.post_handlers = [
 	{path: '^/player$', handler: createPlayer},
 	{path:'^/placingOfShip$',handler:checkAndSubmit},
