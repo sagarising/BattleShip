@@ -129,11 +129,8 @@ var updates = function(req,res){
 	update['ownHit'] = {table:'own',stat:mySelf.grid.destroyed,color:"red"};
 	update['enemyMiss'] = {table:"enemy",stat:mySelf.misses,color:"paleturquoise"};
 	update['enemyHit'] = {table:"enemy",stat:mySelf.hits,color:"red"};
-	update['result'] = {status:false};
+	update['isGameOver'] = game.if_a_player_dies();
 	update['isTurn'] = mySelf.turn;
-	if(game.if_a_player_dies()){
-		update['result'] = {status:true}
-	};
 	res.end(JSON.stringify(update));	
 };
 

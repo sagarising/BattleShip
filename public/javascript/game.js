@@ -131,7 +131,7 @@ var update = function(){
 		gridStatus.forEach(function(clas){
 			changingTheColorOfGrid(clas.table,clas.stat,clas.color)
 		});
-		if(updates.result.status){
+		if(updates.isGameOver){
 			window.location.href = "result.html";
 		};
 	});
