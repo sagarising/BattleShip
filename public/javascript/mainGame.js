@@ -32,7 +32,7 @@ var checkAndSubmit = function(){
 			var ship = $('#ship')[0];
 			ship.remove(ship.selectedIndex);
 			if(ship.children.length==0){
-				$('#ready').css({"pointer-events":"auto","opacity":"1"}); 
+				$('#ready').css({"pointer-events":"auto","opacity":"1","animation":"scale 0.5s infinite alternate"}); 
 				$('#placeShip').css({"pointer-events":"none","opacity":"0.5"});
 			};
 			shipCoordinate.map(function(element){
