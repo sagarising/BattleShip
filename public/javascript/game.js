@@ -8,12 +8,6 @@ var soundPlay=function(){
 		audio.play();
 };
 
-var fillBox=function(self){
-	soundPlay();
-	var coordianteBox = $('#text')[0];
-	coordianteBox.value = self.id;
-};
-
 var createPlayer = function(){
 	soundPlay();
 	if($('#name').val() =='')
@@ -26,11 +20,12 @@ var createPlayer = function(){
 	};
 };
 
-var checkAndSubmit = function(){
+var checkAndSubmit = function(self){
+	soundPlay();
 	var ship = $("#ship");
 	var shipName = ship[0].options[ship[0].selectedIndex].text;
 	var shipSize = ship.val();
-	var coordinateValue = $("#text").val();
+	var coordinateValue = self.id;
 	var align = $("#horizontal")[0].checked ? 'horizontal' :'vertical';	
 	$.post('placingOfShip',{shipName:shipName,shipSize:shipSize,
 		coordinate:coordinateValue,align:align
