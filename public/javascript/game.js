@@ -8,6 +8,13 @@ var soundPlay=function(){
 		audio.play();
 };
 
+$(".firstpage").ready(function(){
+    $("#name").keypress(function(ev){
+      	if (ev.which == '13') 
+       		createPlayer();
+    });
+});
+
 var createPlayer = function(){
 	soundPlay();
 	if($('#name').val() =='')
