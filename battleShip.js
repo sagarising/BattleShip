@@ -98,7 +98,7 @@ exports.Player.prototype.list_of_isAlive_of_each_ship = function(){
 };
 
 exports.Player.prototype.if_all_ship_sunk = function(){
-	var check_if_all_ship_sunk = this.list_of_isAlive_of_each_ship().every(function(status){
+	var check_if_all_ship_sunk = (this.list_of_isAlive_of_each_ship()).every(function(status){
 		return status == 0;
 	});
 	if(check_if_all_ship_sunk)
@@ -112,6 +112,7 @@ exports.Player.prototype.if_it_is_Hit = function(attackPoint){
 		this.ships.forEach(function(ship){
 			ship.if_ship_is_Hit(attackPoint);
 		});
+		this.if_all_ship_sunk();
 		return 1;
 	};
 	return 0;    

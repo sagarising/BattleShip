@@ -123,7 +123,9 @@ var updates = function(req,res){
 	var update = {};
 	var mySelf = game.currentPlayer(req.headers.cookie);
 	var enemy = game.enemyPlayer(req.headers.cookie);
-
+    var result = 
+    console.log(mySelf.isAlive,enemy.isAlive,"is alive of both>>>>>>>>")
+    console.log(result,"sfdgdsjghdhfgjdbghsbfghdbfgbdfsfg>>>>>>>>>>>>>>>>>");
 	update['ownStatusTable'] = {table:'ownStatusTable',stat:mySelf.list_of_isAlive_of_each_ship()};
 	update['enemyStatusTable'] = {table:'enemyStatusTable',stat:enemy.list_of_isAlive_of_each_ship()};
 	update['ownHit'] = {table:'own',stat:mySelf.grid.destroyed,color:"red"};

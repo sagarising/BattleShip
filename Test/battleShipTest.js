@@ -289,6 +289,7 @@ describe('if_all_ship_sunk',function(){
 	var player = new lib.Player('ram');
 	it('should not change isAlive of player even one ship is not sunk',function(){
 		player.if_all_ship_sunk();
+		player.ships[0].isAlive = 0;
 		var result = player.isAlive;
 		expect(player.isAlive).to.equal(true);
 	});
@@ -362,18 +363,18 @@ describe('if_a_player_dies',function(){
 	game.addPlayer(player2);
 
 	it('should return false when both players are alive',function(){
-		var result = game.if_a_player_dies(lib.players);
+		var result = game.if_a_player_dies();
 		expect(result).to.equal(false);
  	});
  	it('should return true even one player dies',function(){
  		player1.isAlive = false;
- 		var result = game.if_a_player_dies(lib.players);
+ 		var result = game.if_a_player_dies();
  		expect(result).to.equal(true);
  	});
  	it('should return true when both player are died',function(){
  		player1.isAlive = false;
  		player2.isAlive = false;
- 		var result = game.if_a_player_dies(lib.players);
+ 		var result = game.if_a_player_dies();
  		expect(result).to.equal(true);
  	});
 });
