@@ -4,6 +4,9 @@ body{
     margin: 0px;
 }
 
+.noClick{
+    pointer-events:none;
+}
 h3 {
     font-size: larger;
     position: relative;

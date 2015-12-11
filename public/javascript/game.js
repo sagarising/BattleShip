@@ -99,9 +99,9 @@ var statusUpdate = function(id,array){
 
 var attack = function(point) {
 	$.post('attack',{point:point.id},function(data){
-		if(!JSON.parse(data))
-			alert("not your turn");
+		
 	});
+	$(point).addClass("noClick");
 	soundPlay();
 };
 
