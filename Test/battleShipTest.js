@@ -416,7 +416,7 @@ describe('allocatePlayer',function() {
 		observer.allocatePlayer('pandey');
 		expect(observer.games).to.have.length(2);
 	});
-	it('Game ID for third player should be 3',function() {
+	it('Game ID for third player should be 2',function() {
 		expect(observer.games[1].gameID).to.equal(2);
 	});
 	it('should add forth player in the same second game',function() {
