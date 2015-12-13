@@ -8,6 +8,13 @@ var soundPlay=function(){
 		audio.play();
 };
 
+$(".firstpage").ready(function(){
+    $("#name").keypress(function(ev){
+      	if (ev.which == '13') 
+       		createPlayer();
+    });
+});
+
 var createPlayer = function(){
 	soundPlay();
 	if($('#name').val() =='')
@@ -99,9 +106,9 @@ var statusUpdate = function(id,array){
 
 var attack = function(point) {
 	$.post('attack',{point:point.id},function(data){
-		if(!JSON.parse(data))
-			alert("not your turn");
+		
 	});
+	$(point).addClass("noClick");
 	soundPlay();
 };
 
