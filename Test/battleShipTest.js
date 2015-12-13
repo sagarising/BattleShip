@@ -378,3 +378,56 @@ describe('if_a_player_dies',function(){
  		expect(result).to.equal(true);
  	});
 });
+
+describe('addGame',function() {
+	var observer = new lib.Observer();
+
+	it('should make new game objects inside which players will be allocated',function() {
+		observer.addGame();
+		expect(observer.games[0]).to.have.keys('players','gameID')
+	});
+	it('should push more game object when required',function(){
+		observer.addGame();
+		var expected = JSON.stringify({players:[],gameID:2});
+		expect(JSON.stringify(observer.games[1])).to.deep.equal(expected);
+	});
+})
+
+describe('allocatePlayer',function() {
+	var observer = new lib.Observer();
+	it('Initially games should have length 0',function(){
+		expect(observer.games).to.have.length(0);
+	});
+	it('should allocate player into game1',function() {
+		observer.allocatePlayer('abhishek');
+		expect(observer.games[0]).to.have.keys("players","gameID");
+	});
+	it('Game ID for first player should be 1',function() {
+		expect(observer.games[0].gameID).to.equal(1);
+	});
+	it('should add second player in the same game',function() {
+		observer.allocatePlayer('nabeel');
+		expect(observer.games).to.have.length(1);
+	});
+	it('Game ID for second player should be 1',function() {
+		expect(observer.games[0].gameID).to.equal(1);
+	});
+	it('should add third player in the next game',function() {
+		observer.allocatePlayer('pandey');
+		expect(observer.games).to.have.length(2);
+	});
+	it('Game ID for third player should be 3',function() {
+		expect(observer.games[1].gameID).to.equal(2);
+	});
+	it('should add forth player in the same second game',function() {
+		observer.allocatePlayer('lalit');
+		expect(observer.games).to.have.length(2);
+	});
+	it('should add fifth player in the next game',function() {
+		observer.allocatePlayer('mohan');
+		expect(observer.games).to.have.length(3);
+	});
+	it('Game ID for fifth player should be 3',function() {
+		expect(observer.games[2].gameID).to.equal(3);
+	});
+})

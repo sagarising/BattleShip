@@ -1,6 +1,27 @@
 var lib={};
 exports.lib = lib;
 
+exports.Observer = function() {
+	this.games = [];
+	this.gameNum = 1;
+}
+
+exports.Observer.prototype.addGame = function() {
+	var self = this;
+	this.games.push(new exports.Game(self.gameNum));
+	this.gameNum++;
+}
+
+exports.Observer.prototype.allocatePlayer = function(name) {
+	var currentGame = this.games[this.games.length-1];
+	if(currentGame && currentGame.players.length<2)
+		currentGame.addPlayer(new exports.Player(name));
+	else{
+		this.addGame();
+		this.games[this.games.length-1].addPlayer(new exports.Player(name));
+	}
+}
+
 lib.isHit = function(groupOfCoordinates,attackPoint) {
 	return groupOfCoordinates.indexOf(attackPoint) !== -1;
 };
@@ -28,8 +49,9 @@ lib.gridCreater.prototype.isUsedSpace = function(coordinates){
 	});
 };
 
-exports.Game = function(){
+exports.Game = function(gameID){
 	this.players=[];
+	this.gameID = gameID;
 }
 
 exports.Game.prototype.addPlayer = function(player){
@@ -55,9 +77,8 @@ exports.Game.prototype.canStartPlaying = function(){
 exports.Game.prototype.currentPlayer = function(cookie){
 	var player_who_requested;
 	this.players.forEach(function(element){
-		if(element.name == cookie){
+		if(element.name == cookie.match(/[a-z]/gi).join(''))
 			player_who_requested = element;
-		};
 	});
 	return player_who_requested;
 };
@@ -76,7 +97,6 @@ exports.Game.prototype.if_a_player_dies = function(){
 
 
 exports.Player = function(name){
-	var self = this;
 	this.name = name;
 	this.grid = new lib.gridCreater();
 	this.ships = [new lib.Ship(5),
