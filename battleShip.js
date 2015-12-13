@@ -58,13 +58,14 @@ exports.Game.prototype.addPlayer = function(player){
 	this.players.push(player);
 }
 
-exports.Game.prototype.gameOver = function(){
-	var player_who_lost = this.players[0].isAlive? this.players[1]: this.players[0];
-	var player_who_won = this.players[0].isAlive? this.players[0]: this.players[1];
-	var result_of_game = {won:player_who_won.name,lost:player_who_lost.name}
-	this.players.length = 0;
-	return JSON.stringify(result_of_game);
-};
+// exports.Game.prototype.gameOver = function(){
+// 	var player_who_lost = this.players[0].isAlive? this.players[1]: this.players[0];
+// 	var player_who_won = this.players[0].isAlive? this.players[0]: this.players[1];
+// 	var winnerStatus = player_who_won.list_of_isAlive_of_each_ship();
+// 	var result_of_game = {won:player_who_won,lost:player_who_lost,status:winnerStatus}
+// 	this.players.length = 0;
+// 	return JSON.stringify(result_of_game);
+// };
 
 exports.Game.prototype.canStartPlaying = function(){
 	var areAllPlayersReady = this.players.every(function(player){

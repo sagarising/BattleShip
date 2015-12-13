@@ -177,43 +177,43 @@ describe('List_of_isAlive_of_each_ship',function(){
 	});
 });
 
-describe('gameOver',function(){
-	var game = new lib.Game();
-	var player1 = new lib.Player('ram');
+// describe('gameOver',function(){
+// 	var game = new lib.Game();
+// 	var player1 = new lib.Player('ram');
 
-	var player2 = new lib.Player('manu');
+// 	var player2 = new lib.Player('manu');
 
-	it('should return an object with player1 won and player2 lost when player2 loses the game',function(){
-		player1.isAlive = true;
-		player2.isAlive = false;
+// 	it('should return an object with player1 won and player2 lost when player2 loses the game',function(){
+// 		player1.isAlive = true;
+// 		player2.isAlive = false;
 
-		game.addPlayer(player1);
-		game.addPlayer(player2);
+// 		game.addPlayer(player1);
+// 		game.addPlayer(player2);
 
-		var result = game.gameOver();
-		expect(result).to.equal('{"won":"ram","lost":"manu"}');
-	});
-	it('should return an object with player2 won and player1 lost when player1 loses the game',function(){
-		player1.isAlive = false;
-		player2.isAlive = true;
+// 		var result = game.gameOver();
+// 		expect(result).to.equal('{"won":"ram","lost":"manu"}');
+// 	});
+// 	it('should return an object with player2 won and player1 lost when player1 loses the game',function(){
+// 		player1.isAlive = false;
+// 		player2.isAlive = true;
 
-		game.addPlayer(player1);
-		game.addPlayer(player2);
+// 		game.addPlayer(player1);
+// 		game.addPlayer(player2);
 
-		var result = game.gameOver();
-		expect(result).to.equal('{"won":"manu","lost":"ram"}')
-	});
-	it('should remove players from players array after gameOver',function(){
-		player1.isAlive = false;
-		player2.isAlive = true;
+// 		var result = game.gameOver();
+// 		expect(result).to.equal('{"won":"manu","lost":"ram"}')
+// 	});
+// 	it('should remove players from players array after gameOver',function(){
+// 		player1.isAlive = false;
+// 		player2.isAlive = true;
 
-		game.addPlayer(player1);
-		game.addPlayer(player2);
+// 		game.addPlayer(player1);
+// 		game.addPlayer(player2);
 
-		game.gameOver();
-		expect(game.players.length).to.equal(0);
-	});
-});
+// 		game.gameOver();
+// 		expect(game.players.length).to.equal(0);
+// 	});
+// });
 
 describe('if_it_is_Hit',function(){
 	var player = new lib.Player('ram');

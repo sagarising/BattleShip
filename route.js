@@ -164,6 +164,7 @@ var gameOver = function(req,res) {
 		}
 		var winnerStatus = winner.list_of_isAlive_of_each_ship();
 		var gameSummary = {winner:winner,loser:loser,shipsStatus:winnerStatus};
+
 		res.end(JSON.stringify(gameSummary));
 }
 
