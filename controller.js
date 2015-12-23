@@ -1,6 +1,8 @@
 var fs = require('fs');
 var querystring = require('querystring');
 var lib = require('./battleShip.js');
+var EventEmitter = require('events').EventEmitter;
+var rEmitter = new EventEmitter();
 game = new lib.Game();
 var observer = new lib.Observer();
 var method_not_allowed = function(req, res){
@@ -136,8 +138,7 @@ var updates = function(req,res){
 	var game = currentPlayerGame(req);
 	var mySelf = game[0].currentPlayer(req.headers.cookie);
 	var enemy = game[0].enemyPlayer(req.headers.cookie);
-    // var result = 
-    console.log(mySelf.isAlive,enemy.isAlive,"is alive of both>>>>>>>>")
+    // console.log(mySelf.isAlive,enemy.isAlive,"is alive of both>>>>>>>>")
     // console.log(result,"sfdgdsjghdhfgjdbghsbfghdbfgbdfsfg>>>>>>>>>>>>>>>>>");
 	update['ownStatusTable'] = {table:'ownStatusTable',stat:mySelf.list_of_isAlive_of_each_ship()};
 	update['enemyStatusTable'] = {table:'enemyStatusTable',stat:enemy.list_of_isAlive_of_each_ship()};
@@ -168,14 +169,14 @@ var gameOver = function(req,res) {
 		res.end(JSON.stringify(gameSummary));
 }
 
-exports.post_handlers = [
+var post_handlers = [
 	{path: '^/player$', handler: createPlayer},
 	{path:'^/placingOfShip$',handler:checkAndSubmit},
 	{path:'^/attack$',handler:checkAttackedPoint},
 	{path: '', handler: method_not_allowed}
 ];
 
-exports.get_handlers = [
+var get_handlers = [
 	{path: '^/$', handler: serveIndex},
 	{path: '^/show$', handler: showDetails},
 	{path: '^/usedSpace$',handler:usedSpace},
@@ -187,3 +188,48 @@ exports.get_handlers = [
 	{path: '', handler: fileNotFound}
 ];
 
+
+
+
+var matchHandler = function(url){
+	return function(ph){
+		return url.match(new RegExp(ph.path));
+	};
+};
+
+rEmitter.on('next', function(handlers, req, res, next){
+	if(handlers.length == 0) return;
+	var ph = handlers.shift();
+	ph.handler(req, res, next);
+});
+
+var handle_all_post = function(req, res){
+	var handlers = post_handlers.filter(matchHandler(req.url));
+	var next = function(){
+		rEmitter.emit('next', handlers, req, res, next);
+	};
+	next();
+}; 
+
+var handle_all_get = function(req, res){
+	var handlers = get_handlers.filter(matchHandler(req.url));
+	var next = function(){
+		rEmitter.emit('next', handlers, req, res, next);
+	};
+	next();
+};
+
+var requestHandler = function(req, res){
+	process.on('uncaughtException',function(err){
+	console.log(err.stack);
+	res.end(err.stack);
+	});
+	if(req.method == 'GET')
+		handle_all_get(req, res);
+	else if(req.method == 'POST')
+		handle_all_post(req, res);
+	else
+		method_not_allowed(req, res);
+};
+
+module.exports = requestHandler;
