@@ -1,14 +1,14 @@
 <html>
 <head>
-	<title></title>
-	<link rel="stylesheet" type="text/css" href="./styles/style.css">
+	<title>Place Ships</title>
+	<link rel="stylesheet" type="text/css" href="../styles/style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script type="text/javascript" src = "./javascript/game.js"></script>
+	<script type="text/javascript" src = "../javascript/game.js"></script>
 	
 </head>
 <body onload="playerName()">
 	<div class="banner">
-		<img src="./images/battle_ship_logo.png" width="100px">
+		<img src="../images/battle_ship_logo.png" width="100px">
     	<h3></h3>
     </div>
 	<table id="shipDeployment" class="grid" value="own">
@@ -134,16 +134,16 @@
 		</tr>
 	</table>
 	<audio id="mysoundclip" preload="auto">
-    		<source src="tick.wav"></source>
+    		<source src="../soundFiles/tick.wav"></source>
 	</audio>
 	<div id="selectShip" class = "controller">
 	<center><h1>Control Panel</h1></center>
 	<select id="ship">
-		<option value="0">Carrier (size:5)</option>
-		<option value="1">Battleship (size:4)</option>
-		<option value="2">Cruiser (size:3)</option>
+		<option value="5">Carrier (size:5)</option>
+		<option value="4">Battleship (size:4)</option>
+		<option value="3">Cruiser (size:3)</option>
 		<option value="3">Submarine (size:3)</option>
-		<option value="4">Destroyer (size:2)</option>
+		<option value="2">Destroyer (size:2)</option>
 	</select>
 	<br>
 	Alignment<br>

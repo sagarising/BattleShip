@@ -22,7 +22,7 @@ var createPlayer = function(){
 	else{
 		$.post('player',{ name : $('#name').val()},
 		function(data){
-			window.location.href = 'shipPlacingPage.html';
+			window.location.href = './shipPlacingPage.html';
 		});
 	};
 };
@@ -30,15 +30,13 @@ var createPlayer = function(){
 var checkAndSubmit = function(self){
 	soundPlay();
 	var ship = $("#ship");
-	var shipName = ship[0].options[ship[0].selectedIndex].text;
+	// var shipName = ship[0].options[ship[0].selectedIndex].text;
 	var shipSize = ship.val();
 	var coordinateValue = self.id;
 	var align = $("#horizontal")[0].checked ? 'horizontal' :'vertical';	
-	$.post('placingOfShip',{shipName:shipName,shipSize:shipSize,
-		coordinate:coordinateValue,align:align
-		},
+	$.post('placingOfShip',{shipSize:shipSize,coordinate:coordinateValue,align:align},
 		function(data){
-			var shipCoordinate = JSON.parse(data); 
+			var shipCoordinate = (data); 
 			var ship = $('#ship')[0];
 			ship.remove(ship.selectedIndex);
 			if(ship.children.length==0){
@@ -83,7 +81,7 @@ var sendToGamePage = function(){
 
 var changeTheColorOfGamePage = function(){
 	$.get('usedSpace',function(data){
-		placesWhereShipArePlaced = JSON.parse(data);
+		placesWhereShipArePlaced = data;
 		changingTheColorOfGrid('own',placesWhereShipArePlaced,'grey');
 	});
 };
@@ -127,7 +125,7 @@ var update = function(){
 	$.get('givingUpdate',function(data){
 		var shipStatus = [];
 		var gridStatus = [];
-		var updates = JSON.parse(data);
+		var updates = data;
 		var playerTurn = updates.isTurn;
 		displayTurn(playerTurn);
 		shipStatus = [updates.ownStatusTable,updates.enemyStatusTable];
@@ -146,7 +144,7 @@ var update = function(){
 
 var winnerAndLoser = function(update){
 	$.get('gameOver',function(data){
-		var updates = JSON.parse(data);
+		var updates = data;
 		var winnerShipsSunk = updates.shipsStatus.filter(function(ele){return ele==0}).length;
 		var context = {winner:updates.winner.name,loser:updates.loser.name,winnerStatus:winnerShipsSunk+'/5',loserStatus:'5/5'};
 		var source = $('#declare').html();
