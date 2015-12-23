@@ -16,11 +16,13 @@
 		<section id ="resultBox">
 			<div style="float:left; width:800px; padding-left:200px;">
 				<h2>Winner : <span style="color:blue">{{winner}}</span></h2>
-				<p>My ships destroyed : <span style="color:blue">{{winnerStatus}}</span></p>
+				<p>Ships destroyed : <span style="color:blue">{{winnerStatus}}</span></p>
+				<p>Hit Accuracy: <span style="color:blue">{{winnerAccuracy}}</span></p>
 			</div>
 			<div style="float:left;">
 				<h2>Loser : <span style="color:blue">{{loser}}</span></h2>
-				<p>My ships destroyed : <span style="color:blue">{{loserStatus}}</span></p>
+				<p>Ships destroyed: <span style="color:blue">{{loserStatus}}</span></p>
+				<p>Hit Accuracy: <span style="color:blue">{{loserAccuracy}}</span></p>
 			</div>
 			<div class="own" style="padding-left:150px; float:left">
 			<table class="grid" id="own" value="own">
@@ -272,9 +274,11 @@
 			</div>
 		</section><br>
 
-			<div id="hits">HITS</div>
-			<div id="miss">MISS</div>
-			<div id="shipsLeft">Ships left</div>
+			<div id="hits" class="label">HITS</div>
+			<div id="miss" class="label">MISS</div>
+			<div id="shipsLeft" class="label">Left</div>
+			<button id = "restartButton" onclick="soundPlay();window.location.href='index.html';">Play Again</button>
+
 	</script>
 	<div id="result"></div>
 </body>

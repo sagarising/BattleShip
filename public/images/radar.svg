@@ -221,42 +221,4 @@
        repeatCount="indefinite" />
   </g>
 </svg>
-<!-- <circle cx="650" cy="350" r="235" fill="none" stroke="black" stroke-width="3" />
-	<g>
-		<line x1="650" y1="350" x2="750" y2="135" style="stroke:rgb(255,0,0);stroke-width:2"/>
-		<line x1="650" y1="350" x2="885" y2="350" style="stroke:rgb(255,0,0);stroke-width:2"/>
-		<line x1="650" y1="350" x2="550" y2="564" style="stroke:rgb(255,0,0);stroke-width:2"/>
-		<line x1="650" y1="350" x2="415" y2="350" style="stroke:rgb(255,0,0);stroke-width:2"/>
-		<circle cx="757" cy="125" r="15" fill="yellow" stroke="black" stroke-width="3" />
-		<circle cx="900" cy="350" r="15" fill="red" stroke="black" stroke-width="3" />
-		<circle cx="545" cy="577" r="15" fill="red" stroke="black" stroke-width="3" />
-		<circle cx="400" cy="350" r="15" fill="yellow" stroke="black" stroke-width="3" />
-		
-		<animateTransform attributeName="transform"
-                          attributeType="XML"
-                          type="rotate"
-                          from="0 650 350"
-                          to="360 650 350"
-                          dur="30s"
-                          repeatCount="indefinite"/>
-	</g>
-
-
-<circle cx="250" cy="250" r="160" stroke="black" stroke-width="3" fill="black"/>
-<g>
-   <polygon points="250,250 300,95 200,95"          
-     style="fill:#07B705;stroke:purple;stroke-width:1" /> -->
-
-<!-- <polygon points="250,250 280,405 220,405"          
-     style="fill:red;stroke:purple;stroke-width:1" /> -->
-
-<!-- <animateTransform attributeName="transform"
-                          attributeType="XML"
-                          type="rotate"
-                          from="0 250 250"
-                          to="360 250 250"
-                          dur="3s"
-                          repeatCount="indefinite"/> -->
-
-<!-- </g> -->
 

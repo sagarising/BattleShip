@@ -142,11 +142,32 @@ var update = function(){
 	});
 };
 
+var hitAccuracy = function(player){
+	var attempts = player.hits.length + player.misses.length;
+	var ratioOfHits = player.hits.length / attempts ;
+	var percentage = Math.round(ratioOfHits*100);
+	return percentage+"%";
+}
+
+var Context = function(updates){
+	var winner = updates.winner;
+	var loser = updates.loser;
+	this.winner = winner.name;
+	this.loser = loser.name;
+	this.winnerStatus = updates.shipsStatus.filter(function(ele){return ele==0}).length+"/5";
+	this.loserStatus = "5/5";
+	this.winnerAccuracy = hitAccuracy(winner);
+	this.loserAccuracy =  hitAccuracy(loser);
+}
+
 var winnerAndLoser = function(update){
 	$.get('gameOver',function(data){
 		var updates = data;
 		var winnerShipsSunk = updates.shipsStatus.filter(function(ele){return ele==0}).length;
-		var context = {winner:updates.winner.name,loser:updates.loser.name,winnerStatus:winnerShipsSunk+'/5',loserStatus:'5/5'};
+		var context = new Context(updates);
+
+		 // {winner:updates.winner.name,loser:updates.loser.name,winnerStatus:winnerShipsSunk+'/5',loserStatus:'5/5',
+						// winnerAccuracy:'56',loserAccuracy:'45'};
 		var source = $('#declare').html();
 		var template = Handlebars.compile(source);
 		$('#result').html(template(context));
