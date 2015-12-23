@@ -3,8 +3,9 @@ var querystring = require('querystring');
 var lib = require('./battleShip.js');
 var EventEmitter = require('events').EventEmitter;
 var rEmitter = new EventEmitter();
-game = new lib.Game();
-var observer = new lib.Observer();
+
+game = require('./Game');
+var observer = require('./observer');
 var method_not_allowed = function(req, res){
 	res.statusCode = 405;
 	console.log(res.statusCode);
@@ -138,8 +139,7 @@ var updates = function(req,res){
 	var game = currentPlayerGame(req);
 	var mySelf = game[0].currentPlayer(req.headers.cookie);
 	var enemy = game[0].enemyPlayer(req.headers.cookie);
-    // console.log(mySelf.isAlive,enemy.isAlive,"is alive of both>>>>>>>>")
-    // console.log(result,"sfdgdsjghdhfgjdbghsbfghdbfgbdfsfg>>>>>>>>>>>>>>>>>");
+
 	update['ownStatusTable'] = {table:'ownStatusTable',stat:mySelf.list_of_isAlive_of_each_ship()};
 	update['enemyStatusTable'] = {table:'enemyStatusTable',stat:enemy.list_of_isAlive_of_each_ship()};
 	update['ownHit'] = {table:'own',stat:mySelf.grid.destroyed,color:"red"};
