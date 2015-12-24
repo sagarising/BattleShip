@@ -1,7 +1,8 @@
 // var assert = require('chai').assert;
 // var expect = require('chai').expect;
-// var lib = require('../battleShip.js');
-
+// var lib = require('../lib/battleShip.js');
+// var player = require('../lib/player.js');
+// console.log(player.toString());
 // describe('Ship',function(){
 // 	it('should give an array of coordinates',function(){
 // 		var ship = new lib.lib.Ship(3);
@@ -13,14 +14,14 @@
 // });
 
 // describe('isAllowed',function(){
-// 	var player = new lib.Player('ram');
+// 	var user = new player('ram');
 // 	it('should check if the firstpoint is valid for placing ship aligned vertical',function(){
-// 		assert.equal(true,lib.lib.isAllowedToBePlaced(player.ships[0],"vertical","B9")); 
-// 		assert.equal(false,lib.lib.isAllowedToBePlaced(player.ships[0],"vertical","I9")); 
+// 		assert.equal(true,lib.lib.isAllowedToBePlaced(user.ships[0],"vertical","B9")); 
+// 		assert.equal(false,lib.lib.isAllowedToBePlaced(user.ships[0],"vertical","I9")); 
 // 	});
 // 	it('should check if the firstpoint is valid for placing ship aligned horizontal',function(){
-// 		assert.equal(true,lib.lib.isAllowedToBePlaced(player.ships[0],"vertical","B9")); 
-// 		assert.equal(false,lib.lib.isAllowedToBePlaced(player.ships[0],"vertical","I9")); 
+// 		assert.equal(true,lib.lib.isAllowedToBePlaced(user.ships[0],"vertical","B9")); 
+// 		assert.equal(false,lib.lib.isAllowedToBePlaced(user.ships[0],"vertical","I9")); 
 // 	});
 // });
 
@@ -33,15 +34,15 @@
 
 // describe('isUsedSpace',function(){
 // 	var grid = new lib.lib.gridCreater();
-// 	var player = new lib.Player('ram');
+// 	var user = new lib.Player('ram');
 // 	it('should return true if coordinate exists in used coordinates',function(){
 // 		grid.usedCoordinates = ['A1'];
-// 		player.ships[3].coordinates = ['A1','A2','A3'];
-// 		assert.equal(true,grid.isUsedSpace(player.ships[3].coordinates));
+// 		user.ships[3].coordinates = ['A1','A2','A3'];
+// 		assert.equal(true,grid.isUsedSpace(user.ships[3].coordinates));
 // 	});
 // 	it('should return false if coordinate does not exists in used coordinates',function(){
 // 		grid.usedCoordinates = ['B2'];
-// 		assert.equal(false,grid.isUsedSpace(player.ships[0].coordinates));
+// 		assert.equal(false,grid.isUsedSpace(user.ships[0].coordinates));
 // 	});
 // });
 

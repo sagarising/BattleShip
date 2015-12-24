@@ -1,5 +1,5 @@
 var http = require('http');
-var controller = require('./controller');
+var controller = require('./lib/controller');
 // var EventEmitter = require('events').EventEmitter;
 // var routes = require('./route.js');
 // var get_handlers = routes.get_handlers;
