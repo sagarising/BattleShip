@@ -2,7 +2,9 @@ var assert = require('chai').assert;
 var controller = require('../lib/controller');
 var request = require('supertest');
 
-describe('controller',function() {
+
+
+describe('controller',function(){
 	describe('/',function(){
 		it('should give homePage',function(done){
 		request(controller)
@@ -68,5 +70,12 @@ describe('controller',function() {
 			.expect(200,done);
 		})
 	})
+	describe('',function(){
+		it('should return after checking',function(done){
+			request(controller)
+				.post('')
+				.expect(405,done);
+		})
+	});
 
 });
