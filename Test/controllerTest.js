@@ -74,7 +74,7 @@ describe('controller',function(){
 		it('should return after checking',function(done){
 			request(controller)
 				.post('')
-				.expect(405,done);
+				.expect(404,done);
 		})
 	});
 

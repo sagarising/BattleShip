@@ -73,6 +73,7 @@ button:hover{
 #loading{
     visibility: hidden;
     display: inline;
+    animation:loading 1s infinite alternate;
 }
 
 .controller{
@@ -121,6 +122,11 @@ section table#own{
 @keyframes scale {
     0%   {transform:scale(1)}
     100% {transform:scale(1.2);background-color:green;}
+}
+
+@keyframes loading{
+    0% {}
+    100% {color:transparent;text-shadow:0px 0px 3px lightsteelblue;}
 }
 
 .label{
