@@ -19,6 +19,13 @@
   "homepage": "https://github.com/nabeel95/BattleShip#readme",
   "devDependencies": {
     "chai": "^3.4.1",
-    "mocha": "^2.3.4"
+    "mocha": "^2.3.4",
+    "sinon": "^1.17.2",
+    "supertest": "^1.1.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "cookie-parser": "^1.4.0",
+    "express": "^4.13.3"
   }
 }
