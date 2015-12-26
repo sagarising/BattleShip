@@ -43,8 +43,8 @@ h3 {
 }
 
 .grid td:hover{
+    cursor : url(../images/crosshair.png) 25 25,cell;
 	background-color: lightgrey;
-    cursor: pointer;
 }
 
 .firstpagestart{
