@@ -2,6 +2,7 @@ var assert = require('chai').assert;
 var controller = require('../lib/controller');
 var request = require('supertest');
 
+controller.injectObserver({});
 
 
 describe('controller',function(){
