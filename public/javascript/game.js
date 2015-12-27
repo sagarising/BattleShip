@@ -30,7 +30,6 @@ var createPlayer = function(){
 var checkAndSubmit = function(self){
 	soundPlay();
 	var ship = $("#ship");
-	// var shipName = ship[0].options[ship[0].selectedIndex].text;
 	var shipSize = ship.val();
 	var coordinateValue = self.id;
 	var align = $("#horizontal")[0].checked ? 'horizontal' :'vertical';	
@@ -112,11 +111,11 @@ var attack = function(point) {
 
 var displayTurn = function(turn){
 	if(turn == true){
-		$( ".controller" ).html( "<p>Your turn</p>" );
+		$( ".turn" ).html( "<p>Your turn</p>" );
 		$("#enemy").css("pointer-events","auto");
 	}
 	else{
-		$( ".controller" ).html( "<p>Enemy's turn</p>" );
+		$( ".turn" ).html( "<p>Enemy's turn</p>" );
 		$("#enemy").css("pointer-events","none");
 	};
 };
@@ -165,9 +164,6 @@ var winnerAndLoser = function(update){
 		var updates = data;
 		var winnerShipsSunk = updates.shipsStatus.filter(function(ele){return ele==0}).length;
 		var context = new Context(updates);
-
-		 // {winner:updates.winner.name,loser:updates.loser.name,winnerStatus:winnerShipsSunk+'/5',loserStatus:'5/5',
-						// winnerAccuracy:'56',loserAccuracy:'45'};
 		var source = $('#declare').html();
 		var template = Handlebars.compile(source);
 		$('#result').html(template(context));
@@ -186,4 +182,6 @@ var serveStatus = function(){
 	changeTheColorOfGamePage();
 	setInterval(update,120);
 };
+
+
 

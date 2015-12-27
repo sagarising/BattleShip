@@ -1,7 +1,10 @@
 var assert = require('chai').assert;
 var controller = require('../lib/controller');
 var request = require('supertest');
-console.log(controller);
+
+
+controller.injectObserver({});
+
 describe('controller',function(){
 	describe('/',function(){
 		it('should give homePage',function(done){
