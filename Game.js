@@ -1,8 +1,9 @@
+var _ = require('lodash')
 var Ship = require('./ship');
 
-var Game = function(){
+var Game = function(gameId){
 	this.players=[];
-	this.gameID = gameID;
+	this.gameID = gameId;
 }
 
 Game.prototype.getPlayer = function(){return this.players};
@@ -73,7 +74,7 @@ Game.prototype.positionShip = function(shipInfo,player){
 
 Game.prototype.isHit = function(point,name) {
 	var enemyPlayer = this.enemyPlayer(name);
-	return enemyPlayer.indexOf(point) !== -1;
+	return enemyPlayer.grid.usedCoordinates.indexOf(point) !== -1;
 };
 
 Game.prototype.removeHitPoint = function(point,name) {
@@ -90,12 +91,12 @@ Game.prototype.checkForAllShipsSunk = function(name) {
 	enemyPlayer.if_all_ship_sunk();
 }
 
-this.placedShipsPosition = function(shipInfo,playerInfo) {
+Game.prototype.placedShipsPosition = function(shipInfo,playerInfo) {
 	var player = this.currentPlayer(playerInfo.name);
 	this.positionShip(shipInfo,player);
 	return player.grid.usedCoordinates;
 }
-this.arePlayersReady = function(playerInfo) {
+Game.prototype.arePlayersReady = function(playerInfo) {
 	var player = this.currentPlayer(playerInfo.name);
 	if(player.grid.usedCoordinates.length == 17){
 		player.isReady = true;
@@ -104,13 +105,51 @@ this.arePlayersReady = function(playerInfo) {
 	}
 	else return 'select more ships'
 };
-this.reinitiatingUsedCoordinates = function(playerInfo) {
+Game.prototype.reinitiatingUsedCoordinates = function(playerInfo) {
 	var player = this.currentPlayer(playerInfo.name);
 	player.grid.usedCoordinates = [];
 }
-this.usedCoordinatesOfPlayer = function(playerInfo){
+Game.prototype.usedCoordinatesOfPlayer = function(playerInfo){
 	var currentPlayer = this.currentPlayer(playerInfo.name);
 	return currentPlayer.grid.usedCoordinates.slice(0);
+}
+
+Game.prototype.changeTurn = function(name) {
+	var currentPlayer = this.currentPlayer(name);
+	var enemyPlayer = this.enemyPlayer(name);
+	currentPlayer.turn = false;
+	enemyPlayer.turn = true;
+}
+
+Game.prototype.insert_point_into_hitPoints = function(attackPoint,name) {
+	var player = this.currentPlayer(name);
+	player.hits.push(attackPoint);
+}
+
+Game.prototype.insert_point_into_missPoints = function(attackPoint,name) {
+	var player = this.currentPlayer(name);
+	player.misses.push(attackPoint);
+}
+
+Game.prototype.playersStatus = function(player) {
+	var currentPlayer = this.currentPlayer(player);
+	var enemyPlayer = this.enemyPlayer(player);
+	return {
+		currentPlayerShips:shipsStatus(currentPlayer),
+		enemyPlayerShips:shipsStatus(enemyPlayer),
+		destroyedPoints:currentPlayer.grid.destroyed,
+		missPoints:currentPlayer.misses,
+		hitPoints:currentPlayer.hits,
+		turn:currentPlayer.turn
+	};
+}
+
+var shipsStatus = function(player) {
+	var status = [];
+	player.ships.forEach(function(eachShip){
+		status.push(eachShip.isAlive);
+	})
+	return status;
 }
 
 var removePointFromArray = function(array,point) {

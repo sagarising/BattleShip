@@ -79,6 +79,7 @@ var update = function(){
 		var gridStatus = [];
 		var updates = data;
 		var playerTurn = updates.isTurn;
+		console.log(playerTurn,"whose turn")
 		displayTurn(playerTurn);
 		shipStatus = [updates.ownStatusTable,updates.enemyStatusTable];
 		shipStatus.forEach(function(eachPlayer){

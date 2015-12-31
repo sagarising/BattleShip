@@ -13,7 +13,8 @@ var helmet = require('helmet');
 // };
 
 var reinitiate_usedCoordinates = function(req,res,next) {
-	observer.reinitiatingUsedCoordinates(req.cookies);
+	var game = observer.gameOfCurrentPlayer(req.cookies.gameId);
+	game.reinitiatingUsedCoordinates(req.cookies);
 	next();
 }
 
@@ -56,24 +57,33 @@ app.post('/attack',function(req,res){
 	if(game.isHit(attackedPoint,playerName)){
 		game.removeHitPoint(attackedPoint,playerName);
 		game.checkForAllShipsSunk(playerName)
-		game.insert_point_into_hitPoints(attackedPoint);
+		game.insert_point_into_hitPoints(attackedPoint,playerName);
 	}
 	else
 		game.insert_point_into_missPoints(attackedPoint);
+	game.changeTurn(playerName);
 });
 
 app.get('/givingUpdate',function(req,res){
 	var update = {};
 	var game = observer.gameOfCurrentPlayer(req.cookies.gameId);
-	var mySelf = game.currentPlayer(req.cookies.name);
-	var enemy = game.enemyPlayer(req.cookies.name);
-	update['ownStatusTable'] = {table:'ownStatusTable',stat:mySelf.list_of_isAlive_of_each_ship()};
-	update['enemyStatusTable'] = {table:'enemyStatusTable',stat:enemy.list_of_isAlive_of_each_ship()};
-	update['ownHit'] = {table:'own',stat:mySelf.grid.destroyed,color:"red"};
-	update['enemyMiss'] = {table:"enemy",stat:mySelf.misses,color:"paleturquoise"};
-	update['enemyHit'] = {table:"enemy",stat:mySelf.hits,color:"red"};
-	update['isGameOver'] = game.is_any_player_died();
-	update['isTurn'] = mySelf.turn;
+	var status = game.playersStatus(req.cookies.name);
+	update = {
+			ownStatusTable    : {table:'ownStatusTable',stat:status.currentPlayerShips},
+			enemyStatusTable  : {table:'enemyStatusTable',stat:status.enemyPlayerShips},
+			ownHit            : {table:'own',stat:status.destroyedPoints,color:'red'},
+			enemyMiss         : {table:"enemy",stat:status.missPoints,color:"paleturquoise"},
+			enemyHit          : {table:"enemy",stat:status.hitPoints,color:"red"},
+			isGameOver        : game.is_any_player_died(),
+			isTurn            : status.turn
+	}
+	// update['ownStatusTable'] = {table:'ownStatusTable',stat:status.currentPlayerShips};
+	// update['enemyStatusTable'] = {table:'enemyStatusTable',stat:status.enemyPlayerShips};
+	// update['ownHit'] = {table:'own',stat:status.destroyedPoints};
+	// update['enemyMiss'] = {table:"enemy",stat:mySelf.misses,color:"paleturquoise"};
+	// update['enemyHit'] = {table:"enemy",stat:mySelf.hits,color:"red"};
+	// update['isGameOver'] = game.is_any_player_died();
+	// update['isTurn'] = mySelf.turn;
 	res.send(update);
 })
 

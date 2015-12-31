@@ -1,6 +1,6 @@
 var Player = require('./player');
 var _ = require('lodash')
-
+var Game = require('./Game');
 var Observer = function() {
 	this.games = [];
 	this.gameNum = 1;
