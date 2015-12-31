@@ -1,57 +1,32 @@
+
+// gamepage
 var playerName= function(){
-	$('h3').append(document.cookie);	
+	$('h3').append((document.cookie).split('=')[1]);	
 };
 
+var changeTheColorOfGamePage = function(){
+	$.get('usedSpace',function(data){
+		placesWhereShipArePlaced = data;
+		changingTheColorOfGrid('own',placesWhereShipArePlaced,'grey');
+	});
+};
 
+var attack = function(point) {
+	$.post('attack',{point:point.id},function(data){});
+	$(point).addClass("noClick");
+	soundPlay();
+};
+
+//Associate function
 var soundPlay=function(){
 	var audio = $("#mysoundclip")[0];
 		audio.play();
 };
 
-$(".firstpage").ready(function(){
-    $("#name").keypress(function(ev){
-      	if (ev.which == '13') 
-       		createPlayer();
-    });
-});
-
-var createPlayer = function(){
-	soundPlay();
-	if($('#name').val() =='')
-		alert('first enter your name')
-	else{
-		$.post('player',{ name : $('#name').val()},
-		function(data){
-			window.location.href = './shipPlacingPage.html';
-		});
-	};
-};
-
-var checkAndSubmit = function(self){
-	soundPlay();
-	var ship = $("#ship");
-	// var shipName = ship[0].options[ship[0].selectedIndex].text;
-	var shipSize = ship.val();
-	var coordinateValue = self.id;
-	var align = $("#horizontal")[0].checked ? 'horizontal' :'vertical';	
-	$.post('placingOfShip',{shipSize:shipSize,coordinate:coordinateValue,align:align},
-		function(data){
-			var shipCoordinate = (data); 
-			var ship = $('#ship')[0];
-			ship.remove(ship.selectedIndex);
-			if(ship.children.length==0){
-				$('#ready').css({"pointer-events":"auto","opacity":"1","animation":"scale 0.5s infinite alternate"}); 
-				$('#placeShip').css({"pointer-events":"none","opacity":"0.5"});
-			};
-			shipCoordinate.map(function(element){
-				$('#'+element).css("background-color","darkslategrey");
-		});
-	});
-};
 
 var updateForShipPlacing = function(){
 	$.get('placingOfShip',function(data){
-		var shipCoordinate = JSON.parse(data); 
+		var shipCoordinate = data; 
 		var ship = $('#ship')[0];
 		ship.remove(ship.selectedIndex);
 		if(ship.children.length==0)
@@ -63,29 +38,12 @@ var updateForShipPlacing = function(){
 	});
 };
 
-var sendToGamePage = function(){
-	$.get('makeReady',function(data){
-		data = JSON.parse(data);
-		if(data==='select more ships'){
-			$('#alert').show();
-		}
-		else{
-			if(data===true)
-				window.location.href = "game.html";
-			$('#loading').css('visibility','visible');
-			$('#selectShip').css('visibility','hidden');
-			$('table').css('pointerEvents','none');
-		}
-	})
-};
+//shipPlacingPage
 
-var changeTheColorOfGamePage = function(){
-	$.get('usedSpace',function(data){
-		placesWhereShipArePlaced = data;
-		changingTheColorOfGrid('own',placesWhereShipArePlaced,'grey');
-	});
-};
 
+//gamePage
+
+//
 var changingTheColorOfGrid=function(clas,usedSpace,colour){
 	usedSpace.forEach(function(eachCoordinate){
 		$('.'+clas+' [id='+eachCoordinate+']').css("background-color",colour);
@@ -102,13 +60,7 @@ var statusUpdate = function(id,array){
 	});
 };
 
-var attack = function(point) {
-	$.post('attack',{point:point.id},function(data){
-		
-	});
-	$(point).addClass("noClick");
-	soundPlay();
-};
+//gamePage
 
 var displayTurn = function(turn){
 	if(turn == true){

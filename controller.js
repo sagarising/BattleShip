@@ -5,116 +5,82 @@ var cookieParser = require('cookie-parser');
 var Observer = require('./observer.js');
 var observer = new Observer();
 var Grid =  require('./grid');
-
-
-// var player=function(req,res,next){
-// 	if(req.cookies.name)
-// 		req.player = {name:req.cookies.name};
-// 	next();
-// };
+var helmet = require('helmet');
 
 // var ensureLogin = function(req,res,next){
-// 	if(req.cookies.name){
-// 		next();	
-// 	} 
+// 	if(req.body.name) next();	
 // 	else res.redirect('/');
 // };
 
 var reinitiate_usedCoordinates = function(req,res,next) {
-	var game = observer.gameOfCurrentPlayer(req.cookies.name);
-	var player = game[0].currentPlayer(req.cookies.name);
-	player.grid.usedCoordinates = [];
+	observer.reinitiatingUsedCoordinates(req.cookies);
 	next();
+}
+
+var setPlayerCookie = function(req,res) {
+	res.cookie('name',req.body.name);	
+	res.cookie('gameId', observer.games[observer.games.length-1].gameID);
 }
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
-
-app.use("/shipPlacingPage.html",reinitiate_usedCoordinates)
-
+app.use("/shipPlacingPage.html",reinitiate_usedCoordinates);
 app.use(express.static('./public'));
 
-app.get('/',function(req,res){
-	res.sendFile(__dirname+'/public/index.html')
-});
-
-// app.use('/player',ensureLogin);
 
 app.post('/player',function(req,res){
-	var grid = new Grid();
-	observer.allocatePlayer(req.body.name,grid);
-	res.cookie('name',req.body.name+observer.games[observer.games.length-1].gameID);	
+	observer.allocatePlayer(req.body.name,new Grid());
+	setPlayerCookie(req,res);
 	res.redirect('/shipPlacingPage.html');
 });
 
-app.get('/makeReady',function(req,res){
-	var game = observer.gameOfCurrentPlayer(req.cookies.name);
-	var player = game[0].currentPlayer(req.cookies.name);
-	if (player.grid.usedCoordinates.length==17) {
-		player.isReady=true;
-		game[0].players[0].turn = true;
-		res.send(JSON.stringify(game[0].canStartPlaying()));	
-	}
-	else{
-		res.send(JSON.stringify('select more ships'));
-	}
+app.post('/placingOfShip',function(req,res){
+	var game = observer.gameOfCurrentPlayer(req.cookies.gameId);
+	res.send(game.placedShipsPosition(req.body,req.cookies));
 });
 
-app.post('/placingOfShip',function(req,res){
-	var shipInfo = req.body;
-	var game = observer.gameOfCurrentPlayer(req.cookies.name);
-	var player = game[0].currentPlayer(req.cookies.name);
-	game[0].positionShip(shipInfo,player);
-	res.send(player.grid.usedCoordinates);
+app.get('/makeReady',function(req,res){
+	var game = observer.gameOfCurrentPlayer(req.cookies.gameId);
+	res.send(game.arePlayersReady(req.cookies));
 });
 
 app.get('/usedSpace',function(req,res){
-	var game = observer.gameOfCurrentPlayer(req.cookies.name);
-	var player=game[0].currentPlayer(req.cookies.name);
-	res.send(player.grid.usedCoordinates);
+	var game = observer.gameOfCurrentPlayer(req.cookies.gameId);
+	res.send(game.usedCoordinatesOfPlayer(req.cookies));
 })
 
 app.post('/attack',function(req,res){
-	var allHits = [];
-	var sunkShips=[];
-	var attackPoint = '';
-	var game = observer.gameOfCurrentPlayer(req.cookies.name);
-	var mySelf = game[0].currentPlayer(req.cookies.name);
-	var enemy = game[0].enemyPlayer(req.cookies.name);
-
-	var point = req.body.point;
-	if(mySelf.turn){
-		result = enemy.if_it_is_Hit(point);
-		if(result)
-			mySelf.hits.push(point);
-		else
-			mySelf.misses.push(point);
-		mySelf.turn =false;
-		enemy.turn = true;
-		res.send(1);
-	};
-	res.end(0);
+	var attackedPoint = req.body.point;
+	var playerName = req.cookies.name;
+	var game = observer.gameOfCurrentPlayer(req.cookies.gameId);
+	if(game.isHit(attackedPoint,playerName)){
+		game.removeHitPoint(attackedPoint,playerName);
+		game.checkForAllShipsSunk(playerName)
+		game.insert_point_into_hitPoints(attackedPoint);
+	}
+	else
+		game.insert_point_into_missPoints(attackedPoint);
 });
 
 app.get('/givingUpdate',function(req,res){
 	var update = {};
-	var game = observer.gameOfCurrentPlayer(req.cookies.name);
-	var mySelf = game[0].currentPlayer(req.cookies.name);
-	var enemy = game[0].enemyPlayer(req.cookies.name);
+	var game = observer.gameOfCurrentPlayer(req.cookies.gameId);
+	var mySelf = game.currentPlayer(req.cookies.name);
+	var enemy = game.enemyPlayer(req.cookies.name);
 	update['ownStatusTable'] = {table:'ownStatusTable',stat:mySelf.list_of_isAlive_of_each_ship()};
 	update['enemyStatusTable'] = {table:'enemyStatusTable',stat:enemy.list_of_isAlive_of_each_ship()};
 	update['ownHit'] = {table:'own',stat:mySelf.grid.destroyed,color:"red"};
 	update['enemyMiss'] = {table:"enemy",stat:mySelf.misses,color:"paleturquoise"};
 	update['enemyHit'] = {table:"enemy",stat:mySelf.hits,color:"red"};
-	update['isGameOver'] = game[0].is_any_player_died();
+	update['isGameOver'] = game.is_any_player_died();
 	update['isTurn'] = mySelf.turn;
 	res.send(update);
 })
 
 app.get('/gameOver',function(req,res){
-	var game = observer.gameOfCurrentPlayer(req.cookies.name);
-	var player1 = game[0].players[0],
-		player2 = game[0].players[1],
+	var game = observer.gameOfCurrentPlayer(req.cookies.gameId);
+	var player1 = game.players[0],
+		player2 = game.players[1],
 		winner,looser;
 		if(player1.isAlive){
 			winner = player1;

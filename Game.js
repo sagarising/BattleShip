@@ -1,5 +1,6 @@
 var Ship = require('./ship');
-var Game = function(gameID){
+
+var Game = function(){
 	this.players=[];
 	this.gameID = gameID;
 }
@@ -17,7 +18,7 @@ Game.prototype.canStartPlaying = function(){
 Game.prototype.currentPlayer = function(cookie){
 	var player_who_requested;
 	this.players.forEach(function(element){
-		if(element.name == cookie.match(/[a-z]/gi).join(''))
+		if(element.name == cookie.match(/[a-z]|\s/gi).join(''))
 			player_who_requested = element;
 	});
 	return player_who_requested;
@@ -52,7 +53,7 @@ Game.prototype.positionShip = function(shipInfo,player){
 		if(shipInfo.align=='vertical'){
 			var initialCharCode = shipInfo.coordinate.charCodeAt(0);
 			var tempCoordinates = makesCoordinates(shipInfo.shipSize,shipInfo.coordinate,initialCharCode);
-		}   //don't put semi-colon here 
+		}
 		else if(shipInfo.align == 'horizontal'){
 			var initialColumnNumber = shipInfo.coordinate.slice(1);
 			var tempCoordinates = makesCoordinates(shipInfo.shipSize,shipInfo.coordinate,initialCharCode,initialColumnNumber);
@@ -60,16 +61,63 @@ Game.prototype.positionShip = function(shipInfo,player){
 		if(player.grid.isUsedSpace(tempCoordinates)){
 				throw new Error('Cannot place over other ship.');
 		};
-		if(player.grid.usedCoordinates.concat(tempCoordinates).length > 17){
-			throw new Error('Ships already placed');
-		};
 		player.ships.push(new Ship(tempCoordinates));
 		player.grid.usedCoordinates = player.grid.usedCoordinates.concat(tempCoordinates); 
+		if(player.grid.usedCoordinates.length > 17){
+			throw new Error('Ships already placed');
+		};
 		return;                                 
 	};
 	throw new Error('Cannot position ship here.');
 };
 
+Game.prototype.isHit = function(point,name) {
+	var enemyPlayer = this.enemyPlayer(name);
+	return enemyPlayer.indexOf(point) !== -1;
+};
+
+Game.prototype.removeHitPoint = function(point,name) {
+	var enemyPlayer = this.enemyPlayer(name);
+	var hitShip = _.find(enemyPlayer.ships,function(eachShip){
+		return eachShip.coordinates.indexOf(point) !== -1;
+	});
+	enemyPlayer.grid.usedCoordinates = removePointFromArray(enemyPlayer.grid.usedCoordinates,point);
+	hitShip.coordinates = removePointFromArray(hitShip.coordinates,point);
+}
+
+Game.prototype.checkForAllShipsSunk = function(name) {
+	var enemyPlayer = this.enemyPlayer(name);
+	enemyPlayer.if_all_ship_sunk();
+}
+
+this.placedShipsPosition = function(shipInfo,playerInfo) {
+	var player = this.currentPlayer(playerInfo.name);
+	this.positionShip(shipInfo,player);
+	return player.grid.usedCoordinates;
+}
+this.arePlayersReady = function(playerInfo) {
+	var player = this.currentPlayer(playerInfo.name);
+	if(player.grid.usedCoordinates.length == 17){
+		player.isReady = true;
+		this.players[0].turn = true;
+		return this.canStartPlaying();
+	}
+	else return 'select more ships'
+};
+this.reinitiatingUsedCoordinates = function(playerInfo) {
+	var player = this.currentPlayer(playerInfo.name);
+	player.grid.usedCoordinates = [];
+}
+this.usedCoordinatesOfPlayer = function(playerInfo){
+	var currentPlayer = this.currentPlayer(playerInfo.name);
+	return currentPlayer.grid.usedCoordinates.slice(0);
+}
+
+var removePointFromArray = function(array,point) {
+	return array.filter(function(eachPoint){
+		return eachPoint !== point
+	})
+}
 
 var makesCoordinates = function(size,firstPoint,initialCharCode,initialColumnNumber){
 	var generatedCoordinates = [];

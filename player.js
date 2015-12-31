@@ -11,19 +11,19 @@ var Player = function(name,grid){
 	this.turn = false;
 };
 
-Player.prototype.list_of_isAlive_of_each_ship = function(){
-	return this.ships.map(function(element){
-		return element.isAlive;
-	});
-};
+// Player.prototype.list_of_isAlive_of_each_ship = function(){
+// 	return this.ships.map(function(element){
+// 		return element.isAlive;
+// 	});
+// };
 
 Player.prototype.addShips = function(ship) {
 	this.ships.push(ship);
 }
 
 Player.prototype.if_all_ship_sunk = function(){
-	var are_all_ships_sunk = (this.list_of_isAlive_of_each_ship()).every(function(status){
-		return status == 0;
+	var are_all_ships_sunk = this.ships.every(function(eachShip){
+		return eachShip.isAlive == 0;
 	});
 	if(are_all_ships_sunk){
 		this.isAlive = false;

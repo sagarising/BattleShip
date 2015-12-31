@@ -6,13 +6,13 @@ var Grid = function (){
 	};
 	this.usedCoordinates = [];
 	this.destroyed = [];
-};
 
-Grid.prototype.isUsedSpace = function(coordinates){
+	this.isUsedSpace = function(coordinates){
 		var self = this;
 		return coordinates.some(function(coordinate){
 			return self.usedCoordinates.indexOf(coordinate) !== -1;
-	});
+		});
+	};
 };
 
 module.exports = Grid;
