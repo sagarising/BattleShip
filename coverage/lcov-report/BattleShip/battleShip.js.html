@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for BattleShip/battleShip.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">BattleShip/</a> battleShip.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">30% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>6/20</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/7</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">33.33% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>6/18</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var lib={};
+exports.lib = lib;
+&nbsp;
+&nbsp;
+lib.isHit = <span class="fstat-no" title="function not covered" >function(groupOfCoordinates,attackPoint) {</span>
+<span class="cstat-no" title="statement not covered" >	return groupOfCoordinates.indexOf(attackPoint) !== -1;</span>
+};
+&nbsp;
+lib.removingHitPointFromExistingCoordinates = <span class="fstat-no" title="function not covered" >function(existingCoordinates,hitPoint){    </span>
+<span class="cstat-no" title="statement not covered" >	return existingCoordinates.filter(<span class="fstat-no" title="function not covered" >function(coordinate){</span></span>
+<span class="cstat-no" title="statement not covered" >		return coordinate != hitPoint;</span>
+	});
+};
+&nbsp;
+lib.gridCreater = <span class="fstat-no" title="function not covered" >function (){</span>
+<span class="cstat-no" title="statement not covered" >	for (var i=65;i&lt;75;i++){</span>
+<span class="cstat-no" title="statement not covered" >		this[String.fromCharCode(i)] = (<span class="fstat-no" title="function not covered" >function makeArray(){<span class="cstat-no" title="statement not covered" ></span>var arr=[];</span></span>
+<span class="cstat-no" title="statement not covered" >			for(var j=1;j&lt;11;j++){<span class="cstat-no" title="statement not covered" >arr.push(j)}</span></span>
+<span class="cstat-no" title="statement not covered" >				return arr}</span>)();
+	};
+<span class="cstat-no" title="statement not covered" >	this.usedCoordinates = [];</span>
+<span class="cstat-no" title="statement not covered" >	this.destroyed = [];</span>
+};
+&nbsp;
+lib.gridCreater.prototype.isUsedSpace = <span class="fstat-no" title="function not covered" >function(coordinates){</span>
+<span class="cstat-no" title="statement not covered" >		var self = this;</span>
+<span class="cstat-no" title="statement not covered" >		return coordinates.some(<span class="fstat-no" title="function not covered" >function(coordinate){</span></span>
+<span class="cstat-no" title="statement not covered" >			return self.usedCoordinates.indexOf(coordinate) !== -1;</span>
+	});
+};
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+// function fillArrayWithNull(size,array){
+//  	var arr = array||[];
+// 	arr.push(null);
+// 	if(arr.length &lt;size)
+// 	fillArrayWithNull(size,arr)
+// 	return arr;
+// };
+&nbsp;
+&nbsp;
+&nbsp;
+// lib.isAllowedToBePlaced = function(ship,align,firstPoint){
+// 	var rows=['A','B','C','D','E','F','G','H','I','J'];
+// 	var shipsize = ship.coordinates.length;
+// 	if(align == "vertical"){
+// 		var allowedRows = 10 - (shipsize - 1);
+// 		if(rows.indexOf(firstPoint[0]) &lt; allowedRows)
+// 			return true;
+// 		return false;
+// 	}
+// 	if(align == "horizontal"){
+// 		var allowedColumn = 10 - (shipsize - 1);
+// 		if(firstPoint.slice(1) &lt;= allowedColumn)
+// 			return true;
+// 		return false;
+// 	}
+// };
+&nbsp;
+// exports.positionShip = function(ship,align,firstPoint,grid){
+// 	if(lib.isAllowedToBePlaced(ship,align,firstPoint)){
+// 		if(align=='vertical'){
+// 			var initialCharCode = firstPoint.charCodeAt(0);
+// 			var tempCoordinates = lib.makesCoordinates(ship,firstPoint,initialCharCode);
+// 		}   //don't put semi-colon here 
+// 		else if(align == 'horizontal'){
+// 			var initialColumnNumber = firstPoint.slice(1);
+// 			var tempCoordinates = lib.makesCoordinates(ship,firstPoint,initialCharCode,initialColumnNumber);
+// 		};
+// 		if(grid.isUsedSpace(tempCoordinates)){
+// 				throw new Error('Cannot place over other ship.');
+// 		};
+// 		if(grid.usedCoordinates.concat(tempCoordinates).length &gt; 17){
+// 			throw new Error('Ships already placed');
+// 		};
+&nbsp;
+// 		ship.coordinates = tempCoordinates;
+// 		grid.usedCoordinates = grid.usedCoordinates.concat(tempCoordinates); 
+// 		return;                                 
+// 	};
+// 	throw new Error('Cannot position ship here.');
+// };
+&nbsp;
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Jan 02 2016 17:57:52 GMT+0530 (IST)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

@@ -2,37 +2,41 @@ var _ = require('lodash')
 var Ship = require('./ship');
 
 var Game = function(gameId){
-	this.players=[];
+	this._players=[];
 	this.gameID = gameId;
 }
 
-Game.prototype.getPlayer = function(){return this.players};
 Game.prototype.addPlayer =function(player){
-	this.players.push(player);
+	this._players.push(player);
 };
+
 Game.prototype.canStartPlaying = function(){
-	var areAllPlayersReady = this.players.every(function(player){
+	var areAllPlayersReady = this._players.every(function(player){
 		return player.isReady;
 	});	
-	return areAllPlayersReady && this.players.length == 2;
+	return areAllPlayersReady && this._players.length == 2;
 };
+
 Game.prototype.currentPlayer = function(cookie){
 	var player_who_requested;
-	this.players.forEach(function(element){
+	this._players.forEach(function(element){
 		if(element.name == cookie.match(/[a-z]|\s/gi).join(''))
 			player_who_requested = element;
 	});
 	return player_who_requested;
 };
+
 Game.prototype.enemyPlayer = function(cookie){
-	var index = +(!this.players.indexOf(this.currentPlayer(cookie)));
-	return this.players[index];
+	var index = +(!this._players.indexOf(this.currentPlayer(cookie)));
+	return this._players[index];
 };
+
 Game.prototype.is_any_player_died = function(){
-	return this.players.some(function(player){
+	return this._players.some(function(player){
 		return player.isAlive == false ;
 	});
 };
+
 Game.prototype.isAllowedToBePlaced = function(size,align,firstPoint){
 	var rows=['A','B','C','D','E','F','G','H','I','J'];
 	var shipsize = size;
@@ -49,6 +53,7 @@ Game.prototype.isAllowedToBePlaced = function(size,align,firstPoint){
 		return false;
 	}
 };
+
 Game.prototype.positionShip = function(shipInfo,player){
 	if(Game.prototype.isAllowedToBePlaced(shipInfo.shipSize,shipInfo.align,shipInfo.coordinate)){
 		if(shipInfo.align=='vertical'){
@@ -84,6 +89,9 @@ Game.prototype.removeHitPoint = function(point,name) {
 	});
 	enemyPlayer.grid.usedCoordinates = removePointFromArray(enemyPlayer.grid.usedCoordinates,point);
 	hitShip.coordinates = removePointFromArray(hitShip.coordinates,point);
+	enemyPlayer.grid.destroyed.push(point);
+	if(!hitShip.coordinates.length)
+		hitShip.isAlive = 0;
 }
 
 Game.prototype.checkForAllShipsSunk = function(name) {
@@ -96,19 +104,22 @@ Game.prototype.placedShipsPosition = function(shipInfo,playerInfo) {
 	this.positionShip(shipInfo,player);
 	return player.grid.usedCoordinates;
 }
+
 Game.prototype.arePlayersReady = function(playerInfo) {
 	var player = this.currentPlayer(playerInfo.name);
 	if(player.grid.usedCoordinates.length == 17){
 		player.isReady = true;
-		this.players[0].turn = true;
+		this._players[0].turn = true;
 		return this.canStartPlaying();
 	}
 	else return 'select more ships'
 };
+
 Game.prototype.reinitiatingUsedCoordinates = function(playerInfo) {
 	var player = this.currentPlayer(playerInfo.name);
 	player.grid.usedCoordinates = [];
 }
+
 Game.prototype.usedCoordinatesOfPlayer = function(playerInfo){
 	var currentPlayer = this.currentPlayer(playerInfo.name);
 	return currentPlayer.grid.usedCoordinates.slice(0);
@@ -168,13 +179,12 @@ var makesCoordinates = function(size,firstPoint,initialCharCode,initialColumnNum
 	return generatedCoordinates;
 };
 
-module.exports = Game;
+Game.prototype.gameOver = function(){
+	var player_who_lost = this._players[0].isAlive? this._players[1]: this._players[0];
+	var player_who_won = this._players[0].isAlive? this._players[0]: this._players[1];
+	var winnerStatus = shipsStatus(player_who_won);
+	var result_of_game = {won:JSON.stringify(player_who_won),lost:JSON.stringify(player_who_lost),status:winnerStatus}
+	return result_of_game;
+};
 
-// exports.Game.prototype.gameOver = function(){
-// 	var player_who_lost = Game.prototype.this.players[0].isAlive? this.this.players[1]: this.players[0];
-// 	var player_who_won = this.players[0].isAlive? this.players[0]: this.players[1];
-// 	var winnerStatus = player_who_won.list_of_isAlive_of_each_ship();
-// 	var result_of_game = {won:player_who_won,lost:player_who_lost,status:winnerStatus}
-// 	this.players.length = 0;
-// 	return JSON.stringify(result_of_game);
-// };
+module.exports = Game;

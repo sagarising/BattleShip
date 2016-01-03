@@ -4,9 +4,9 @@ var sinon = require('sinon');
 describe('Game',function(){
 	it('Should have one player as I push',function() {
 		var game = new Game(1);
-		var player = sinon.stub().returns({name:"Abhi"})();
+		var player = {name:"Abhi"};
 		game.addPlayer(player);
-		assert.equal(JSON.stringify(game.getPlayer()),JSON.stringify([{name:"Abhi"}]));
+		assert.equal(JSON.stringify(game._players),JSON.stringify([{name:"Abhi"}]));
 	});
 	it('Should allow to play when both players are ready',function(){
 		var game = new Game(1);

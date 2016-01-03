@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for BattleShip/Game.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">BattleShip/</a> Game.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">21.67% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>26/120</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/32</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/29</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">21.67% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>26/120</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span></td><td class="text"><pre class="prettyprint lang-js">var _ = require('lodash')
+var Ship = require('./ship');
+&nbsp;
+var Game = <span class="fstat-no" title="function not covered" >function(gameId){</span>
+<span class="cstat-no" title="statement not covered" >	this._players=[];</span>
+<span class="cstat-no" title="statement not covered" >	this.gameID = gameId;</span>
+}
+&nbsp;
+Game.prototype.addPlayer =<span class="fstat-no" title="function not covered" >function(player){</span>
+<span class="cstat-no" title="statement not covered" >	this._players.push(player);</span>
+};
+&nbsp;
+Game.prototype.canStartPlaying = <span class="fstat-no" title="function not covered" >function(){</span>
+<span class="cstat-no" title="statement not covered" >	var areAllPlayersReady = this._players.every(<span class="fstat-no" title="function not covered" >function(player){</span></span>
+<span class="cstat-no" title="statement not covered" >		return player.isReady;</span>
+	});	
+<span class="cstat-no" title="statement not covered" >	return areAllPlayersReady &amp;&amp; this._players.length == 2;</span>
+};
+&nbsp;
+Game.prototype.currentPlayer = <span class="fstat-no" title="function not covered" >function(cookie){</span>
+<span class="cstat-no" title="statement not covered" >	var player_who_requested;</span>
+<span class="cstat-no" title="statement not covered" >	this._players.forEach(<span class="fstat-no" title="function not covered" >function(element){</span></span>
+<span class="cstat-no" title="statement not covered" >		if(element.name == cookie.match(/[a-z]|\s/gi).join(''))</span>
+<span class="cstat-no" title="statement not covered" >			player_who_requested = element;</span>
+	});
+<span class="cstat-no" title="statement not covered" >	return player_who_requested;</span>
+};
+&nbsp;
+Game.prototype.enemyPlayer = <span class="fstat-no" title="function not covered" >function(cookie){</span>
+<span class="cstat-no" title="statement not covered" >	var index = +(!this._players.indexOf(this.currentPlayer(cookie)));</span>
+<span class="cstat-no" title="statement not covered" >	return this._players[index];</span>
+};
+&nbsp;
+Game.prototype.is_any_player_died = <span class="fstat-no" title="function not covered" >function(){</span>
+<span class="cstat-no" title="statement not covered" >	return this._players.some(<span class="fstat-no" title="function not covered" >function(player){</span></span>
+<span class="cstat-no" title="statement not covered" >		return player.isAlive == false ;</span>
+	});
+};
+&nbsp;
+Game.prototype.isAllowedToBePlaced = <span class="fstat-no" title="function not covered" >function(size,align,firstPoint){</span>
+<span class="cstat-no" title="statement not covered" >	var rows=['A','B','C','D','E','F','G','H','I','J'];</span>
+<span class="cstat-no" title="statement not covered" >	var shipsize = size;</span>
+<span class="cstat-no" title="statement not covered" >	if(align == "vertical"){</span>
+<span class="cstat-no" title="statement not covered" >		var allowedRows = 10 - (shipsize - 1);</span>
+<span class="cstat-no" title="statement not covered" >		if(rows.indexOf(firstPoint[0]) &lt; allowedRows)</span>
+<span class="cstat-no" title="statement not covered" >			return true;</span>
+<span class="cstat-no" title="statement not covered" >		return false;</span>
+	}
+<span class="cstat-no" title="statement not covered" >	if(align == "horizontal"){</span>
+<span class="cstat-no" title="statement not covered" >		var allowedColumn = 10 - (shipsize - 1);</span>
+<span class="cstat-no" title="statement not covered" >		if(firstPoint.slice(1) &lt;= allowedColumn)</span>
+<span class="cstat-no" title="statement not covered" >			return true;</span>
+<span class="cstat-no" title="statement not covered" >		return false;</span>
+	}
+};
+&nbsp;
+Game.prototype.positionShip = <span class="fstat-no" title="function not covered" >function(shipInfo,player){</span>
+<span class="cstat-no" title="statement not covered" >	if(Game.prototype.isAllowedToBePlaced(shipInfo.shipSize,shipInfo.align,shipInfo.coordinate)){</span>
+<span class="cstat-no" title="statement not covered" >		if(shipInfo.align=='vertical'){</span>
+<span class="cstat-no" title="statement not covered" >			var initialCharCode = shipInfo.coordinate.charCodeAt(0);</span>
+<span class="cstat-no" title="statement not covered" >			var tempCoordinates = makesCoordinates(shipInfo.shipSize,shipInfo.coordinate,initialCharCode);</span>
+		}
+		else <span class="cstat-no" title="statement not covered" >if(shipInfo.align == 'horizontal'){</span>
+<span class="cstat-no" title="statement not covered" >			var initialColumnNumber = shipInfo.coordinate.slice(1);</span>
+<span class="cstat-no" title="statement not covered" >			var tempCoordinates = makesCoordinates(shipInfo.shipSize,shipInfo.coordinate,initialCharCode,initialColumnNumber);</span>
+		};
+<span class="cstat-no" title="statement not covered" >		if(player.grid.isUsedSpace(tempCoordinates)){</span>
+<span class="cstat-no" title="statement not covered" >				throw new Error('Cannot place over other ship.');</span>
+		};
+<span class="cstat-no" title="statement not covered" >		player.ships.push(new Ship(tempCoordinates));</span>
+<span class="cstat-no" title="statement not covered" >		player.grid.usedCoordinates = player.grid.usedCoordinates.concat(tempCoordinates); </span>
+<span class="cstat-no" title="statement not covered" >		if(player.grid.usedCoordinates.length &gt; 17){</span>
+<span class="cstat-no" title="statement not covered" >			throw new Error('Ships already placed');</span>
+		};
+<span class="cstat-no" title="statement not covered" >		return;                                 </span>
+	};
+<span class="cstat-no" title="statement not covered" >	throw new Error('Cannot position ship here.');</span>
+};
+&nbsp;
+Game.prototype.isHit = <span class="fstat-no" title="function not covered" >function(point,name) {</span>
+<span class="cstat-no" title="statement not covered" >	var enemyPlayer = this.enemyPlayer(name);</span>
+<span class="cstat-no" title="statement not covered" >	return enemyPlayer.grid.usedCoordinates.indexOf(point) !== -1;</span>
+};
+&nbsp;
+Game.prototype.removeHitPoint = <span class="fstat-no" title="function not covered" >function(point,name) {</span>
+<span class="cstat-no" title="statement not covered" >	var enemyPlayer = this.enemyPlayer(name);</span>
+<span class="cstat-no" title="statement not covered" >	var hitShip = _.find(enemyPlayer.ships,<span class="fstat-no" title="function not covered" >function(eachShip){</span></span>
+<span class="cstat-no" title="statement not covered" >		return eachShip.coordinates.indexOf(point) !== -1;</span>
+	});
+<span class="cstat-no" title="statement not covered" >	enemyPlayer.grid.usedCoordinates = removePointFromArray(enemyPlayer.grid.usedCoordinates,point);</span>
+<span class="cstat-no" title="statement not covered" >	hitShip.coordinates = removePointFromArray(hitShip.coordinates,point);</span>
+<span class="cstat-no" title="statement not covered" >	enemyPlayer.grid.destroyed.push(point);</span>
+<span class="cstat-no" title="statement not covered" >	if(!hitShip.coordinates.length)</span>
+<span class="cstat-no" title="statement not covered" >		hitShip.isAlive = 0;</span>
+}
+&nbsp;
+Game.prototype.checkForAllShipsSunk = <span class="fstat-no" title="function not covered" >function(name) {</span>
+<span class="cstat-no" title="statement not covered" >	var enemyPlayer = this.enemyPlayer(name);</span>
+<span class="cstat-no" title="statement not covered" >	enemyPlayer.if_all_ship_sunk();</span>
+}
+&nbsp;
+Game.prototype.placedShipsPosition = <span class="fstat-no" title="function not covered" >function(shipInfo,playerInfo) {</span>
+<span class="cstat-no" title="statement not covered" >	var player = this.currentPlayer(playerInfo.name);</span>
+<span class="cstat-no" title="statement not covered" >	this.positionShip(shipInfo,player);</span>
+<span class="cstat-no" title="statement not covered" >	return player.grid.usedCoordinates;</span>
+}
+&nbsp;
+Game.prototype.arePlayersReady = <span class="fstat-no" title="function not covered" >function(playerInfo) {</span>
+<span class="cstat-no" title="statement not covered" >	var player = this.currentPlayer(playerInfo.name);</span>
+<span class="cstat-no" title="statement not covered" >	if(player.grid.usedCoordinates.length == 17){</span>
+<span class="cstat-no" title="statement not covered" >		player.isReady = true;</span>
+<span class="cstat-no" title="statement not covered" >		this._players[0].turn = true;</span>
+<span class="cstat-no" title="statement not covered" >		return this.canStartPlaying();</span>
+	}
+	else <span class="cstat-no" title="statement not covered" >return 'select more ships'</span>
+};
+&nbsp;
+Game.prototype.reinitiatingUsedCoordinates = <span class="fstat-no" title="function not covered" >function(playerInfo) {</span>
+<span class="cstat-no" title="statement not covered" >	var player = this.currentPlayer(playerInfo.name);</span>
+<span class="cstat-no" title="statement not covered" >	player.grid.usedCoordinates = [];</span>
+}
+&nbsp;
+Game.prototype.usedCoordinatesOfPlayer = <span class="fstat-no" title="function not covered" >function(playerInfo){</span>
+<span class="cstat-no" title="statement not covered" >	var currentPlayer = this.currentPlayer(playerInfo.name);</span>
+<span class="cstat-no" title="statement not covered" >	return currentPlayer.grid.usedCoordinates.slice(0);</span>
+}
+&nbsp;
+Game.prototype.changeTurn = <span class="fstat-no" title="function not covered" >function(name) {</span>
+<span class="cstat-no" title="statement not covered" >	var currentPlayer = this.currentPlayer(name);</span>
+<span class="cstat-no" title="statement not covered" >	var enemyPlayer = this.enemyPlayer(name);</span>
+<span class="cstat-no" title="statement not covered" >	currentPlayer.turn = false;</span>
+<span class="cstat-no" title="statement not covered" >	enemyPlayer.turn = true;</span>
+}
+&nbsp;
+Game.prototype.insert_point_into_hitPoints = <span class="fstat-no" title="function not covered" >function(attackPoint,name) {</span>
+<span class="cstat-no" title="statement not covered" >	var player = this.currentPlayer(name);</span>
+<span class="cstat-no" title="statement not covered" >	player.hits.push(attackPoint);</span>
+}
+&nbsp;
+Game.prototype.insert_point_into_missPoints = <span class="fstat-no" title="function not covered" >function(attackPoint,name) {</span>
+<span class="cstat-no" title="statement not covered" >	var player = this.currentPlayer(name);</span>
+<span class="cstat-no" title="statement not covered" >	player.misses.push(attackPoint);</span>
+}
+&nbsp;
+Game.prototype.playersStatus = <span class="fstat-no" title="function not covered" >function(player) {</span>
+<span class="cstat-no" title="statement not covered" >	var currentPlayer = this.currentPlayer(player);</span>
+<span class="cstat-no" title="statement not covered" >	var enemyPlayer = this.enemyPlayer(player);</span>
+<span class="cstat-no" title="statement not covered" >	return {</span>
+		currentPlayerShips:shipsStatus(currentPlayer),
+		enemyPlayerShips:shipsStatus(enemyPlayer),
+		destroyedPoints:currentPlayer.grid.destroyed,
+		missPoints:currentPlayer.misses,
+		hitPoints:currentPlayer.hits,
+		turn:currentPlayer.turn
+	};
+}
+&nbsp;
+var shipsStatus = <span class="fstat-no" title="function not covered" >function(player) {</span>
+<span class="cstat-no" title="statement not covered" >	var status = [];</span>
+<span class="cstat-no" title="statement not covered" >	player.ships.forEach(<span class="fstat-no" title="function not covered" >function(eachShip){</span></span>
+<span class="cstat-no" title="statement not covered" >		status.push(eachShip.isAlive);</span>
+	})
+<span class="cstat-no" title="statement not covered" >	return status;</span>
+}
+&nbsp;
+var removePointFromArray = <span class="fstat-no" title="function not covered" >function(array,point) {</span>
+<span class="cstat-no" title="statement not covered" >	return array.filter(<span class="fstat-no" title="function not covered" >function(eachPoint){</span></span>
+<span class="cstat-no" title="statement not covered" >		return eachPoint !== point</span>
+	})
+}
+&nbsp;
+var makesCoordinates = <span class="fstat-no" title="function not covered" >function(size,firstPoint,initialCharCode,initialColumnNumber){</span>
+<span class="cstat-no" title="statement not covered" >	var generatedCoordinates = [];</span>
+<span class="cstat-no" title="statement not covered" >	for (var i = 0; i&lt;size; i++){</span>
+<span class="cstat-no" title="statement not covered" >		var coordinateToBePushed = initialCharCode != undefined ? (String.fromCharCode(initialCharCode++) + firstPoint.slice(1))</span>
+									: (firstPoint[0] + initialColumnNumber++);
+<span class="cstat-no" title="statement not covered" >		generatedCoordinates.push(coordinateToBePushed);</span>
+	};
+<span class="cstat-no" title="statement not covered" >	return generatedCoordinates;</span>
+};
+&nbsp;
+Game.prototype.gameOver = <span class="fstat-no" title="function not covered" >function(){</span>
+<span class="cstat-no" title="statement not covered" >	var player_who_lost = this._players[0].isAlive? this._players[1]: this._players[0];</span>
+<span class="cstat-no" title="statement not covered" >	var player_who_won = this._players[0].isAlive? this._players[0]: this._players[1];</span>
+<span class="cstat-no" title="statement not covered" >	var winnerStatus = shipsStatus(player_who_won);</span>
+<span class="cstat-no" title="statement not covered" >	var result_of_game = {won:JSON.stringify(player_who_won),lost:JSON.stringify(player_who_lost),status:winnerStatus}</span>
+<span class="cstat-no" title="statement not covered" >	return result_of_game;</span>
+};
+&nbsp;
+module.exports = Game;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Jan 02 2016 17:57:52 GMT+0530 (IST)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

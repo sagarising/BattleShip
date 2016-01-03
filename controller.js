@@ -5,12 +5,6 @@ var cookieParser = require('cookie-parser');
 var Observer = require('./observer.js');
 var observer = new Observer();
 var Grid =  require('./grid');
-var helmet = require('helmet');
-
-// var ensureLogin = function(req,res,next){
-// 	if(req.body.name) next();	
-// 	else res.redirect('/');
-// };
 
 var reinitiate_usedCoordinates = function(req,res,next) {
 	var game = observer.gameOfCurrentPlayer(req.cookies.gameId);
@@ -60,8 +54,9 @@ app.post('/attack',function(req,res){
 		game.insert_point_into_hitPoints(attackedPoint,playerName);
 	}
 	else
-		game.insert_point_into_missPoints(attackedPoint);
+		game.insert_point_into_missPoints(attackedPoint,playerName);
 	game.changeTurn(playerName);
+	res.send('success');
 });
 
 app.get('/givingUpdate',function(req,res){
@@ -77,33 +72,13 @@ app.get('/givingUpdate',function(req,res){
 			isGameOver        : game.is_any_player_died(),
 			isTurn            : status.turn
 	}
-	// update['ownStatusTable'] = {table:'ownStatusTable',stat:status.currentPlayerShips};
-	// update['enemyStatusTable'] = {table:'enemyStatusTable',stat:status.enemyPlayerShips};
-	// update['ownHit'] = {table:'own',stat:status.destroyedPoints};
-	// update['enemyMiss'] = {table:"enemy",stat:mySelf.misses,color:"paleturquoise"};
-	// update['enemyHit'] = {table:"enemy",stat:mySelf.hits,color:"red"};
-	// update['isGameOver'] = game.is_any_player_died();
-	// update['isTurn'] = mySelf.turn;
 	res.send(update);
 })
 
 app.get('/gameOver',function(req,res){
 	var game = observer.gameOfCurrentPlayer(req.cookies.gameId);
-	var player1 = game.players[0],
-		player2 = game.players[1],
-		winner,looser;
-		if(player1.isAlive){
-			winner = player1;
-			loser = player2;
-		}
-		else{
-			winner = player2;
-			loser = player1;
-		}
-		var winnerStatus = winner.list_of_isAlive_of_each_ship();
-		var gameSummary = {winner:winner,loser:loser,shipsStatus:winnerStatus};
-
-		res.send(gameSummary);
+	var stat = game.gameOver();
+		res.send(stat);
 })
 
 module.exports = app;

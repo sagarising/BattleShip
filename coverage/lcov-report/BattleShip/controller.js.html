@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for BattleShip/controller.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">BattleShip/</a> controller.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">39.62% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>21/53</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/9</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">39.62% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>21/53</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span></td><td class="text"><pre class="prettyprint lang-js">var express = require('express');
+var app = express();
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var Observer = require('./observer.js');
+var observer = new Observer();
+var Grid =  require('./grid');
+&nbsp;
+var reinitiate_usedCoordinates = <span class="fstat-no" title="function not covered" >function(req,res,next) {</span>
+<span class="cstat-no" title="statement not covered" >	var game = observer.gameOfCurrentPlayer(req.cookies.gameId);</span>
+<span class="cstat-no" title="statement not covered" >	game.reinitiatingUsedCoordinates(req.cookies);</span>
+<span class="cstat-no" title="statement not covered" >	next();</span>
+}
+&nbsp;
+var setPlayerCookie = <span class="fstat-no" title="function not covered" >function(req,res) {</span>
+<span class="cstat-no" title="statement not covered" >	res.cookie('name',req.body.name);	</span>
+<span class="cstat-no" title="statement not covered" >	res.cookie('gameId', observer.games[observer.games.length-1].gameID);</span>
+}
+&nbsp;
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
+app.use("/shipPlacingPage.html",reinitiate_usedCoordinates);
+app.use(express.static('./public'));
+&nbsp;
+&nbsp;
+app.post('/player',<span class="fstat-no" title="function not covered" >function(req,res){</span>
+<span class="cstat-no" title="statement not covered" >	observer.allocatePlayer(req.body.name,new Grid());</span>
+<span class="cstat-no" title="statement not covered" >	setPlayerCookie(req,res);</span>
+<span class="cstat-no" title="statement not covered" >	res.redirect('/shipPlacingPage.html');</span>
+});
+&nbsp;
+app.post('/placingOfShip',<span class="fstat-no" title="function not covered" >function(req,res){</span>
+<span class="cstat-no" title="statement not covered" >	var game = observer.gameOfCurrentPlayer(req.cookies.gameId);</span>
+<span class="cstat-no" title="statement not covered" >	res.send(game.placedShipsPosition(req.body,req.cookies));</span>
+});
+&nbsp;
+app.get('/makeReady',<span class="fstat-no" title="function not covered" >function(req,res){</span>
+<span class="cstat-no" title="statement not covered" >	var game = observer.gameOfCurrentPlayer(req.cookies.gameId);</span>
+<span class="cstat-no" title="statement not covered" >	res.send(game.arePlayersReady(req.cookies));</span>
+});
+&nbsp;
+app.get('/usedSpace',<span class="fstat-no" title="function not covered" >function(req,res){</span>
+<span class="cstat-no" title="statement not covered" >	var game = observer.gameOfCurrentPlayer(req.cookies.gameId);</span>
+<span class="cstat-no" title="statement not covered" >	res.send(game.usedCoordinatesOfPlayer(req.cookies));</span>
+})
+&nbsp;
+app.post('/attack',<span class="fstat-no" title="function not covered" >function(req,res){</span>
+<span class="cstat-no" title="statement not covered" >	var attackedPoint = req.body.point;</span>
+<span class="cstat-no" title="statement not covered" >	var playerName = req.cookies.name;</span>
+<span class="cstat-no" title="statement not covered" >	var game = observer.gameOfCurrentPlayer(req.cookies.gameId);</span>
+<span class="cstat-no" title="statement not covered" >	if(game.isHit(attackedPoint,playerName)){</span>
+<span class="cstat-no" title="statement not covered" >		game.removeHitPoint(attackedPoint,playerName);</span>
+<span class="cstat-no" title="statement not covered" >		game.checkForAllShipsSunk(playerName)</span>
+<span class="cstat-no" title="statement not covered" >		game.insert_point_into_hitPoints(attackedPoint,playerName);</span>
+	}
+	else
+<span class="cstat-no" title="statement not covered" >		game.insert_point_into_missPoints(attackedPoint,playerName);</span>
+<span class="cstat-no" title="statement not covered" >	game.changeTurn(playerName);</span>
+<span class="cstat-no" title="statement not covered" >	res.send('success');</span>
+});
+&nbsp;
+app.get('/givingUpdate',<span class="fstat-no" title="function not covered" >function(req,res){</span>
+<span class="cstat-no" title="statement not covered" >	var update = {};</span>
+<span class="cstat-no" title="statement not covered" >	var game = observer.gameOfCurrentPlayer(req.cookies.gameId);</span>
+<span class="cstat-no" title="statement not covered" >	var status = game.playersStatus(req.cookies.name);</span>
+<span class="cstat-no" title="statement not covered" >	update = {</span>
+			ownStatusTable    : {table:'ownStatusTable',stat:status.currentPlayerShips},
+			enemyStatusTable  : {table:'enemyStatusTable',stat:status.enemyPlayerShips},
+			ownHit            : {table:'own',stat:status.destroyedPoints,color:'red'},
+			enemyMiss         : {table:"enemy",stat:status.missPoints,color:"paleturquoise"},
+			enemyHit          : {table:"enemy",stat:status.hitPoints,color:"red"},
+			isGameOver        : game.is_any_player_died(),
+			isTurn            : status.turn
+	}
+<span class="cstat-no" title="statement not covered" >	res.send(update);</span>
+})
+&nbsp;
+app.get('/gameOver',<span class="fstat-no" title="function not covered" >function(req,res){</span>
+<span class="cstat-no" title="statement not covered" >	var game = observer.gameOfCurrentPlayer(req.cookies.gameId);</span>
+<span class="cstat-no" title="statement not covered" >	var stat = game.gameOver();</span>
+<span class="cstat-no" title="statement not covered" >		res.send(stat);</span>
+})
+&nbsp;
+module.exports = app;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Jan 02 2016 17:57:52 GMT+0530 (IST)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

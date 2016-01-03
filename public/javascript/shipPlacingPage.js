@@ -5,7 +5,6 @@ var playerName= function(){
 var checkAndSubmit = function(self){
 	soundPlay();
 	var ship = $("#ship");
-	// var shipName = ship[0].options[ship[0].selectedIndex].text;
 	var shipSize = ship.val();
 	var coordinateValue = self.id;
 	var align = $("#horizontal")[0].checked ? 'horizontal' :'vertical';	
