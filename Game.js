@@ -10,6 +10,10 @@ Game.prototype.addPlayer =function(player){
 	this._players.push(player);
 };
 
+Game.prototype.numberOfPlayers = function(){
+	return this._players.length;
+}
+
 Game.prototype.canStartPlaying = function(){
 	var areAllPlayersReady = this._players.every(function(player){
 		return player.isReady;
