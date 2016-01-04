@@ -47,6 +47,10 @@ h3 {
     cursor: pointer;
 }
 
+#winner,#loser td{
+    pointer-events : none;
+}
+
 .firstpagestart{
     margin: 10px;
     height: 100px;

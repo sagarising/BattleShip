@@ -12,7 +12,7 @@ var Observer = function() {
 	};
 	this.allocatePlayer = function(name,grid) {
 		var currentGame = this.games[this.games.length-1];
-		if(currentGame && currentGame.numberOfPlayers.length<2){
+		if(currentGame && currentGame.numberOfPlayers()<2){
 			currentGame.addPlayer(new Player(name,grid));
 		}
 		else{
