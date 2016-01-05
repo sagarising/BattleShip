@@ -1,5 +1,5 @@
 var assert = require('chai').assert;
-var Game = require('../Game');
+var Game = require('../lib/Game');
 var sinon = require('sinon');
 describe('Game',function(){
 	it('Should have one player as I push',function() {
