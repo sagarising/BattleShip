@@ -1,5 +1,5 @@
 var assert = require('chai').assert;
-var controller = require('../controller');
+var controller = require('../lib/controller');
 var request = require('supertest');
 
 describe('controller',function() {

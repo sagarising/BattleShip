@@ -1,5 +1,5 @@
 var assert = require('chai').assert;
-var Player = require('../player');
+var Player = require('../lib/player');
 var sinon = require('sinon');
 
 describe('Player',function() {
