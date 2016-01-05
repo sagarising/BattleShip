@@ -1,17 +1,48 @@
-	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height='435' width='1400'>
+	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" height='435' width='1400'>
 	
 <g>
 		<ellipse cx="1000" cy="200" rx="70" ry="50" style="fill:black" stroke="black" stroke-width="1" />
 		<path d="M 990,162 990,150 1010,150 1010,162 990,162" fill="none" stroke="black" stroke-width="3"></path>
+		<path d="M 1000,150 1000,140" fill="none" stroke="black" stroke-width="5"></path>
 		<ellipse cx="993" cy="200" rx="45" ry="26" style="fill:grey" stroke="black" stroke-width="1"/>
-		<!-- <path d="M940,140a60,7 0 1,0 120,0a60,7 0 1,0 -120,0" fill="none" stroke="black" stroke-width="5"></path> -->
-		<ellipse cx="1000" cy="140" rx="60" ry="7" style="fill:none" stroke="black" stroke-width="5"/>
-		
-		<circle cx="940" cy="140" r="4" style="fill:red"/>
-		<circle cx="1060" cy="140" r="4" style="fill:green"/>
-		<circle cx="1000" cy="132.5" r="4" style="fill:yellow"/>
-		<circle cx="1000" cy="147.5" r="4" style="fill:blue"/>
+		<g id="topWing">
+			<!-- <ellipse cx="1000" cy="140" rx="60" ry="7" style="fill:none" stroke="black" stroke-width="1"/> -->
+			<path d="M920,140a60,10 0 1,0 120,0a60,10 0 1,0 -120,0" style="fill:none" stroke="black" stroke-width="0" id="motion"></path>
 
+				<rect x="" y="" width="15" height="2" fill="black">
+			        <animateMotion dur="0.3s" repeatCount="indefinite">
+			           <mpath xlink:href="#motion"/>
+			        </animateMotion>
+			    </rect>
+
+				<rect x="" y="" width="15" height="2" fill="black">
+			        <animateMotion dur="0.4s" repeatCount="indefinite">
+			           <mpath xlink:href="#motion"/>
+			        </animateMotion>
+			    </rect>
+
+			    <rect x="" y="" width="15" height="2" fill="black">
+			        <animateMotion dur="0.5s" repeatCount="indefinite">
+			           <mpath xlink:href="#motion"/>
+			        </animateMotion>
+			    </rect>
+
+			    <rect x="" y="" width="15" height="2" fill="black">
+			        <animateMotion dur="0.6s" repeatCount="indefinite">
+			           <mpath xlink:href="#motion"/>
+			        </animateMotion>
+			    </rect>
+			    <rect x="" y="" width="15" height="2" fill="black">
+			        <animateMotion dur="0.7s" repeatCount="indefinite">
+			           <mpath xlink:href="#motion"/>
+			        </animateMotion>
+			    </rect>
+			    <rect x="" y="" width="15" height="2" fill="black">
+			        <animateMotion dur="0.8s" repeatCount="indefinite">
+			           <mpath xlink:href="#motion"/>
+			        </animateMotion>
+			    </rect>
+		</g>
 
 		<path d="M 1050,165 1170,175" fill="none" stroke="black" stroke-width="3"></path>
 		<path d="M 1058,227 Q 1110,205 1170,200" fill="none" stroke="black" stroke-width="3"></path>
@@ -19,16 +50,16 @@
 			<circle cx="1197" cy="190" r="30" style="fill:none" stroke="black" stroke-width="3"></circle>
 			<circle cx="1197" cy="190" r="10" style="fill:none" stroke="black" stroke-width="4"></circle>
 
-			<circle cx="1216" cy="190" r="8" style="fill:red" stroke="black" stroke-width="2"></circle>
-			<circle cx="1178" cy="190" r="8" style="fill:green" stroke="black" stroke-width="2"></circle>
-			<circle cx="1197" cy="209" r="8" style="fill:red" stroke="black" stroke-width="2"></circle>
-			<circle cx="1197" cy="171" r="8" style="fill:green" stroke="black" stroke-width="2"></circle>
+			<circle cx="1216" cy="190" r="8" style="fill:black" stroke="black" stroke-width="2"></circle>
+			<circle cx="1178" cy="190" r="8" style="fill:grey" stroke="black" stroke-width="2"></circle>
+			<circle cx="1197" cy="209" r="8" style="fill:black" stroke="black" stroke-width="2"></circle>
+			<circle cx="1197" cy="171" r="8" style="fill:grey" stroke="black" stroke-width="2"></circle>
 			<animateTransform attributeName="transform"
                           attributeType="XML"
                           type="rotate"
                           from="0 1197 190"
                           to="360 1197 190"
-                          dur="0.01s"
+                          dur="0.001s"
                           repeatCount="indefinite"/>
 		</g>
 		<path d="M 980,247 980,260" fill="none" stroke="black" stroke-width="3"></path>
