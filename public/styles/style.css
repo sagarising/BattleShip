@@ -4,6 +4,19 @@ body{
     margin: 0px;
 }
 
+a{
+    position: relative;
+    color: black;
+    font-size: larger;
+    text-decoration: none;
+    left:20px;
+    padding: 5px;
+}
+
+a:hover{
+    color: white;
+}
+
 .noClick{
     pointer-events:none;
 }
@@ -41,7 +54,6 @@ h3 {
 #selectShip {
      font-size: 20px;
 }
-
 .grid td:hover{
     cursor : url(../images/crosshair.png) 25 25,cell;
 	background-color: lightgrey;
