@@ -19,9 +19,8 @@ var attack = function(point) {
 //Associate function
 var soundPlay=function(){
 	var audio = $("#mysoundclip")[0];
-		audio.play();
+	audio.play();
 };
-
 
 var updateForShipPlacing = function(){
 	$.get('placingOfShip',function(data){

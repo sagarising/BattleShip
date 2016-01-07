@@ -1,49 +1,177 @@
-	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" height='435' width='1400'>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" height='435' width='1400'>
 	
-<g>
+<g id="helicopter1">
+		<ellipse cx="1500" cy="200" rx="70" ry="50" style="fill:black" stroke="black" stroke-width="1" />
+		<path d="M 1490,162 1490,150 1510,150 1510,162 1490,162" fill="none" stroke="black" stroke-width="3"></path>
+		<path d="M 1500,150 1500,140" fill="none" stroke="black" stroke-width="5"></path>
+		<ellipse cx="1493" cy="200" rx="45" ry="26" style="fill:grey" stroke="black" stroke-width="1"/>
+		<text x="1460" y="210" fill="red">U.S. Army</text>
+	<g id="topWing">
+		<!-- <ellipse cx="1000" cy="140" rx="60" ry="7" style="fill:none" stroke="black" stroke-width="1"/> -->
+		<path d="M1440,140a60,9 0 1,0 120,0a60,9 0 1,0 -120,0" style="fill:none" stroke="black" stroke-width="0" id="motion1"></path>
+		<rect x="" y="" width="15" height="2" fill="black">
+	        <animateMotion dur="0.003s" repeatCount="indefinite">
+	           <mpath xlink:href="#motion1"/>
+	        </animateMotion>
+	    </rect>
+		<rect x="" y="" width="15" height="2" fill="black">
+	        <animateMotion dur="0.004s" repeatCount="indefinite">
+	           <mpath xlink:href="#motion1"/>
+	        </animateMotion>
+	    </rect>
+	    <rect x="" y="" width="15" height="2" fill="black">
+	        <animateMotion dur="0.005s" repeatCount="indefinite">
+	           <mpath xlink:href="#motion1"/>
+	        </animateMotion>
+	    </rect>
+	    <rect x="" y="" width="15" height="2" fill="black">
+	        <animateMotion dur="0.006s" repeatCount="indefinite">
+	           <mpath xlink:href="#motion1"/>
+	        </animateMotion>
+	    </rect>
+	    <rect x="" y="" width="15" height="2" fill="black">
+	        <animateMotion dur="0.001s" repeatCount="indefinite">
+	           <mpath xlink:href="#motion1"/>
+	        </animateMotion>
+	    </rect>
+	    <rect x="" y="" width="15" height="2" fill="black">
+	        <animateMotion dur="0.002s" repeatCount="indefinite">
+	           <mpath xlink:href="#motion1"/>
+	        </animateMotion>
+	    </rect>
+	<g id="guns">
+	    	<!-- <circle cx="1500" cy="240" r="4" style="fill:black">
+			<animateTransform attributeName="transform"
+                          attributeType="XML"
+                          type="rotate"
+                          from="0 1500 200"
+                          to="90 1500 600"
+                          dur="0.5s"
+                          begin="5s"
+                          repeatCount="50"/>
+		</circle>
+		<circle cx="1500" cy="240" r="4" style="fill:black">
+			<animateTransform attributeName="transform"
+                          attributeType="XML"
+                          type="rotate"
+                          from="0 1500 200"
+                          to="-90 1500 600"
+                          dur="0.5s"
+                          begin="5s"
+                          repeatCount="140"/>
+		</circle>
+		<circle cx="1500" cy="240" r="4" style="fill:black">
+			<animateTransform attributeName="transform"
+                          attributeType="XML"
+                          type="rotate"
+                          from="0 1500 200"
+                          to="200 1500 600"
+                          dur="0.5s"
+                          begin="5s"
+                          repeatCount="160"/>
+		</circle> -->
+		<circle cx="1500" cy="240" r="9" style="fill:black">
+			<animateTransform attributeName="transform"
+                          attributeType="XML"
+                          type="rotate"
+                          from="0 1500 200"
+                          to="180 -1500 200"
+                          dur="5s"
+                          begin="5s"
+                          repeatCount="5"/>
+		</circle>
+	</g>
+	</g>
+		<path d="M 1550,165 1670,175" fill="none" stroke="black" stroke-width="3"></path>
+		<path d="M 1558,227 Q 1610,205 1670,200" fill="none" stroke="black" stroke-width="3"></path>
+		<g>
+			<circle cx="1697" cy="190" r="30" style="fill:none" stroke="black" stroke-width="3"></circle>
+			<circle cx="1697" cy="190" r="10" style="fill:none" stroke="black" stroke-width="4"></circle>
+
+			<circle cx="1716" cy="190" r="8" style="fill:black" stroke="black" stroke-width="2"></circle>
+			<circle cx="1678" cy="190" r="8" style="fill:grey" stroke="black" stroke-width="2"></circle>
+			<circle cx="1697" cy="209" r="8" style="fill:black" stroke="black" stroke-width="2"></circle>
+			<circle cx="1697" cy="171" r="8" style="fill:grey" stroke="black" stroke-width="2"></circle>
+			<animateTransform attributeName="transform"
+                          attributeType="XML"
+                          type="rotate"
+                          from="0 1697 190"
+                          to="360 1697 190"
+                          dur="0.001s"
+                          repeatCount="indefinite"/>
+		</g>
+		<path d="M 1480,247 1480,260" fill="none" stroke="black" stroke-width="3"></path>
+		<path d="M 1520,247 1520,260" fill="none" stroke="black" stroke-width="4"></path>
+		<path d="M 1450,270 Q 1480,260,1500,260 1520,260 1550,270" fill="none" stroke="black" stroke-width="4"></path>
+		<animateMotion 
+						path="M 560,-100 -1800,-130"
+                        dur="10s"
+                        begin="1s"
+                        repeatCount="1"/>
+</g>
+
+<g id="helicopter2">
 		<ellipse cx="1000" cy="200" rx="70" ry="50" style="fill:black" stroke="black" stroke-width="1" />
+		<circle cx="1000" cy="190" r="7" style="fill:red">
+			<animateTransform attributeName="transform"
+                          attributeType="XML"
+                          type="rotate"
+                          from="180 1000 200"
+                          to="180 -1000 200"
+                          dur="0.5s"
+                          begin="7s"
+                          repeatCount="180"/>
+		</circle>
+		<circle cx="1000" cy="190" r="3" style="fill:red">
+			<animateTransform attributeName="transform"
+                          attributeType="XML"
+                          type="rotate"
+                          from="180 1000 200"
+                          to="200 -1000 200"
+                          dur="0.8s"
+                          begin="7s"
+                          repeatCount="indefinite"/>
+		</circle>
 		<path d="M 990,162 990,150 1010,150 1010,162 990,162" fill="none" stroke="black" stroke-width="3"></path>
 		<path d="M 1000,150 1000,140" fill="none" stroke="black" stroke-width="5"></path>
 		<ellipse cx="993" cy="200" rx="45" ry="26" style="fill:grey" stroke="black" stroke-width="1"/>
-		<g id="topWing">
-			<!-- <ellipse cx="1000" cy="140" rx="60" ry="7" style="fill:none" stroke="black" stroke-width="1"/> -->
-			<path d="M920,140a60,10 0 1,0 120,0a60,10 0 1,0 -120,0" style="fill:none" stroke="black" stroke-width="0" id="motion"></path>
-
-				<rect x="" y="" width="15" height="2" fill="black">
-			        <animateMotion dur="0.3s" repeatCount="indefinite">
-			           <mpath xlink:href="#motion"/>
-			        </animateMotion>
-			    </rect>
-
-				<rect x="" y="" width="15" height="2" fill="black">
-			        <animateMotion dur="0.4s" repeatCount="indefinite">
-			           <mpath xlink:href="#motion"/>
-			        </animateMotion>
-			    </rect>
-
-			    <rect x="" y="" width="15" height="2" fill="black">
-			        <animateMotion dur="0.5s" repeatCount="indefinite">
-			           <mpath xlink:href="#motion"/>
-			        </animateMotion>
-			    </rect>
-
-			    <rect x="" y="" width="15" height="2" fill="black">
-			        <animateMotion dur="0.6s" repeatCount="indefinite">
-			           <mpath xlink:href="#motion"/>
-			        </animateMotion>
-			    </rect>
-			    <rect x="" y="" width="15" height="2" fill="black">
-			        <animateMotion dur="0.7s" repeatCount="indefinite">
-			           <mpath xlink:href="#motion"/>
-			        </animateMotion>
-			    </rect>
-			    <rect x="" y="" width="15" height="2" fill="black">
-			        <animateMotion dur="0.8s" repeatCount="indefinite">
-			           <mpath xlink:href="#motion"/>
-			        </animateMotion>
-			    </rect>
-		</g>
-
+		<text x="950" y="210" fill="red">INDIAN Army</text>
+	<g id="topWing">
+		<!-- <ellipse cx="1000" cy="140" rx="60" ry="7" style="fill:none" stroke="black" stroke-width="1"/> -->
+		<path d="M920,140a60,10 0 1,0 120,0a60,10 0 1,0 -120,0" style="fill:none" stroke="black" stroke-width="0" id="motion"></path>
+		<rect x="" y="" width="15" height="2" fill="black">
+	        <animateMotion dur="0.003s" repeatCount="indefinite">
+	           <mpath xlink:href="#motion"/>
+	        </animateMotion>
+	    </rect>
+		<rect x="" y="" width="15" height="2" fill="black">
+	        <animateMotion dur="0.004s" repeatCount="indefinite">
+	           <mpath xlink:href="#motion"/>
+	        </animateMotion>
+	    </rect>
+	    <rect x="" y="" width="15" height="2" fill="black">
+	        <animateMotion dur="0.005s" repeatCount="indefinite">
+	           <mpath xlink:href="#motion"/>
+	        </animateMotion>
+	    </rect>
+	    <rect x="" y="" width="15" height="2" fill="black">
+	        <animateMotion dur="0.006s" repeatCount="indefinite">
+	           <mpath xlink:href="#motion"/>
+	        </animateMotion>
+	    </rect>
+	    <rect x="" y="" width="15" height="2" fill="black">
+	        <animateMotion dur="0.001s" repeatCount="indefinite">
+	           <mpath xlink:href="#motion"/>
+	        </animateMotion>
+	    </rect>
+	    <rect x="" y="" width="15" height="2" fill="black">
+	        <animateMotion dur="0.002s" repeatCount="indefinite">
+	           <mpath xlink:href="#motion"/>
+	        </animateMotion>
+	    </rect>
+	    
+	</g>
+		
 		<path d="M 1050,165 1170,175" fill="none" stroke="black" stroke-width="3"></path>
 		<path d="M 1058,227 Q 1110,205 1170,200" fill="none" stroke="black" stroke-width="3"></path>
 		<g>
@@ -66,40 +194,39 @@
 		<path d="M 1020,247 1020,260" fill="none" stroke="black" stroke-width="4"></path>
 		<path d="M 950,270 Q 980,260,1000,260 1020,260 1050,270" fill="none" stroke="black" stroke-width="4"></path>
 		<animateMotion 
-						path="M 560,-100 160,-100 150,-90 140,-80 -32,68 -32.2,68 -32,68 -32.2,67.5 -32,68 -32.2,68 -32,68 -32.2,67.5 -32,68 -32.2,68 -32,68 -32.2,67.5 -32,68 -32.2,68 -32,68 -32.2,67.5 -32,68 -32.2,68 -32,68 -32.2,67.5 -32,68 -32.2,68 -32,68 -32.2,67.5 -32,68 -32.2,68 -32,68 -32.2,67.5 -32,68 -32.2,68 -32,68 -32.2,67.5 -32,68 -32.2,68 -32,68 -32.2,67.5 -32,68 -32.2,68 -32,68 -32.2,67.5 -32,68 -32.2,68 -32,68 -32.2,67.5  -30,-55 -60,-60 -80,-80 -130,-90 -140,-90 -300,-110  -1000,-130"
-                        dur="10s"
+						path="M 560,-100 160,-100 150,-90 140,-80 -32,68 -32.2,68 -32,68 -32.2,67.5 -32,68 -32.2,68 -32,68 -32.2,67.5  -30,-55 -60,-60 -80,-80 -130,-90 -140,-90 -300,-110  -1300,-130"
+                        dur="20s"
                         repeatCount="indefinite"/>
-	</g>
+</g>
 
-
-
-	<g>
+<g id="ship">
 		<path d="M 620 179 570 260 100 260 30 170" stroke="none" stroke-width="3" fill="grey"></path>
+		<text x="310" y="200" fill="red">INDIAN NAVY</text>
 		<circle cx="200" cy="220" r="10" stroke="black" stroke-width="3" fill="darkgrey" />
 		<circle cx="280" cy="220" r="10" stroke="black" stroke-width="3" fill="darkgrey" />
 		<circle cx="360" cy="220" r="10" stroke="black" stroke-width="3" fill="darkgrey" />
 		<path d="M 400 180 400 60 375 60 375 80 350 80 350 110 300 110 150 175" stroke="black" stroke-width="1" fill="darkgrey"></path>
-		<g>
-			<circle cx="387" cy="65" r="12" fill="black" />
-			<path d="M 375 65 320 50" stroke="black" stroke-width="10"></path>
-			<circle cx="387" cy="65" r="4"  fill="red">
-				<animateMotion 
-						path="M 0,0 -1000,-200"
-                        dur="1s"
-                        repeatCount="indefinite"/>
-			</circle>
-			<animateTransform attributeName="transform"
-                          attributeType="XML"
-                          type="rotate"
-                          from="0 387 65"
-                          to="-15 387 65"
-                          dur="1s"
-                          repeatCount="indefinite"/>
-		</g>
+	<g>
+		<circle cx="387" cy="65" r="12" fill="black" />
+		<path d="M 375 65 320 50" stroke="black" stroke-width="10"></path>
+		<circle cx="387" cy="65" r="4"  fill="red">
+			<animateMotion 
+					path="M 0,0 -1000,-200"
+                    dur="1s"
+                    repeatCount="indefinite"/>
+		</circle>
+		<animateTransform attributeName="transform"
+                      attributeType="XML"
+                      type="rotate"
+                      from="0 387 65"
+                      to="-15 387 65"
+                      dur="1s"
+                      repeatCount="indefinite"/>
+	</g>
 		<animateMotion
 	              path="M 500,179 500,160 490,179 490,160 475,179 475,160 460,179 460,160 445,179 445,160 430,179 445,160 445,179 460,160 460,179 475,160 475,179 490,160 490,179 500,160 500,179"
 	              begin="0s" dur="40s" repeatCount="indefinite"
 	              />
-	</g>
+</g>
 
-	</svg> 
+</svg> 
