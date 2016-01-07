@@ -1,5 +1,5 @@
 var playerName= function(){
-	$('h3').append((document.cookie));	
+	$('h3').append($.cookie('name')+"<small> GameID:</small>"+$.cookie('gameId'));	
 };
 
 var checkAndSubmit = function(self){
