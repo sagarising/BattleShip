@@ -62,11 +62,11 @@ var statusUpdate = function(id,array){
 
 var displayTurn = function(turn){
 	if(turn == true){
-		$( ".controller" ).html( "<p>Your turn</p>" );
+		$( ".turn" ).html( "<p>Your turn</p>" );
 		$("#enemy").css("pointer-events","auto");
 	}
 	else{
-		$( ".controller" ).html( "<p>Enemy's turn</p>" );
+		$( ".turn" ).html( "<p>Enemy's turn</p>" );
 		$("#enemy").css("pointer-events","none");
 	};
 };
