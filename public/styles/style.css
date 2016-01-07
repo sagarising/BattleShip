@@ -145,6 +145,12 @@ section table#own{
     100% {color:transparent;text-shadow:0px 0px 3px lightsteelblue;}
 }
 
+@keyframes scale_once{
+    0% {}
+    50% {transform:scale(1.2);opacity: 0.2;}
+    100% {transform:scale(1);opacity: 1;}
+}
+
 .label{
     padding:5px;
     border-radius: 5px;
