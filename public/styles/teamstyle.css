@@ -1,0 +1,181 @@
+
+body{
+	margin:0px;
+	background: linear-gradient(rgba(0,0,255,0), rgba(0,0,200,0.4)); 
+}
+
+	div.banner{ 
+		
+		text-align: center;
+		position: fixed;
+		display: flex;
+		left:0px;
+		right: 0px;
+		z-index: 1;
+		padding: 5px;
+		height: 30px;
+		background-color: lightsteelblue;
+	}
+
+	div.banner a{
+		text-decoration: none;
+		font-family: arial;
+		color: steelblue;
+		display: block;
+		padding: 5px;
+		padding-right: 20px;
+		padding-left: 20px;
+		font-size: large;
+	}
+
+	div.banner a:hover{
+		color: white;
+		opacity: 0.7;
+	}
+
+	div.disp{
+		position: absolute;
+		left:600px;
+		top:300px;
+		border:5px solid grey;
+		margin: 35px;
+		width: 900px;
+		height: 550px;
+		display: inline;
+		border-radius: 25px;
+	}
+
+	div.disp p{
+		position: absolute;
+		color: #7272B1;
+		left:0px;
+		top:100px;
+		width: auto;
+		display: inline;
+		padding: 50px;	
+
+	}
+
+
+	h1{position: relative;
+		top:35px;
+		text-align: center;
+		display: block;
+	}
+	h2	{text-align: center;
+		display: inline;
+		color: dimgrey;
+	}
+	
+	p    {color:green;
+		width:1500;
+		position: relative;
+		text-align: center;
+		font-family: fantasy;
+		left: 30px;
+		right: 30px;
+		margin-top: 50px;
+		font-size: 30;
+	}
+
+
+	
+	section{
+		padding: 20px;
+		margin-left: 220px;
+		margin-right: 20px;
+		width:1300;
+	}
+
+	.gallery{
+		overflow: auto;
+		padding: 20px;
+		margin-left: 220px;
+		border: 5px double ;
+		width:250px;
+		height:500px;
+	}
+
+	.gallery img{
+		border: 5px solid dimgray;
+		width:100;
+		height:70;
+	}
+	nav {
+    line-height:30px;
+    background: linear-gradient(rgba(170,170,170,1), rgba(200,200,200,0)); ;
+     border-radius: 50px;
+    height:500px;
+    width:200px;
+    float:left;
+    text-align: center;	
+    margin-top: 0px;	
+	    margin-bottom: 20px;
+    	margin-right: 20px;
+   		margin-left: 20px;      
+	}
+	footer {
+		position: relative;
+		bottom: 0px;
+	    background-color:black;
+	    color:white;
+	    clear:both;
+	    text-align:center;
+	    padding:5px;
+	    border-style: solid;
+	     margin-top: 50px;		 	 
+	}
+	nav a{
+
+		display: block;
+		width: 200px;
+		color:white;
+		font-size: 30px;
+		text-decoration: none;
+	}
+	nav a:hover{
+		background-color: silver;
+		color: black;
+		font-size: 32px;
+	}
+
+	
+	section a {
+    position: relative;
+    width: 170px;
+    text-decoration: none;
+    text-align: center;
+ 	 }
+  	section a:after {
+    content: attr(name);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 0.5em 20px;
+    width: 170px;
+    background: rgba(0,0,0,0.8);
+    text-decoration: none ;
+    font-size:30px;
+    color: white;
+    border-radius: 25px;
+    opacity: 0;
+    transition: opacity 1s;
+   
+  }
+  	section a:hover:after {
+    opacity: 1;
+  }
+	section img{
+		height:250;
+		width: 200;
+		border-radius: 25px;
+		margin: 5px;
+	}
+
+	section p {
+		width: 1200;
+	}
+	section img:hover{
+		opacity:0.7;
+	}
+	
