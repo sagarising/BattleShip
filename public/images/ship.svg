@@ -7,7 +7,6 @@
 		<ellipse cx="1493" cy="200" rx="45" ry="26" style="fill:grey" stroke="black" stroke-width="1"/>
 		<text x="1460" y="210" fill="red">U.S. Army</text>
 	<g id="topWing">
-		<!-- <ellipse cx="1000" cy="140" rx="60" ry="7" style="fill:none" stroke="black" stroke-width="1"/> -->
 		<path d="M1440,140a60,9 0 1,0 120,0a60,9 0 1,0 -120,0" style="fill:none" stroke="black" stroke-width="0" id="motion1"></path>
 		<rect x="" y="" width="15" height="2" fill="black">
 	        <animateMotion dur="0.003s" repeatCount="indefinite">
@@ -40,46 +39,17 @@
 	        </animateMotion>
 	    </rect>
 	<g id="guns">
-	    	<!-- <circle cx="1500" cy="240" r="4" style="fill:black">
+		<circle cx="1500" cy="245" r="11" style="fill:black">
 			<animateTransform attributeName="transform"
                           attributeType="XML"
                           type="rotate"
-                          from="0 1500 200"
-                          to="90 1500 600"
-                          dur="0.5s"
-                          begin="5s"
-                          repeatCount="50"/>
+                          from="180 1500 245"
+                          to="180 1500 500"
+                          dur="0.9s"
+                          begin="3.5s"
+                          repeatCount="7"/>
 		</circle>
-		<circle cx="1500" cy="240" r="4" style="fill:black">
-			<animateTransform attributeName="transform"
-                          attributeType="XML"
-                          type="rotate"
-                          from="0 1500 200"
-                          to="-90 1500 600"
-                          dur="0.5s"
-                          begin="5s"
-                          repeatCount="140"/>
-		</circle>
-		<circle cx="1500" cy="240" r="4" style="fill:black">
-			<animateTransform attributeName="transform"
-                          attributeType="XML"
-                          type="rotate"
-                          from="0 1500 200"
-                          to="200 1500 600"
-                          dur="0.5s"
-                          begin="5s"
-                          repeatCount="160"/>
-		</circle> -->
-		<circle cx="1500" cy="240" r="9" style="fill:black">
-			<animateTransform attributeName="transform"
-                          attributeType="XML"
-                          type="rotate"
-                          from="0 1500 200"
-                          to="180 -1500 200"
-                          dur="5s"
-                          begin="5s"
-                          repeatCount="5"/>
-		</circle>
+		<path id="gun" d="M 1500,240 1500,275" stroke="black" stroke-width="13"></path>
 	</g>
 	</g>
 		<path d="M 1550,165 1670,175" fill="none" stroke="black" stroke-width="3"></path>
@@ -112,25 +82,17 @@
 
 <g id="helicopter2">
 		<ellipse cx="1000" cy="200" rx="70" ry="50" style="fill:black" stroke="black" stroke-width="1" />
-		<circle cx="1000" cy="190" r="7" style="fill:red">
+		<path id="gun" d="M 1000,200 920,200" stroke="black" stroke-width="8"></path>
+		<circle cx="932" cy="200" r="9" style="fill:black"/>
+		<circle cx="932" cy="200" r="9" style="fill:black">
 			<animateTransform attributeName="transform"
                           attributeType="XML"
                           type="rotate"
                           from="180 1000 200"
                           to="180 -1000 200"
-                          dur="0.5s"
+                          dur="1s"
                           begin="7s"
-                          repeatCount="180"/>
-		</circle>
-		<circle cx="1000" cy="190" r="3" style="fill:red">
-			<animateTransform attributeName="transform"
-                          attributeType="XML"
-                          type="rotate"
-                          from="180 1000 200"
-                          to="200 -1000 200"
-                          dur="0.8s"
-                          begin="7s"
-                          repeatCount="indefinite"/>
+                          repeatCount="10"/>
 		</circle>
 		<path d="M 990,162 990,150 1010,150 1010,162 990,162" fill="none" stroke="black" stroke-width="3"></path>
 		<path d="M 1000,150 1000,140" fill="none" stroke="black" stroke-width="5"></path>
