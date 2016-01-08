@@ -34,7 +34,7 @@ describe('controller',function(){
 	describe('/makeReady',function(){
 		it('should allow to start game',function(done){
 			var game = {
-							players : ['sooraj', 'shibi'],
+							players : ['nabeel', 'shibi'],
 							arePlayersReady : function(){return true}
 						};
 			var observer = {
@@ -73,7 +73,7 @@ describe('controller',function(){
 	describe('/usedSpace',function(){
 		it('should give used coordinates of user',function(done){
 			var game = {
-							players : ['sooraj', 'shibi'],
+							players : ['nabeel', 'shibi'],
 							usedCoordinatesOfPlayer : function(){return [];}
 						};
 			var observer = {
