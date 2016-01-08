@@ -128,31 +128,32 @@ describe('controller',function(){
 			.expect(200,done);
 		})
 	})
-	// describe('/attack',function(){
-	// 	it('should give attacking points are hit or miss',function(done){
-	// 		var game = {
-	// 					isHit : function(){return true;},
-	// 					removeHitPoint:function(){},
-	// 					checkForAllShipsSunk:function(){},
-	// 					insert_point_into_hitPoints:function(){},
-	// 					changeTurn : function(){}
-	// 					};
-	// 		var observer = {
-	// 			gameOfCurrentPlayer : function() {
-	// 					return game;
-	// 				}
-	// 		};
-	// 		controller.injectObserver(observer);
+	describe('/attack',function(){
+		it('should give attacking points are hit or miss',function(done){
+			var game = {
+						currentPlayer :function(){return player},
+						isHit : function(){return true;},
+						removeHitPoint:function(){},
+						checkForAllShipsSunk:function(){},
+						insert_point_into_hitPoints:function(){},
+						changeTurn : function(){}
+						};
+			var observer = {
+				gameOfCurrentPlayer : function() {
+						return game;
+					}
+			};
+			controller.injectObserver(observer);
 
-	// 		request(controller)
-	// 		.post('/attack')
-	// 		.send({point:"a1"})
-	// 		.set('cookie',['name=shibi'])
-	// 		.expect('Content-Type',/text\/html/)
-	// 		.expect('success')
-	// 		.expect(200,done);
-	// 	})
-	// })
+			request(controller)
+			// .post('/attack')
+			// .send({point:"a1"})
+			// .set('cookie',['name=shibi'])
+			// .expect('Content-Type',/text\/html/)
+			// .expect('success')
+			// .expect(200,done);
+		})
+	})
 	describe('/givingUpdate',function(){
 		it('should give updates of own and enemy grid',function(done){
 			var status = {
