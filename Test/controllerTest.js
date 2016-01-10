@@ -87,10 +87,11 @@ describe('controller',function(){
 			.get('/usedSpace')
 			.expect('Content-Type',/application\/json/)
 			.expect(200,done);
-		})
-	})
+		});
+	});
+
 	describe('/attack',function(){
-		it('should give attacking points are hit or miss',function(done){
+		it('should give attacking points if it is a hit',function(done){
 			var game = {
 						isHit : function(){return true;},
 						removeHitPoint:function(){},
@@ -112,8 +113,30 @@ describe('controller',function(){
 			.expect('Content-Type',/text\/html/)
 			.expect('success')
 			.expect(200,done);
-		})
-	})
+		});
+		it('should give attacking points if it is a miss',function(done){
+			var game = {
+						isHit : function(){return false;},
+						insert_point_into_missPoints:function(){},
+						changeTurn : function(){}
+						};
+			var observer = {
+				gameOfCurrentPlayer : function() {
+						return game;
+					}
+			};
+			controller.injectObserver(observer);
+
+			request(controller)
+			.post('/attack')
+			.send({point:"a1"})
+			.set('cookie',['name=shibi'])
+			.expect('Content-Type',/text\/html/)
+			.expect('success')
+			.expect(200,done);
+		});
+	});
+
 	describe('/givingUpdate',function(){
 		it('should give updates of own and enemy grid',function(done){
 			var status = {
@@ -125,13 +148,13 @@ describe('controller',function(){
 				turn 				: true
 			}
 			var game = {
-						playersStatus:function(){return status},
-						is_any_player_died:function(){}
-						};
+				playersStatus:function(){return status},
+				is_any_player_died:function(){}
+			};
 			var observer = {
 				gameOfCurrentPlayer : function() {
 						return game;
-					}
+				}
 			};
 			controller.injectObserver(observer);
 
@@ -139,8 +162,9 @@ describe('controller',function(){
 			.get('/givingUpdate')
 			.expect('Content-Type',/application\/json/)
 			.expect(200,done);
-		})
-	})
+		});
+	});
+
 	describe('/gameOver',function(){
 		it('should give game summary',function(done){
 			var game = {
@@ -157,8 +181,9 @@ describe('controller',function(){
 			.get('/gameOver')
 			.expect('Content-Type',/application\/json/)
 			.expect(200,done);
-		})
-	})
+		});
+	});
+	
 	describe('',function(){
 		it('should return after checking',function(done){
 			request(controller)
