@@ -123,7 +123,8 @@ describe('controller',function(){
 			var game = {
 						isHit : function(){return false;},
 						insert_point_into_missPoints:function(){},
-						changeTurn : function(){}
+						changeTurn : function(){},
+						currentPlayerTurn : function(){return true}
 						};
 			var observer = {
 				gameOfCurrentPlayer : function() {
