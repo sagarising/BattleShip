@@ -17,13 +17,13 @@ describe('Game',function(){
 	it('Should give tell who is the current player is',function(){
 		var game = new Game(1);
 		game.addPlayer({name:"Abhi",isReady:true});
-		assert.equal(JSON.stringify(game.currentPlayer("Abhi1")),JSON.stringify({name:"Abhi",isReady:true}));
+		assert.equal(JSON.stringify(game._currentPlayer("Abhi1")),JSON.stringify({name:"Abhi",isReady:true}));
 	});
 	it("Should tell me enemy player also",function(){
 		var game = new Game(1);
 		game.addPlayer({name:"Abhi",isReady:true});
 		game.addPlayer({name:"Nabi",isReady:true});
-		assert.equal(JSON.stringify(game.enemyPlayer("Abhi1")),JSON.stringify({name:"Nabi",isReady:true}));
+		assert.equal(JSON.stringify(game._enemyPlayer("Abhi1")),JSON.stringify({name:"Nabi",isReady:true}));
 	});
 	it("Should return false if no player died",function(){
 		var game = new Game(1);

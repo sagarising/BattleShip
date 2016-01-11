@@ -67,7 +67,7 @@ describe('controller',function(){
 			controller.injectObserver(observer);
 
 			request(controller.injectObserver({}))
-				.post('/placingOfShip')
+				.use('/placingOfShip')
 				.set('cookie',['gameId=somthing'])
 				.expect(200,done);
 		});
