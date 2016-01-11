@@ -134,6 +134,6 @@ var winnerAndLoser = function(update){
 var serveStatus = function(){
 	playerName();
 	changeTheColorOfGamePage();
-	intervalObject = setInterval(update,150);
+	intervalObject = setInterval(update,2000);
 };
 
