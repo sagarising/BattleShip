@@ -100,7 +100,8 @@ describe('controller',function(){
 						removeHitPoint:function(){},
 						checkForAllShipsSunk:function(){},
 						insert_point_into_hitPoints:function(){},
-						changeTurn : function(){}
+						changeTurn : function(){},
+						currentPlayerTurn : function(){return true}
 						};
 			var observer = {
 				gameOfCurrentPlayer : function() {
