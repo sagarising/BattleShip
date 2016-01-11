@@ -2,7 +2,6 @@ var assert = require('chai').assert;
 var controller = require('../lib/controller');
 var request = require('supertest');
 
-
 controller.injectObserver({});
 
 describe('controller',function(){
@@ -14,7 +13,8 @@ describe('controller',function(){
 			.expect('Content-Type',/text\/html/)
 			.expect(200,done)
 		});
-	})
+	});
+	
 	// describe('/player',function(){
 	// 	it('should give next page called shipPlacingPage',function(done){
 	// 		var observer = {
@@ -31,6 +31,7 @@ describe('controller',function(){
 	// 			.expect('Location','/shipPlacingPage.html', done);
 	// 	})
 	// })
+
 	describe('/makeReady',function(){
 		it('should allow to start game',function(done){
 			var game = {
@@ -50,26 +51,28 @@ describe('controller',function(){
 				.expect(200,done);
 		});
 	});
-	// describe('/placingOfShip',function(){
-	// 	it('should give used coordinates of user',function(done){
-	// 		var game = {
-	// 						players : ['sooraj', 'shibi'],
-	// 						placedShipsPosition : function(){return []}
-	// 					};
-	// 		var observer = {
-	// 			gameOfCurrentPlayer : function() {
-	// 				console.log("hahahahahahhahahahhahah")
-	// 					return game;
-	// 				}
-	// 		};
-	// 		controller.injectObserver(observer);
 
-	// 		request(controller.injectObserver({}))
-	// 			.post('/placingOfShip')
-	// 			.set('cookie',['gameId=somthing'])
-	// 			.expect(200,done);
-	// 	})
-	// })
+	describe('/placingOfShip',function(){
+		it('should give used coordinates of user',function(done){
+			var game = {
+				players : ['nabi', 'abhi'],
+				placedShipsPosition : function(){return []}
+						};
+			var observer = {
+				gameOfCurrentPlayer : function() {
+					console.log("hahahahahahhahahahhahah")
+						return game;
+					}
+			};
+			controller.injectObserver(observer);
+
+			request(controller.injectObserver({}))
+				.post('/placingOfShip')
+				.set('cookie',['gameId=somthing'])
+				.expect(200,done);
+		});
+	});
+
 	describe('/usedSpace',function(){
 		it('should give used coordinates of user',function(done){
 			var game = {
@@ -114,6 +117,7 @@ describe('controller',function(){
 			.expect('success')
 			.expect(200,done);
 		});
+
 		it('should give attacking points if it is a miss',function(done){
 			var game = {
 						isHit : function(){return false;},
@@ -175,6 +179,7 @@ describe('controller',function(){
 						return game;
 					}
 			};
+
 			controller.injectObserver(observer);
 
 			request(controller)
@@ -183,13 +188,13 @@ describe('controller',function(){
 			.expect(200,done);
 		});
 	});
-	
+
 	describe('',function(){
 		it('should return after checking',function(done){
 			request(controller)
 				.post('')
 				.expect(404,done);
-		})
+		});
 	});
 
 });
