@@ -10,6 +10,12 @@ var checkAndSubmit = function(self){
 	var align = $("#horizontal")[0].checked ? 'horizontal' :'vertical';	
 	$.post('placingOfShip',{shipSize:shipSize,coordinate:coordinateValue,align:align},
 		function(data){
+			if (data.constructor == String) {
+				$("#alert1").children("span").show()
+				$("#alert1").children("span").text(data);
+				setTimeout(function() {$("#alert1").children("span").hide();}, 1000);
+			}
+			else{
 			var shipCoordinate = (data); 
 			var ship = $('#ship')[0];
 			ship.remove(ship.selectedIndex);
@@ -20,6 +26,7 @@ var checkAndSubmit = function(self){
 			shipCoordinate.map(function(element){
 				$('#'+element).css("background-color","darkslategrey");
 		});
+	}
 	});
 };
 
