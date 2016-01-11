@@ -1,5 +1,6 @@
 
 // gamepage
+var intervalObject;
 var playerName= function(){
 	$('h3').append($.cookie('name')+"<small> GameID:</small>"+$.cookie('gameId'));	
 };
@@ -88,6 +89,7 @@ var update = function(){
 			changingTheColorOfGrid(clas.table,clas.stat,clas.color)
 		});
 		if(updates.isGameOver){
+			clearInterval(intervalObject);
 			window.location.href = "result.html";
 		};
 	});
@@ -132,6 +134,6 @@ var winnerAndLoser = function(update){
 var serveStatus = function(){
 	playerName();
 	changeTheColorOfGamePage();
-	setInterval(update,150);
+	intervalObject = setInterval(update,150);
 };
 
