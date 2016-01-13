@@ -1,6 +1,6 @@
-var playerName= function(){
-	$('h3').append($.cookie('name')+"<small> GameID:</small>"+$.cookie('gameId'));	
-};
+// var playerName= function(){
+// 	$('h3').append($.cookie('name')+"<small> GameID:</small>"+$.cookie('gameId'));	
+// };
 
 var checkAndSubmit = function(self){
 	soundPlay();
@@ -49,3 +49,4 @@ var soundPlay=function(){
 	var audio = $("#mysoundclip")[0];
 		audio.play();
 };
+
