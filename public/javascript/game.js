@@ -137,3 +137,9 @@ var serveStatus = function(){
 	intervalObject = setInterval(update,2000);
 };
 
+var highscore = function(){
+	$.get('highscore',function(data){
+		console.log(data);
+		$('#highscore').html(data);
+	});
+}
