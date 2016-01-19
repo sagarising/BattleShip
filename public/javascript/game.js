@@ -139,7 +139,18 @@ var serveStatus = function(){
 
 var highscore = function(){
 	$.get('highscore',function(data){
-		console.log(data);
-		$('#highscore').html(data);
+		var parsedData = JSON.parse(data);
+		$('#top1name').append(parsedData[0].name);
+		$('#top2name').append(parsedData[1].name);
+		$('#top3name').append(parsedData[2].name);
+		$('#top4name').append(parsedData[3].name);
+		$('#top5name').append(parsedData[4].name);
+
+		$('#top1accuracy').append(parsedData[0].accuracy+'%');
+		$('#top2accuracy').append(parsedData[1].accuracy+'%');
+		$('#top3accuracy').append(parsedData[2].accuracy+'%');
+		$('#top4accuracy').append(parsedData[3].accuracy+'%');
+		$('#top5accuracy').append(parsedData[4].accuracy+'%');
+
 	});
 }
