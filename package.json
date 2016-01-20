@@ -5,7 +5,8 @@
   "main": "battleShip.js",
   "scripts": {
     "test": "mocha",
-    "watch": "mocha -R min --watch"
+    "watch": "mocha -R min --watch",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -33,5 +34,9 @@
     "pg": "4.4.3",
     "sinon": "^1.17.2",
     "supertest": "^1.1.0"
+  },
+   "engines": {
+    "node": ">= 0.12.0",
+    "npm": ">= 1.2.0"
   }
 }
