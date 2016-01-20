@@ -2,7 +2,7 @@
   "name": "battleship",
   "version": "1.0.0",
   "description": "",
-  "main": "battleShip.js",
+  "main": "server.js",
   "scripts": {
     "test": "mocha",
     "watch": "mocha -R min --watch",
