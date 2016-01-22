@@ -19,7 +19,6 @@ var checkAndSubmit = function(self){
 			var ship = $('#ship')[0];
 			ship.remove(ship.selectedIndex);
 			if(ship.children.length==0){
-				console.log("sakcadhkjCHASdkdhsmnhzkjbx anshukdsahvbmsghiudysbgfmh")
 				$('#ready').css({"pointer-events":"auto","opacity":"1","animation":"scale 0.5s infinite alternate"}); 
 				$('#placeShip').css({"pointer-events":"none","opacity":"0.5"});
 			};
@@ -48,47 +47,8 @@ var createInterval = setInterval(function(){
 			$('table').css('pointerEvents','none');
 		}
 	})
-},2000);
-	// return createInterval;	
-}
-
-// function(){
-// 	$.get('makeReady',function(data){
-// 		if(data==='select more ships'){
-// 			$('#alert').show();
-// 		}
-// 		else{
-// 			if(data===true){
-// 				clearInterval(createInterval);				
-// 				$.get('gamePage',function(data){
-// 				$('html').html(data);
-// 				});
-// 			}
-// 			$('#loading').css('visibility','visible');
-// 			$('#selectShip').css('visibility','hidden');
-// 			$('table').css('pointerEvents','none');
-// 		}
-// 	})
-// };
-
-
-// var sendToGamePage = function(){
-// 	$.get('makeReady',function(data){
-// 		if(data==='select more ships'){
-// 			$('#alert').show();
-// 		}
-// 		else{
-// 			if(data===true){
-// 			$.get('game',function(data){
-// 			$('html').html(data);
-// 			clearInterval(Interval);
-// 			}
-// 		$('#loading').css('visibility','visible');
-// 		$('#selectShip').css('visibility','hidden');
-// 		$('table').css('pointerEvents','none');
-// 		}
-// 	}
-// };
+	},2000);	
+};
 
 var soundPlay=function(){
 	var audio = $("#mysoundclip")[0];
