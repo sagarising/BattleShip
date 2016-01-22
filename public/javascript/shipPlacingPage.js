@@ -1,7 +1,6 @@
 // var playerName= function(){
 // 	$('h3').append($.cookie('name')+"<small> GameID:</small>"+$.cookie('gameId'));	
 // };
-
 var checkAndSubmit = function(self){
 	soundPlay();
 	var ship = $("#ship");
@@ -20,6 +19,7 @@ var checkAndSubmit = function(self){
 			var ship = $('#ship')[0];
 			ship.remove(ship.selectedIndex);
 			if(ship.children.length==0){
+				console.log("sakcadhkjCHASdkdhsmnhzkjbx anshukdsahvbmsghiudysbgfmh")
 				$('#ready').css({"pointer-events":"auto","opacity":"1","animation":"scale 0.5s infinite alternate"}); 
 				$('#placeShip').css({"pointer-events":"none","opacity":"0.5"});
 			};
@@ -31,19 +31,64 @@ var checkAndSubmit = function(self){
 };
 
 var sendToGamePage = function(){
+var createInterval = setInterval(function(){
 	$.get('makeReady',function(data){
 		if(data==='select more ships'){
 			$('#alert').show();
 		}
 		else{
-			if(data===true)
-				window.location.href = "game.html";
+			if(data===true){
+				clearInterval(createInterval);				
+				$.get('gamePage',function(data){
+				$('html').html(data);
+				});
+			}
 			$('#loading').css('visibility','visible');
 			$('#selectShip').css('visibility','hidden');
 			$('table').css('pointerEvents','none');
 		}
 	})
-};
+},2000);
+	// return createInterval;	
+}
+
+// function(){
+// 	$.get('makeReady',function(data){
+// 		if(data==='select more ships'){
+// 			$('#alert').show();
+// 		}
+// 		else{
+// 			if(data===true){
+// 				clearInterval(createInterval);				
+// 				$.get('gamePage',function(data){
+// 				$('html').html(data);
+// 				});
+// 			}
+// 			$('#loading').css('visibility','visible');
+// 			$('#selectShip').css('visibility','hidden');
+// 			$('table').css('pointerEvents','none');
+// 		}
+// 	})
+// };
+
+
+// var sendToGamePage = function(){
+// 	$.get('makeReady',function(data){
+// 		if(data==='select more ships'){
+// 			$('#alert').show();
+// 		}
+// 		else{
+// 			if(data===true){
+// 			$.get('game',function(data){
+// 			$('html').html(data);
+// 			clearInterval(Interval);
+// 			}
+// 		$('#loading').css('visibility','visible');
+// 		$('#selectShip').css('visibility','hidden');
+// 		$('table').css('pointerEvents','none');
+// 		}
+// 	}
+// };
 
 var soundPlay=function(){
 	var audio = $("#mysoundclip")[0];
