@@ -2,7 +2,7 @@
 // gamepage
 var intervalObject;
 var playerName= function(){
-	$('h3').append($.cookie('name')+"<small> GameID:</small>"+$.cookie('gameId'));	
+	$('h3').append($.cookie('name')+"<small> GameID:</small>"+$.cookie('gameId'));
 };
 var changeTheColorOfGamePage = function(){
 	$.get('usedSpace',function(data){
@@ -26,11 +26,11 @@ var soundPlay=function(){
 
 var updateForShipPlacing = function(){
 	$.get('placingOfShip',function(data){
-		var shipCoordinate = data; 
+		var shipCoordinate = data;
 		var ship = $('#ship')[0];
 		ship.remove(ship.selectedIndex);
 		if(ship.children.length==0)
-			setInterval(sendToGamePage,20); 
+			setInterval(sendToGamePage,20);
 		shipCoordinate.map(function(element){
 		var cell = $('#'+element)[0];
 		cell.bgColor ='grey';
@@ -151,6 +151,13 @@ var highscore = function(){
 		$('#top3accuracy').append(parsedData[2].accuracy+'%');
 		$('#top4accuracy').append(parsedData[3].accuracy+'%');
 		$('#top5accuracy').append(parsedData[4].accuracy+'%');
+
+		$('#top1time').append(parsedData[0].time);
+		$('#top2time').append(parsedData[1].time);
+		$('#top3time').append(parsedData[2].time);
+		$('#top4time').append(parsedData[3].time);
+		$('#top5time').append(parsedData[4].time);
+
 
 	});
 }
