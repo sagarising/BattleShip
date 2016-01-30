@@ -95,6 +95,7 @@ var Context = function(updates){
 
 var winnerAndLoser = function(update){
 	$.get('gameOver',function(data){
+		console.log(data);
 		var updates = data;
 		var winnerShipsSunk = updates.status.filter(function(ele){return ele==0}).length;
 		var context = new Context(updates);
