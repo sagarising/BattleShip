@@ -55,6 +55,7 @@ var displayTurn = function(turn){
 
 var update = function(){
 	$.get('givingUpdate',function(data){
+		console.log(data,"above get result");
 		var shipStatus = [];
 		var gridStatus = [];
 		var updates = data;
@@ -70,7 +71,11 @@ var update = function(){
 		});
 		if(updates.isGameOver){
 			clearInterval(intervalObject);
-			window.location.href = "result.html";
+			$.get('getResult',function(data){
+				console.log(data);
+				$('html').html(data);
+				winnerAndLoser(update);
+			})
 		};
 	});
 };
@@ -95,7 +100,6 @@ var Context = function(updates){
 
 var winnerAndLoser = function(update){
 	$.get('gameOver',function(data){
-		console.log(data);
 		var updates = data;
 		var winnerShipsSunk = updates.status.filter(function(ele){return ele==0}).length;
 		var context = new Context(updates);
