@@ -52,26 +52,27 @@ describe('controller',function(){
 		});
 	});
 
-	describe('/placingOfShip',function(){
-		it('should give used coordinates of user',function(done){
-			var game = {
-				players : ['nabi', 'abhi'],
-				placedShipsPosition : function(){return []}
-						};
-			var observer = {
-				gameOfCurrentPlayer : function() {
-					console.log("hahahahahahhahahahhahah")
-						return game;
-					}
-			};
-			controller.injectObserver(observer);
+	// describe('/placingOfShip',function(){
+	// 	it('should give used coordinates of user',function(done){
+	// 		var game = {
+	// 			players : ['nabi', 'abhi'],
+	// 			placedShipsPosition : function(){return []}
+	// 					};
+	// 		var observer = {
+	// 			gameOfCurrentPlayer : function() {
+	// 				console.log("hahahahahahhahahahhahah")
+	// 					return game;
+	// 				}
+	// 		};
+	// 		controller.injectObserver(observer);
 
-			request(controller.injectObserver({}))
-				.use('/placingOfShip')
-				.set('cookie',['gameId=somthing'])
-				.expect(200,done);
-		});
-	});
+	// 		request(controller.injectObserver({}))
+	// 			.use('/placingOfShip')
+	// 			.set('cookie',['gameId=somthing'])
+	// 			.expect('cannot place ship here')
+	// 			.expect(200,done);
+	// 	});
+	// });
 
 	describe('/usedSpace',function(){
 		it('should give used coordinates of user',function(done){
