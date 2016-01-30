@@ -1,9 +1,6 @@
 
 // gamepage
 var intervalObject;
-var playerName= function(){
-	$('h3').append($.cookie('name')+"<small> GameID:</small>"+$.cookie('gameId'));	
-};
 var changeTheColorOfGamePage = function(){
 	$.get('usedSpace',function(data){
 		placesWhereShipArePlaced = data;
@@ -18,28 +15,11 @@ var attack = function(point) {
 	soundPlay();
 };
 
-//Associate function
+
 var soundPlay=function(){
 	var audio = $("#mysoundclip")[0];
 	audio.play();
 };
-
-var updateForShipPlacing = function(){
-	$.get('placingOfShip',function(data){
-		var shipCoordinate = data; 
-		var ship = $('#ship')[0];
-		ship.remove(ship.selectedIndex);
-		if(ship.children.length==0)
-			setInterval(sendToGamePage,20); 
-		shipCoordinate.map(function(element){
-		var cell = $('#'+element)[0];
-		cell.bgColor ='grey';
-		});
-	});
-};
-
-//shipPlacingPage
-
 
 //gamePage
 
@@ -132,8 +112,9 @@ var winnerAndLoser = function(update){
 };
 
 var serveStatus = function(){
-	playerName();
 	changeTheColorOfGamePage();
 	intervalObject = setInterval(update,2000);
 };
+
+
 

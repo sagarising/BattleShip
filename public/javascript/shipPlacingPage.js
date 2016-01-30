@@ -40,6 +40,7 @@ var createInterval = setInterval(function(){
 				clearInterval(createInterval);				
 				$.get('gamePage',function(data){
 				$('html').html(data);
+				serveStatus();
 				});
 			}
 			$('#loading').css('visibility','visible');

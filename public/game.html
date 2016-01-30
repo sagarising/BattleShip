@@ -4,6 +4,13 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 	<script type="text/javascript" src= './javascript/game.js'></script>
+	<script>
+		var serveStatus = function(){
+		playerName();
+		changeTheColorOfGamePage();
+		intervalObject = setInterval(update,2000);
+	};		
+	</script>
 	<link rel="stylesheet" href="./styles/style.css">
 	<title>BATTLESHIP</title>
 </head>
@@ -15,9 +22,9 @@
 		<img src="./images/battle_ship_logo.png" width="100px">
 		<a href="instructions.html" target='_blank'>Instructions</a>
 		<a href="team.html" target='_blank'>Our Team</a>
-    	<h3></h3>
+    	<h3><button onclick = 'serveStatus()'></button></h3>
    </div>
-	<section class="gamePage">
+	<section class="gamePage" onload="serveStatus()">
 		<div class="own">
 			<h2 style="margin:0em 0em 0em 5em">OWN'S GRID</h2>
 			<table class="grid" id="own" value="own">
