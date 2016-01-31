@@ -1,0 +1,276 @@
+html
+  head
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js')
+    script(type='text/javascript', src='./javascript/game.js')
+    link(rel='stylesheet', href='./styles/style.css')
+    title BATTLESHIP
+  body.player1(onload='serveStatus()')
+    audio#mysoundclip(preload='auto')
+      source(src='../soundFiles/hit.wav')
+    .banner
+      img(src='./images/battle_ship_logo.png', width='100px')
+      a(href='instructions.html', target='_blank') Instructions
+      a(href='team.html', target='_blank') Our Team
+      h3!=playerInfo
+    section.gamePage(onload='serveStatus()')
+      .own
+        h2(style='margin:0em 0em 0em 5em') OWN'S GRID
+        table#own.grid(value='own')
+          tr
+            td#A1(width='40px', height='40px')
+            td#A2(width='40px', height='40px')
+            td#A3(width='40px', height='40px')
+            td#A4(width='40px', height='40px')
+            td#A5(width='40px', height='40px')
+            td#A6(width='40px', height='40px')
+            td#A7(width='40px', height='40px')
+            td#A8(width='40px', height='40px')
+            td#A9(width='40px', height='40px')
+            td#A10(width='40px', height='40px')
+          tr
+            td#B1(width='40px', height='40px')
+            td#B2(width='40px', height='40px')
+            td#B3(width='40px', height='40px')
+            td#B4(width='40px', height='40px')
+            td#B5(width='40px', height='40px')
+            td#B6(width='40px', height='40px')
+            td#B7(width='40px', height='40px')
+            td#B8(width='40px', height='40px')
+            td#B9(width='40px', height='40px')
+            td#B10(width='40px', height='40px')
+          tr
+            td#C1(width='40px', height='40px')
+            td#C2(width='40px', height='40px')
+            td#C3(width='40px', height='40px')
+            td#C4(width='40px', height='40px')
+            td#C5(width='40px', height='40px')
+            td#C6(width='40px', height='40px')
+            td#C7(width='40px', height='40px')
+            td#C8(width='40px', height='40px')
+            td#C9(width='40px', height='40px')
+            td#C10(width='40px', height='40px')
+          tr
+            td#D1(width='40px', height='40px')
+            td#D2(width='40px', height='40px')
+            td#D3(width='40px', height='40px')
+            td#D4(width='40px', height='40px')
+            td#D5(width='40px', height='40px')
+            td#D6(width='40px', height='40px')
+            td#D7(width='40px', height='40px')
+            td#D8(width='40px', height='40px')
+            td#D9(width='40px', height='40px')
+            td#D10(width='40px', height='40px')
+          tr
+            td#E1(width='40px', height='40px')
+            td#E2(width='40px', height='40px')
+            td#E3(width='40px', height='40px')
+            td#E4(width='40px', height='40px')
+            td#E5(width='40px', height='40px')
+            td#E6(width='40px', height='40px')
+            td#E7(width='40px', height='40px')
+            td#E8(width='40px', height='40px')
+            td#E9(width='40px', height='40px')
+            td#E10(width='40px', height='40px')
+          tr
+            td#F1(width='40px', height='40px')
+            td#F2(width='40px', height='40px')
+            td#F3(width='40px', height='40px')
+            td#F4(width='40px', height='40px')
+            td#F5(width='40px', height='40px')
+            td#F6(width='40px', height='40px')
+            td#F7(width='40px', height='40px')
+            td#F8(width='40px', height='40px')
+            td#F9(width='40px', height='40px')
+            td#F10(width='40px', height='40px')
+          tr
+            td#G1(width='40px', height='40px')
+            td#G2(width='40px', height='40px')
+            td#G3(width='40px', height='40px')
+            td#G4(width='40px', height='40px')
+            td#G5(width='40px', height='40px')
+            td#G6(width='40px', height='40px')
+            td#G7(width='40px', height='40px')
+            td#G8(width='40px', height='40px')
+            td#G9(width='40px', height='40px')
+            td#G10(width='40px', height='40px')
+          tr
+            td#H1(width='40px', height='40px')
+            td#H2(width='40px', height='40px')
+            td#H3(width='40px', height='40px')
+            td#H4(width='40px', height='40px')
+            td#H5(width='40px', height='40px')
+            td#H6(width='40px', height='40px')
+            td#H7(width='40px', height='40px')
+            td#H8(width='40px', height='40px')
+            td#H9(width='40px', height='40px')
+            td#H10(width='40px', height='40px')
+          tr
+            td#I1(width='40px', height='40px')
+            td#I2(width='40px', height='40px')
+            td#I3(width='40px', height='40px')
+            td#I4(width='40px', height='40px')
+            td#I5(width='40px', height='40px')
+            td#I6(width='40px', height='40px')
+            td#I7(width='40px', height='40px')
+            td#I8(width='40px', height='40px')
+            td#I9(width='40px', height='40px')
+            td#I10(width='40px', height='40px')
+          tr
+            td#J1(width='40px', height='40px')
+            td#J2(width='40px', height='40px')
+            td#J3(width='40px', height='40px')
+            td#J4(width='40px', height='40px')
+            td#J5(width='40px', height='40px')
+            td#J6(width='40px', height='40px')
+            td#J7(width='40px', height='40px')
+            td#J8(width='40px', height='40px')
+            td#J9(width='40px', height='40px')
+            td#J10(width='40px', height='40px')
+        table#ownStatusTable.statusOfships(style='margin:1em 0em 0em 0em', border='1')
+          tr
+            td Ships
+            td Carrier
+            td Battleship
+            td Cruiser
+            td Submarine
+            td Destroyer
+          tr
+            td Status
+            td#carrier Alive
+            td#battleship Alive
+            td#cruiser Alive
+            td#submarine Alive
+            td#destroyer Alive
+      .enemy
+        h2(style='margin:0em 0em 0em 5em') ENEMY'S GRID
+        table#enemy.grid(value='own')
+          tr
+            td#A1(width='40px', height='40px', onclick='attack(this)')
+            td#A2(width='40px', height='40px', onclick='attack(this)')
+            td#A3(width='40px', height='40px', onclick='attack(this)')
+            td#A4(width='40px', height='40px', onclick='attack(this)')
+            td#A5(width='40px', height='40px', onclick='attack(this)')
+            td#A6(width='40px', height='40px', onclick='attack(this)')
+            td#A7(width='40px', height='40px', onclick='attack(this)')
+            td#A8(width='40px', height='40px', onclick='attack(this)')
+            td#A9(width='40px', height='40px', onclick='attack(this)')
+            td#A10(width='40px', height='40px', onclick='attack(this)')
+          tr
+            td#B1(width='40px', height='40px', onclick='attack(this)')
+            td#B2(width='40px', height='40px', onclick='attack(this)')
+            td#B3(width='40px', height='40px', onclick='attack(this)')
+            td#B4(width='40px', height='40px', onclick='attack(this)')
+            td#B5(width='40px', height='40px', onclick='attack(this)')
+            td#B6(width='40px', height='40px', onclick='attack(this)')
+            td#B7(width='40px', height='40px', onclick='attack(this)')
+            td#B8(width='40px', height='40px', onclick='attack(this)')
+            td#B9(width='40px', height='40px', onclick='attack(this)')
+            td#B10(width='40px', height='40px', onclick='attack(this)')
+          tr
+            td#C1(width='40px', height='40px', onclick='attack(this)')
+            td#C2(width='40px', height='40px', onclick='attack(this)')
+            td#C3(width='40px', height='40px', onclick='attack(this)')
+            td#C4(width='40px', height='40px', onclick='attack(this)')
+            td#C5(width='40px', height='40px', onclick='attack(this)')
+            td#C6(width='40px', height='40px', onclick='attack(this)')
+            td#C7(width='40px', height='40px', onclick='attack(this)')
+            td#C8(width='40px', height='40px', onclick='attack(this)')
+            td#C9(width='40px', height='40px', onclick='attack(this)')
+            td#C10(width='40px', height='40px', onclick='attack(this)')
+          tr
+            td#D1(width='40px', height='40px', onclick='attack(this)')
+            td#D2(width='40px', height='40px', onclick='attack(this)')
+            td#D3(width='40px', height='40px', onclick='attack(this)')
+            td#D4(width='40px', height='40px', onclick='attack(this)')
+            td#D5(width='40px', height='40px', onclick='attack(this)')
+            td#D6(width='40px', height='40px', onclick='attack(this)')
+            td#D7(width='40px', height='40px', onclick='attack(this)')
+            td#D8(width='40px', height='40px', onclick='attack(this)')
+            td#D9(width='40px', height='40px', onclick='attack(this)')
+            td#D10(width='40px', height='40px', onclick='attack(this)')
+          tr
+            td#E1(width='40px', height='40px', onclick='attack(this)')
+            td#E2(width='40px', height='40px', onclick='attack(this)')
+            td#E3(width='40px', height='40px', onclick='attack(this)')
+            td#E4(width='40px', height='40px', onclick='attack(this)')
+            td#E5(width='40px', height='40px', onclick='attack(this)')
+            td#E6(width='40px', height='40px', onclick='attack(this)')
+            td#E7(width='40px', height='40px', onclick='attack(this)')
+            td#E8(width='40px', height='40px', onclick='attack(this)')
+            td#E9(width='40px', height='40px', onclick='attack(this)')
+            td#E10(width='40px', height='40px', onclick='attack(this)')
+          tr
+            td#F1(width='40px', height='40px', onclick='attack(this)')
+            td#F2(width='40px', height='40px', onclick='attack(this)')
+            td#F3(width='40px', height='40px', onclick='attack(this)')
+            td#F4(width='40px', height='40px', onclick='attack(this)')
+            td#F5(width='40px', height='40px', onclick='attack(this)')
+            td#F6(width='40px', height='40px', onclick='attack(this)')
+            td#F7(width='40px', height='40px', onclick='attack(this)')
+            td#F8(width='40px', height='40px', onclick='attack(this)')
+            td#F9(width='40px', height='40px', onclick='attack(this)')
+            td#F10(width='40px', height='40px', onclick='attack(this)')
+          tr
+            td#G1(width='40px', height='40px', onclick='attack(this)')
+            td#G2(width='40px', height='40px', onclick='attack(this)')
+            td#G3(width='40px', height='40px', onclick='attack(this)')
+            td#G4(width='40px', height='40px', onclick='attack(this)')
+            td#G5(width='40px', height='40px', onclick='attack(this)')
+            td#G6(width='40px', height='40px', onclick='attack(this)')
+            td#G7(width='40px', height='40px', onclick='attack(this)')
+            td#G8(width='40px', height='40px', onclick='attack(this)')
+            td#G9(width='40px', height='40px', onclick='attack(this)')
+            td#G10(width='40px', height='40px', onclick='attack(this)')
+          tr
+            td#H1(width='40px', height='40px', onclick='attack(this)')
+            td#H2(width='40px', height='40px', onclick='attack(this)')
+            td#H3(width='40px', height='40px', onclick='attack(this)')
+            td#H4(width='40px', height='40px', onclick='attack(this)')
+            td#H5(width='40px', height='40px', onclick='attack(this)')
+            td#H6(width='40px', height='40px', onclick='attack(this)')
+            td#H7(width='40px', height='40px', onclick='attack(this)')
+            td#H8(width='40px', height='40px', onclick='attack(this)')
+            td#H9(width='40px', height='40px', onclick='attack(this)')
+            td#H10(width='40px', height='40px', onclick='attack(this)')
+          tr
+            td#I1(width='40px', height='40px', onclick='attack(this)')
+            td#I2(width='40px', height='40px', onclick='attack(this)')
+            td#I3(width='40px', height='40px', onclick='attack(this)')
+            td#I4(width='40px', height='40px', onclick='attack(this)')
+            td#I5(width='40px', height='40px', onclick='attack(this)')
+            td#I6(width='40px', height='40px', onclick='attack(this)')
+            td#I7(width='40px', height='40px', onclick='attack(this)')
+            td#I8(width='40px', height='40px', onclick='attack(this)')
+            td#I9(width='40px', height='40px', onclick='attack(this)')
+            td#I10(width='40px', height='40px', onclick='attack(this)')
+          tr
+            td#J1(width='40px', height='40px', onclick='attack(this)')
+            td#J2(width='40px', height='40px', onclick='attack(this)')
+            td#J3(width='40px', height='40px', onclick='attack(this)')
+            td#J4(width='40px', height='40px', onclick='attack(this)')
+            td#J5(width='40px', height='40px', onclick='attack(this)')
+            td#J6(width='40px', height='40px', onclick='attack(this)')
+            td#J7(width='40px', height='40px', onclick='attack(this)')
+            td#J8(width='40px', height='40px', onclick='attack(this)')
+            td#J9(width='40px', height='40px', onclick='attack(this)')
+            td#J10(width='40px', height='40px', onclick='attack(this)')
+        table#enemyStatusTable.statusOfships(style='margin:1em 0em 0em 0em', border='1')
+          tr
+            td Ships
+            td Carrier
+            td Battleship
+            td Cruiser
+            td Submarine
+            td Destroyer
+          tr
+            td Status
+            td#carrier Alive
+            td#battleship Alive
+            td#cruiser Alive
+            td#submarine Alive
+            td#destroyer Alive
+      #attackController.controller
+        .turn
+        .radar
+          object#rad(data='./images/radar.svg', type='image/svg+xml')

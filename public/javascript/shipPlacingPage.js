@@ -1,7 +1,6 @@
-var playerName= function(){
-	$('h3').append($.cookie('name')+"<small> GameID:</small>"+$.cookie('gameId'));	
-};
-
+// var playerName= function(){
+// 	$('h3').append($.cookie('name')+"<small> GameID:</small>"+$.cookie('gameId'));	
+// };
 var checkAndSubmit = function(self){
 	soundPlay();
 	var ship = $("#ship");
@@ -31,21 +30,29 @@ var checkAndSubmit = function(self){
 };
 
 var sendToGamePage = function(){
+var createInterval = setInterval(function(){
 	$.get('makeReady',function(data){
 		if(data==='select more ships'){
 			$('#alert').show();
 		}
 		else{
-			if(data===true)
-				window.location.href = "game.html";
+			if(data===true){
+				clearInterval(createInterval);				
+				$.get('gamePage',function(data){
+				$('html').html(data);
+				serveStatus();
+				});
+			}
 			$('#loading').css('visibility','visible');
 			$('#selectShip').css('visibility','hidden');
 			$('table').css('pointerEvents','none');
 		}
 	})
+	},2000);	
 };
 
 var soundPlay=function(){
 	var audio = $("#mysoundclip")[0];
 		audio.play();
 };
+
