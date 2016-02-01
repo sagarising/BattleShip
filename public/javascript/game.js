@@ -87,7 +87,6 @@ var hitAccuracy = function(player){
 }
 
 var Context = function(updates){
-	console.log(updates,"updates");
 	var winner = JSON.parse(updates.won);
 	var loser = JSON.parse(updates.lost);
 	this.winner = winner.name;
@@ -100,7 +99,6 @@ var Context = function(updates){
 
 var winnerAndLoser = function(update){
 	$.get('gameOver',function(data){
-		console.log(data,"data");
 		var updates = data;
 		var winnerShipsSunk = updates.status.filter(function(ele){return ele==0}).length;
 		var context = new Context(updates);

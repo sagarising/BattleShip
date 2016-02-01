@@ -5,7 +5,6 @@ html
     script(type='text/javascript', src='./javascript/game.js')
     link(rel='stylesheet', href='./styles/style.css')
     title BATTLESHIP
-  body.player1(onload='serveStatus()')
     audio#mysoundclip(preload='auto')
       source(src='../soundFiles/hit.wav')
     .banner
@@ -13,7 +12,7 @@ html
       a(href='instructions.html', target='_blank') Instructions
       a(href='team.html', target='_blank') Our Team
       h3!=playerInfo
-    section.gamePage(onload='serveStatus()')
+    section.gamePage
       .own
         h2(style='margin:0em 0em 0em 5em') OWN'S GRID
         table#own.grid(value='own')
