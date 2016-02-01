@@ -1,9 +1,7 @@
 
 // gamepage
 var intervalObject;
-var playerName= function(){
-	$('h3').append($.cookie('name')+"<small> GameID:</small>"+$.cookie('gameId'));
-};
+
 var changeTheColorOfGamePage = function(){
 	$.get('usedSpace',function(data){
 		placesWhereShipArePlaced = data;
@@ -18,28 +16,11 @@ var attack = function(point) {
 	soundPlay();
 };
 
-//Associate function
+
 var soundPlay=function(){
 	var audio = $("#mysoundclip")[0];
 	audio.play();
 };
-
-var updateForShipPlacing = function(){
-	$.get('placingOfShip',function(data){
-		var shipCoordinate = data;
-		var ship = $('#ship')[0];
-		ship.remove(ship.selectedIndex);
-		if(ship.children.length==0)
-			setInterval(sendToGamePage,20);
-		shipCoordinate.map(function(element){
-		var cell = $('#'+element)[0];
-		cell.bgColor ='grey';
-		});
-	});
-};
-
-//shipPlacingPage
-
 
 //gamePage
 
@@ -90,7 +71,10 @@ var update = function(){
 		});
 		if(updates.isGameOver){
 			clearInterval(intervalObject);
-			window.location.href = "result.html";
+			$.get('getResult',function(data){
+				$('html').html(data);
+				winnerAndLoser(update);
+			})
 		};
 	});
 };
@@ -103,6 +87,7 @@ var hitAccuracy = function(player){
 }
 
 var Context = function(updates){
+	console.log(updates,"updates");
 	var winner = JSON.parse(updates.won);
 	var loser = JSON.parse(updates.lost);
 	this.winner = winner.name;
@@ -115,6 +100,7 @@ var Context = function(updates){
 
 var winnerAndLoser = function(update){
 	$.get('gameOver',function(data){
+		console.log(data,"data");
 		var updates = data;
 		var winnerShipsSunk = updates.status.filter(function(ele){return ele==0}).length;
 		var context = new Context(updates);
@@ -132,10 +118,10 @@ var winnerAndLoser = function(update){
 };
 
 var serveStatus = function(){
-	playerName();
 	changeTheColorOfGamePage();
 	intervalObject = setInterval(update,2000);
 };
+
 
 var highscore = function(){
 	$.get('highscore',function(data){
@@ -160,4 +146,4 @@ var highscore = function(){
 
 
 	});
-}
+};

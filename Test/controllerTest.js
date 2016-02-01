@@ -9,7 +9,7 @@ describe('controller',function(){
 		it('should give homePage',function(done){
 		request(controller)
 			.get('/')
-			.expect(/<title>Battleship(.*)/)
+			.expect(/<title>Battleship/)
 			.expect('Content-Type',/text\/html/)
 			.expect(200,done)
 		});
