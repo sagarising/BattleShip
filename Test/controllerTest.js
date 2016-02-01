@@ -14,23 +14,6 @@ describe('controller',function(){
 			.expect(200,done)
 		});
 	});
-	
-	// describe('/player',function(){
-	// 	it('should give next page called shipPlacingPage',function(done){
-	// 		var observer = {
-	// 			games: [{gameID:"game1"}],
-	// 			allocatePlayerToSpecificGame:function(){}
-	// 		};
-	// 		var body = {name:"shibi",gameId:"somthing"};
-	// 		controller.injectObserver(observer);
-	// 		request(controller)
-	// 			.post('/player')
-	// 			// .type('json')
- //                .send(JSON.stringify(body))
-	// 			.expect(302)
-	// 			.expect('Location','/shipPlacingPage.html', done);
-	// 	})
-	// })
 
 	describe('/makeReady',function(){
 		it('should allow to start game',function(done){
@@ -51,28 +34,6 @@ describe('controller',function(){
 				.expect(200,done);
 		});
 	});
-
-	// describe('/placingOfShip',function(){
-	// 	it('should give used coordinates of user',function(done){
-	// 		var game = {
-	// 			players : ['nabi', 'abhi'],
-	// 			placedShipsPosition : function(){return []}
-	// 					};
-	// 		var observer = {
-	// 			gameOfCurrentPlayer : function() {
-	// 				console.log("hahahahahahhahahahhahah")
-	// 					return game;
-	// 				}
-	// 		};
-	// 		controller.injectObserver(observer);
-
-	// 		request(controller.injectObserver({}))
-	// 			.use('/placingOfShip')
-	// 			.set('cookie',['gameId=somthing'])
-	// 			.expect('cannot place ship here')
-	// 			.expect(200,done);
-	// 	});
-	// });
 
 	describe('/usedSpace',function(){
 		it('should give used coordinates of user',function(done){
