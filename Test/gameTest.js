@@ -59,27 +59,48 @@ describe('Game',function(){
 		});
 	});
 
-	it('Should give tell who is the current player is',function(){
-		var game = new Game(1);
-		game.addPlayer({name:"Abhi",isReady:true});
-		assert.equal(JSON.stringify(game._currentPlayer("Abhi1")),JSON.stringify({name:"Abhi",isReady:true}));
+	describe('_currentPlayer',function(){
+		it('Should return the current',function(){
+			var game = new Game(1);
+			game.addPlayer({name:"Abhi",isReady:true});
+			assert.equal(JSON.stringify(game._currentPlayer("Abhi1")),JSON.stringify({name:"Abhi",isReady:true}));
+		});
 	});
-	it("Should tell me enemy player also",function(){
-		var game = new Game(1);
-		game.addPlayer({name:"Abhi",isReady:true});
-		game.addPlayer({name:"Nabi",isReady:true});
-		assert.equal(JSON.stringify(game._enemyPlayer("Abhi1")),JSON.stringify({name:"Nabi",isReady:true}));
+
+	describe("_enemyPlayer",function(){
+		it("Should return the enemy player",function(){
+			var game = new Game(1);
+			game.addPlayer({name:"Abhi",isReady:true});
+			game.addPlayer({name:"Nabi",isReady:true});
+			assert.equal(JSON.stringify(game._enemyPlayer("Abhi1")),JSON.stringify({name:"Nabi",isReady:true}));
+		});
 	});
-	it("Should return false if no player died",function(){
+
+	describe('is_any_player_died',function(){
+		it("Should return false if no player died",function(){
+			var game = new Game(1);
+			game.addPlayer({name:"Abhi",isAlive:true});
+			game.addPlayer({name:"Nabi",isAlive:true});
+			assert.equal(game.is_any_player_died(),false)
+		});
+		it("Should return true if a player died",function(){
+			var game = new Game(1);
+			game.addPlayer({name:"Abhi",isAlive:true});
+			game.addPlayer({name:"Nabi",isAlive:false});
+			assert.equal(game.is_any_player_died(),true)
+		});
+	});
+
+	describe('isAllowesToBePlaced',function(){
 		var game = new Game(1);
-		game.addPlayer({name:"Abhi",isAlive:true});
-		game.addPlayer({name:"Nabi",isAlive:true});
-		assert.equal(game.is_any_player_died(),false)
-	})
-	it("Should return true if a player died",function(){
-		var game = new Game(1);
-		game.addPlayer({name:"Abhi",isAlive:true});
-		game.addPlayer({name:"Nabi",isAlive:false});
-		assert.equal(game.is_any_player_died(),true)
-	})
+		game.addPlayer({name:"Abhi",isReady:false,ships:[]});
+		it('should check if the firstpoint is valid for placing ship aligned vertical',function(){
+			assert.equal(true,game.isAllowedToBePlaced(4,"vertical","B9")); 
+			assert.equal(false,game.isAllowedToBePlaced(5,"vertical","I9")); 
+		});
+		it('should check if the firstpoint is valid for placing ship aligned horizontal',function(){
+			assert.equal(true,game.isAllowedToBePlaced(4,"horizontal","B5")); 
+			assert.equal(false,game.isAllowedToBePlaced(3,"horizontal","I9")); 
+		});
+	});
 });
