@@ -1,6 +1,4 @@
-// var playerName= function(){
-// 	$('h3').append($.cookie('name')+"<small> GameID:</small>"+$.cookie('gameId'));	
-// };
+
 var checkAndSubmit = function(self){
 	soundPlay();
 	var ship = $("#ship");
@@ -48,8 +46,14 @@ var createInterval = setInterval(function(){
 			$('table').css('pointerEvents','none');
 		}
 	})
-	},2000);	
+	},500);	
 };
+
+var reset=function(){
+	$.get('reset',function(data){
+		$('html').html(data);
+	});
+}
 
 var soundPlay=function(){
 	var audio = $("#mysoundclip")[0];
