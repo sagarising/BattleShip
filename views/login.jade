@@ -11,11 +11,14 @@ html
     hr
     center
       .firstpagestart
-          br
-          input#name(type='text',name='name', placeholder='Name', required='')
-          input#gameId(type='number',name='gameId', placeholder='Optional Game ID')
-          button(onclick='login()') Start
-          audio#mysoundclip(preload='auto')
-            source(src='../soundFiles/tick.wav')
+        br
+        input#name(type='text', name='name', placeholder='name', required='')
+        input#gameId(type='number', name='gameId', placeholder='optional gameid')
+        button(onclick='login()') Start
+        button#soundSwitch(onclick='sound_on_off()') SOUND OFF
+        audio#mysoundclip(preload='auto')
+          source(src='./soundFiles/tick.wav')
+        audio#helicopter(preload='auto', autoplay='', loop='')
+          source(src='./soundFiles/helicopter.wav')
   .shipimage
     img(src='./images/ship.svg')

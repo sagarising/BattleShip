@@ -189,6 +189,12 @@ section table#own{
     display: none;
 }
 
+#soundSwitch{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
 
 #restartButton{
     margin-left: 100px;
