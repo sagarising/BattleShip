@@ -93,7 +93,7 @@ describe('Game',function(){
 		});
 	});
 
-	describe('isAllowesToBePlaced',function(){
+	describe('isAllowedToBePlaced',function(){
 		var game = new Game(1);
 		game.addPlayer({name:"Abhi",isReady:false,ships:[]});
 		it('should check if the firstpoint is valid for placing ship aligned vertical',function(){
@@ -176,6 +176,109 @@ describe('Game',function(){
 			game.removeHitPoint('D1','Nabhi');
 			var result = game._enemyPlayer("Nabhi").grid.destroyed;
 			assert.deepEqual(['F3','D1'],result);
+		});
+	});
+
+	describe('placedShipsPosition',function(){
+		var game = new Game(1);
+		var grid1 = new Grid();
+		var player = {name:"Abhi",isReady:false,ships:[],grid : grid1};
+		game.addPlayer(player);
+		it('should position the ship and return usedCoordinates for vertical',function(){
+			var shipInfo = {shipSize:3,align:'vertical',coordinate:'A4'}
+			var expected = ['A4','B4','C4'];
+			var result = game.placedShipsPosition(shipInfo,player);
+			assert.deepEqual(expected,result);
+		});
+		it('should position the ship and return usedCoordinates for horizontal',function(){
+			var shipInfo = {shipSize:3,align:'horizontal',coordinate:'A1'}
+			var expected = ['A4','B4','C4','A1','A2','A3'];
+			var result = game.placedShipsPosition(shipInfo,player);
+			assert.deepEqual(expected,result);
+		});
+	});
+
+	describe('arePlayersReady',function(){
+		var game = new Game();
+		var grid1 = new Grid();
+		grid1.usedCoordinates.length = 17;
+		var player1 = {name:"Abhi",isReady:true,grid : grid1,turn:true};
+		var player2 = {name:"Nabhi",isReady:true};
+		game.addPlayer(player1);
+		game.addPlayer(player2);
+		it('should return true if both players are ready',function(){
+			var result = game.canStartPlaying(player1);
+			assert.equal(result,true);
+		});
+		it('should return false if players are not ready',function(){
+			game._enemyPlayer('Abhi').isReady = false;
+			var result = game.canStartPlaying(player1);
+			assert.equal(result,false);
+		});
+	});
+
+	describe('reinitiatingUsedCoordinates',function(){
+		var game = new Game();
+		var grid1 = new Grid();
+		grid1.usedCoordinates.length = 17;
+		var player1 = {name:"Abhi",isReady:true,grid : grid1,turn:true};
+		game.addPlayer(player1);
+		it('should reinitiate the usedCoordinates array of player',function(){
+			game.reinitiatingUsedCoordinates(player1);
+			var result = game._currentPlayer('Abhi').grid.usedCoordinates;
+			assert.deepEqual(result,[]);
+		});
+	});
+
+	describe('usedCoordinatesOfPlayer',function(){
+		var game = new Game();
+		var grid1 = new Grid();
+		grid1.usedCoordinates = ['A4','B4','C4','A1','A2','A3'];
+		var player1 = {name:"Abhi",isReady:true,grid : grid1,turn:true};
+		game.addPlayer(player1);
+		it('should return the usedCoordinates of the player',function(){
+			var result = game.usedCoordinatesOfPlayer(player1);
+			assert.deepEqual(result,['A4','B4','C4','A1','A2','A3']);
+		});
+	});
+
+	describe('changeTurn',function(){
+		var game = new Game();
+		var player1 = {name:"Abhi",turn:true};
+		var player2 = {name:"Nabhi",turn:true};
+		game.addPlayer(player1);
+		game.addPlayer(player2);
+		it('should change the turn of current player to false',function(){
+			game.changeTurn('Abhi');
+			var result = game._currentPlayer('Abhi').turn;
+			assert.equal(result,false);
+		});
+		it('should change the turn of current player to false',function(){
+			game.changeTurn('Abhi');
+			var result = game._enemyPlayer('Abhi').turn;
+			assert.equal(result,true);
+		});
+	});
+
+	describe('insert_point_into_hitPoints',function(){
+		var game = new Game();
+		var player1 = {name:"Abhi",turn:true,hits:[]};
+		game.addPlayer(player1);
+		it('should push the hitPoint to hits array of player',function(){	
+			game.insert_point_into_hitPoints('A1','Abhi');
+			var hitPoints = game._currentPlayer('Abhi').hits;
+			assert.deepEqual(hitPoints,['A1']);
+		});
+	});
+
+	describe('insert_point_into_missPoints',function(){
+		var game = new Game();
+		var player1 = {name:"Abhi",turn:true,misses:[]};
+		game.addPlayer(player1);
+		it('should push the hitPoint to hits array of player',function(){	
+			game.insert_point_into_missPoints('A7','Abhi');
+			var missPoints = game._currentPlayer('Abhi').misses;
+			assert.deepEqual(missPoints,['A7']);
 		});
 	});
 });
