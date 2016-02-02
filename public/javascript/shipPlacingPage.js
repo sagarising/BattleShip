@@ -42,7 +42,7 @@ var createInterval = setInterval(function(){
 				});
 			}
 			$('#loading').css('visibility','visible');
-			$('#selectShip').css('visibility','hidden');
+			$('#selectShip').css('display','none');
 			$('table').css('pointerEvents','none');
 		}
 	})
@@ -53,7 +53,7 @@ var reset=function(){
 	$.get('reset',function(data){
 		$('html').html(data);
 	});
-}
+};
 
 var soundPlay=function(){
 	var audio = $("#mysoundclip")[0];
