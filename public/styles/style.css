@@ -189,11 +189,7 @@ section table#own{
     display: none;
 }
 
-#soundSwitch{
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-}
+
 
 
 #restartButton{
