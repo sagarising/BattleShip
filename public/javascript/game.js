@@ -10,8 +10,10 @@ var changeTheColorOfGamePage = function(){
 };
 
 var attack = function(point) {
-	$.post('attack',{point:point.id},function(data){});
-	$(point).addClass("noClick");
+	$.post('attack',{point:point.id},function(data){
+		if(data=='success')
+		$(point).addClass("noClick");
+	});
 	$(point).css("animation","scale_once 0.5s 1 alternate");
 	soundPlay();
 };
