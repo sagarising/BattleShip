@@ -2,31 +2,31 @@ var assert = require('chai').assert;
 var expect = require('chai').expect;
 var lib = require('../lib/battleShip.js');
 
-// describe('battleShip',function(){
-// 	describe('CheckingIsHit',function(){
-// 	it('should return true if attackPoint is present in groupOfCoordinates',function(){
-// 		var result = lib.lib.isHit(['A1','A2','A3'],'A1');
-// 		assert.equal(true,result);
-// 	});
-// 	it('should return false if attackPoint is not present in groupOfCoordinates',function(){
-// 		assert.equal(false,lib.lib.isHit(['B1','C1','D1'],'A2'));
-// 	});
-// 	it('should return false if groupOfCoordinates is empty',function(){
-// 		assert.equal(false,lib.lib.isHit([],'F1'));
-// 	});
-// });
+describe('battleShip',function(){
+	describe('CheckingIsHit',function(){
+	it('should return true if attackPoint is present in groupOfCoordinates',function(){
+		var result = lib.lib.isHit(['A1','A2','A3'],'A1');
+		assert.equal(true,result);
+	});
+	it('should return false if attackPoint is not present in groupOfCoordinates',function(){
+		assert.equal(false,lib.lib.isHit(['B1','C1','D1'],'A2'));
+	});
+	it('should return false if groupOfCoordinates is empty',function(){
+		assert.equal(false,lib.lib.isHit([],'F1'));
+	});
+});
 
-// describe('removingHitPointFromExistingCoordinates',function(){
-// 	it('should return a new array by removing hitPoint',function(){
-// 		var result = lib.lib.removingHitPointFromExistingCoordinates(['A1','A2','D1','F3'],'F3');
-// 		assert.deepEqual(['A1','A2','D1'],result);
-// 	});
-// 	it('should return the same array if the hitPoint is not present in existingCoordinates',function(){
-// 		var result = lib.lib.removingHitPointFromExistingCoordinates(['D1','D2','D3','A1','A2'],'F1');
-// 		assert.deepEqual(['D1','D2','D3','A1','A2'],result);
-// 	});
-// });
-// });
+describe('removingHitPointFromExistingCoordinates',function(){
+	it('should return a new array by removing hitPoint',function(){
+		var result = lib.lib.removingHitPointFromExistingCoordinates(['A1','A2','D1','F3'],'F3');
+		assert.deepEqual(['A1','A2','D1'],result);
+	});
+	it('should return the same array if the hitPoint is not present in existingCoordinates',function(){
+		var result = lib.lib.removingHitPointFromExistingCoordinates(['D1','D2','D3','A1','A2'],'F1');
+		assert.deepEqual(['D1','D2','D3','A1','A2'],result);
+	});
+});
+});
 
 // describe('Ship',function(){
 // 	it('should give an array of coordinates',function(){
