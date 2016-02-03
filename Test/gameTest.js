@@ -1,8 +1,10 @@
 var assert = require('chai').assert;
 var expect = require('chai').expect;
-var Game = require('../lib/Game');
+var Game = require('../lib/Game').Game;
 var sinon = require('sinon');
 var Grid = require('../lib/Grid');
+var Ship = require('../lib/Ship');
+var lib = require('../lib/Game').lib;
 
 describe('Game',function(){
 	describe('addPlayer',function(){
@@ -279,6 +281,84 @@ describe('Game',function(){
 			game.insert_point_into_missPoints('A7','Abhi');
 			var missPoints = game._currentPlayer('Abhi').misses;
 			assert.deepEqual(missPoints,['A7']);
+		});
+	});
+
+	describe('playerStatus',function(){
+		var game = new Game();
+		var grid1 = new Grid();
+		var ships1 = [];
+		ships1.push(new Ship(['A1']));
+		var player1 = {name:"Abhi",turn:true,misses:['A2'],hits:['I4'],grid : grid1,ships : ships1};
+		var player2 = {name:"Nabhi",turn:true,ships:[]};
+		game.addPlayer(player1);
+		game.addPlayer(player2);
+		it('should return the status of players',function(){
+			var result = game.playersStatus('Abhi');
+			var expected = { currentPlayerShips: [ 1 ],
+						     enemyPlayerShips: [],
+						     destroyedPoints: [],
+						     missPoints: ['A2'],
+						     hitPoints: ['I4'],
+						     turn: true };
+			assert.deepEqual(result,expected);
+		});
+	});
+
+	describe('shipsStatus',function(){
+		var game = new Game();
+		var ships1 = [];
+		ships1.push(new Ship(['A1']));
+		ships1.push(new Ship(['D7']));
+		ships1.push(new Ship([]));
+		it('should return the status of all ships',function(){
+			var player1 = {name:"Abhi",ships : ships1};
+			game.addPlayer(player1);
+			var result = lib.shipsStatus(player1);
+			assert.deepEqual(result,[1,1,1]);
+		});
+	});
+
+	describe('removePointFromArray',function(){
+		it('should remove the given number and return a new array',function(){
+			var array = [1,2,3,4,5];
+			var result = lib.removePointFromArray(array,3);
+			assert.deepEqual(result,[1,2,4,5]);
+		});
+		it('should remove the given point and return a new array',function(){
+			var array = ['A1','A2','A3','A4','A5'];
+			var result = lib.removePointFromArray(array,'A1');
+			assert.deepEqual(result,['A2','A3','A4','A5']);
+		});
+	});
+
+	describe('makesCoordinates',function(){
+		it('should return coordinates of given ship with alignment vertical',function(){
+			var result = lib.makesCoordinates(4,'A1',65);
+			assert.deepEqual(result,[ 'A1', 'B1', 'C1', 'D1' ]);
+		});
+		it('should return coordinates of given ship with alignment horizontal',function(){
+			var result = lib.makesCoordinates(5,'F3',70,3);
+			assert.deepEqual(result,[ 'F3', 'G3', 'H3', 'I3', 'J3' ]);
+		});
+	});
+
+	describe('gameOver',function(){
+		var game = new Game();
+		var ships1 = [];
+		ships1.push(new Ship(['A1']));
+		ships1.push(new Ship(['D7']));
+		ships1.push(new Ship([]));
+		var player1 = {name:"Abhi",misses:['A2','D5','F2'],hits:['I4','I5','I6','I7'],isAlive:true,ships : ships1};
+		var player2 = {name:"Nabhi",isAlive:false};
+		game.addPlayer(player1);
+		game.addPlayer(player2);
+		it('should return the summary or result details of the game',function(){
+			var result = game.gameOver();
+			var expected = { won: '{"name":"Abhi","misses":["A2","D5","F2"],"hits":["I4","I5","I6","I7"],"isAlive":true,"ships":[{"coordinates":["A1"]},{"coordinates":["D7"]},{"coordinates":[]}]}',
+						 	 lost: '{"name":"Nabhi","isAlive":false}',
+							 status: [ 1, 1, 1 ] };
+			assert.deepEqual(result,expected);
 		});
 	});
 });
