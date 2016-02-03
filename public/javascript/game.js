@@ -119,7 +119,7 @@ var winnerAndLoser = function(update){
 
 var serveStatus = function(){
 	changeTheColorOfGamePage();
-	intervalObject = setInterval(update,2000);
+	intervalObject = setInterval(update,500);
 };
 
 
