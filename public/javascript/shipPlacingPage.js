@@ -28,32 +28,46 @@ var checkAndSubmit = function(self){
 };
 
 var sendToGamePage = function(){
-var createInterval = setInterval(function(){
-	$.get('makeReady',function(data){
-		if(data==='select more ships'){
-			$('#alert').show();
-		}
-		else{
-			if(data===true){
-				clearInterval(createInterval);				
-				$.get('gamePage',function(data){
-				$('html').html(data);
-				serveStatus();
-				});
+	var createInterval = setInterval(function(){
+		$.get('makeReady',function(data){
+			if(data==='select more ships'){
+				$('#alert').show();
 			}
-			$('#loading').css('visibility','visible');
-			$('#selectShip').css('visibility','hidden');
-			$('table').css('pointerEvents','none');
-		}
-	})
+			else{
+				if(data===true){
+					clearInterval(createInterval);				
+					$.get('gamePage',function(data){
+					$('html').html(data);
+					serveStatus();
+					});
+				}
+				$('#loading').css('visibility','visible');
+				$('#selectShip').css('display','none');
+				$('table').css('pointerEvents','none');
+			}
+		})
 	},500);	
 };
 
+var instruct = function(){
+	var str="Select ship and alignment from Control Panel. Then click on a cell below to place ship.";
+	var length=str.length;
+	var index=0;
+	setInterval(function(){
+		if(index==length)
+			return;
+		var text = $("#shipPlacingInstruction").text();
+		text+=str[index++];
+		$("#shipPlacingInstruction").html(text);
+	},45);
+};
+
+instruct();
 var reset=function(){
 	$.get('reset',function(data){
 		$('html').html(data);
 	});
-}
+};
 
 var soundPlay=function(){
 	var audio = $("#mysoundclip")[0];

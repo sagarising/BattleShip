@@ -1,115 +1,194 @@
+/*//==========================index.html styling=========================\\*/
+
+.firstpagestart input{
+  border-width: 1.5px;
+  height: 30px;
+  width: 220px;
+  margin-top: 5px;
+  border-color: black;
+  display: list-item;
+  font-size: 19px;
+}
+
+#welcome{
+  height:200px;
+  width:500px;
+  overflow: auto;
+}
+
+.firstpagestart{
+  padding-top: 40px;
+}
+/*//=========================shipPlacingPage.html styling==================\\*/
+#shipDeployment{
+  border: none;
+  display: inline-block;
+}
+
+.nameAndGameId {
+    font-size:14px;
+    position: relative;
+    margin: 30px;
+}
+#shipPlacingInstruction{
+  font-weight: 200;
+  margin: 0px;
+  width:1000px;
+  z-index: 1;
+}
+/*//==========================game.html styl===============================\\*/
+.gamePage{
+    text-align: center;
+    top: 0px;
+    margin-left: -240px;
+    padding-left: 10px;
+}
+
+.statusOfShips tbody .indication{
+  background-color: green;
+}
+.statusOfShips{
+  margin: 20px 0px 0px 0px;
+}
+
+section .own #own tr tbody{
+  visibility: hidden;
+  border-width: 5px;
+}
+
+/*//==========================common styling==============================\\*/
+#instructionLink{
+  left: 20%;
+  margin: 8px;
+  margin-top: 2%;
+}
+#teamLink{
+  left: 20%;
+  margin: 8px;
+  margin-top: 2%;
+}
+
+.controlPanelHeading{
+  font-weight: 200;
+}
 
 body{
-    background: lavender;
-    margin: 0px;
+  font-family:sans-serif;
+  margin: 0 auto;
 }
+
+
+.otherPageLogo{
+  margin-left: 450px;
+  font-size:35px;
+}
+
+h5{
+  height: 20px;
+}
+.grid tbody{
+    border: white;
+    background-color: lightsteelblue;
+}
+.grid td:hover{
+  cursor : url(../images/crosshair.png) 25 25,cell;
+    background-color: lightgrey;
+}
+
+.banner{
+    display:flex;
+}
+
+.gridName{
+  font-size: 17px;
+  font-weight: 400;
+  display:inline;
+  padding: 20px;
+}
+
+.controller{
+    position:absolute;
+    font-size: 20px;
+    display: inline-table;
+    margin:50px 0px 0px 5px;
+    height: 300px;
+    width: 200px;
+    padding: 30px;
+    border-style:solid;
+    border-width: 1px;
+}
+
+button{
+  border-width: 1.5px;
+    background-color: white;
+    padding:2px;
+    width: 60px;
+    height:32px;
+    margin: 5px;
+    border-color: black;
+}
+button:hover{
+    background-color: #E4DDDD;
+}
+/*//======================================================================\\*/
+
+
 
 a{
     position: relative;
     color: black;
-    font-size: larger;
     text-decoration: none;
-    left:20px;
-    padding: 5px;
+}
+
+#homePageIcon{
+  font-family: sans-serif;
+  font-size: 50px;
+  font-weight: 300;
+  text-align: center;
+}
+
+
+input::-webkit-input-placeholder{
+  color: #A5A899;
+  font-size: 12px;
 }
 
 a:hover{
-    color: white;
+    color: red;
 }
 
 .noClick{
     pointer-events:none;
 }
-h3 {
-    font-size: larger;
-    position: relative;
-    margin: 0px;
-    left: 700px;
-}
-
-#shipDeployment{
-    margin: 50px 0px 0px 150px;
-    border: none;
-    display: inline-table;
-}
-
-.banner{   
-    top: 0px; 
-    text-align: center;
-    position: fixed;
-    display: flex;
-    left:0px;
-    right: 0px;
-    z-index: 1;
-    padding: 5px;
-    height: 30px;
-    background-color: slategrey;
-}
-
-.grid tbody{
-    border: white;
-    background-color: lightsteelblue;
-}
-
-#selectShip {
-     font-size: 20px;
-}
-.grid td:hover{
-    cursor : url(../images/crosshair.png) 25 25,cell;
-	background-color: lightgrey;
-}
 
 #winner,#loser td{
     pointer-events:none;
 }
-
-.firstpagestart{
-    margin: 10px;
-    height: 100px;
-    width: 300px;
-    border-style: double;
-    padding: 25px;
-    border-radius: 25px;
-    font-size: larger;
-    background: linear-gradient(rgba(0,0,255,0), rgba(0,0,155,0.2));
-}
-button{
-    background-color: lightblue;
-    padding:2px;
-    width: 50px;
-    height:50px;
-    border-radius: 50px;
-    margin: 5px;
-}
-button:hover{
-    transform:scaleX(1.2) ;
-    font-weight: bold;
-    cursor: pointer;
-}
 #loading{
+    position: absolute;
+    background-color: black;
+    font-size: larger;
+    color:white;
+    left:15%;
+    top:50%;
     visibility: hidden;
     display: inline;
     animation:loading 1s infinite alternate;
 }
-
-.controller{
-    position: absolute;
-    display: inline-table;
-    margin: 50px;
-    border-radius: 25px;
-    height: 500px;
-    width: 400px;
-    background: linear-gradient(rgba(170,170,170,1), rgba(200,200,200,0.2));
-    padding: 20px;
+.shipimage{
+  position: fixed;
+  bottom:0px;
 }
-
-.gamePage{
+.shipPlacingSection {
     position: relative;
-    top: 50px;
+    display: block;
+    left: 20%;
+
 }
+
 section div.enemy{
     display: inline-table;
-    margin:5px;
+    margin:15px;
 }
 section div.own{
     display: inline-table;
@@ -125,10 +204,8 @@ section table#own{
     display: none;
 }
 
-.statusOfShips tbody{
-    border:none;
-    background-color: mistyrose;
-}
+
+
 
 #restartButton{
     margin-left: 100px;
@@ -142,7 +219,7 @@ section table#own{
 
 @keyframes loading{
     0% {}
-    100% {color:transparent;text-shadow:0px 0px 3px lightsteelblue;}
+    100% {opacity:0;}
 }
 
 @keyframes scale_once{
@@ -175,19 +252,17 @@ section table#own{
     display: inherit;
     margin-left: 100px;
     border: 1px solid;
-    background-color: #ccfff4;   
+    background-color: #ccfff4;
 }
 
 #shipsLeft {
     float: left;
     display: inherit;
     margin-left: 100px;
-    border: 1px solid; 
-    background-color: grey;      
+    border: 1px solid;
+    background-color: grey;
 }
 
 #highScoreButton{
     margin: 0em 0em 0em 65em;
-    /*margin-left: 1300px;*/
-    /*margin-bottom: 1500px;*/
 }

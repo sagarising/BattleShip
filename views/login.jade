@@ -3,25 +3,20 @@ html
   head
     title Battleship
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
-    script(type='text/javascript', src='javascript/login.js')
-    link(rel='stylesheet', type='text/css', href='styles/style.css')
+    script(type='text/javascript', src='./javascript/login.js')
+    link(rel='stylesheet', type='text/css', href='../styles/style.css')
   body
-    center
-      img(src='./images/battle_ship_logo.png')
+    hr
+    h1#homePageIcon BATTLESHIP
+    hr
     center
       .firstpagestart
-        Please enter your name:
         br
         input#name(type='text', name='name', placeholder='name', required='')
         input#gameId(type='number', name='gameId', placeholder='optional gameid')
         button(onclick='login()') Start
         audio#mysoundclip(preload='auto')
           source(src='./soundFiles/tick.wav')
-        audio#helicopter(preload='auto', autoplay='', loop='')
-          source(src='./soundFiles/helicopter.wav')
-        button#play(onclick='sound_on_off()') SOUND ON
-        br
-        br
-        br
+      #welcome
   .shipimage
-    img(src='images/ship.svg')
+    img(src='./images/ship.svg')
