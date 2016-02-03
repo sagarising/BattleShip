@@ -5,6 +5,7 @@ var sinon = require('sinon');
 var Grid = require('../lib/Grid');
 var Ship = require('../lib/Ship');
 var lib = require('../lib/Game').lib;
+var Player = require('../lib/Player');
 
 describe('Game',function(){
 	describe('addPlayer',function(){
@@ -181,6 +182,28 @@ describe('Game',function(){
 		});
 	});
 
+	describe('checkForAllShipsSunk',function(){
+		var game = new Game();
+		var grid = new Grid();
+		var player1 = new Player('Abhi',grid);
+		var player2 = new Player('Nabhi',grid);
+		var ships = [];
+		ships.push(new Ship(['A1']));
+		player2.ships = ships;
+		game.addPlayer(player1);
+		game.addPlayer(player2);
+		it('should not change the isAlive property of the enemy player if all ships are not sunk',function(){
+			game.checkForAllShipsSunk('Abhi');
+			var result = game._enemyPlayer("Abhi").isAlive;
+			assert.equal(result,true);
+		});
+		it('should change the isAlive property of the enemy player to false if all ships sunk',function(){
+			game.checkForAllShipsSunk('Nabhi');
+			var result = game._enemyPlayer("Nabhi").isAlive;
+			assert.equal(result,false);
+		});
+	});
+
 	describe('placedShipsPosition',function(){
 		var game = new Game(1);
 		var grid1 = new Grid();
@@ -197,6 +220,19 @@ describe('Game',function(){
 			var expected = ['A4','B4','C4','A1','A2','A3'];
 			var result = game.placedShipsPosition(shipInfo,player);
 			assert.deepEqual(expected,result);
+		});
+		it('should return error if the ship cannot be placed',function(){
+			var shipInfo = {shipSize:3,align:'vertical',coordinate:'I4'};
+			expect(function(){
+			    game.placedShipsPosition(shipInfo,player);
+			}).to.throw("Cannot position ship here.");
+		});
+		it('should return error if the ship cannot be placed over used space and expect ship to be unchanged',function(){
+			var shipInfo = {shipSize:3,align:'vertical',coordinate:'B4'};
+			grid1.usedCoordinates = ['C4'];
+			expect(function(){
+			    game.placedShipsPosition(shipInfo,player)
+			}).to.throw('Cannot place over other ship.');
 		});
 	});
 
