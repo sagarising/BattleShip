@@ -34,11 +34,12 @@ var changingTheColorOfGrid=function(clas,usedSpace,colour){
 };
 
 var statusUpdate = function(id,array){
+	console.log(id,'id')
+	// console.log(array,"array")
 	array.forEach(function(each,index){
 		if(!each){
-			var ship = $('#'+id+' tr')[1].children[index+1];
-			ship.style.color = "red";
-			ship.innerHTML = "Sunk";
+			var ship = $('#'+id+' tr')[index].children[1];
+			ship.style.backgroundColor = "red";
 		};
 	});
 };
@@ -63,10 +64,8 @@ var update = function(){
 		var updates = data;
 		var playerTurn = updates.isTurn;
 		displayTurn(playerTurn);
-		shipStatus = [updates.ownStatusTable,updates.enemyStatusTable];
-		shipStatus.forEach(function(eachPlayer){
-			statusUpdate(eachPlayer.table,eachPlayer.stat);
-		});
+		shipStatus = updates.enemyStatusTable;
+		statusUpdate(shipStatus.table,shipStatus.stat);
 		var gridStatus = [updates.ownHit,updates.enemyMiss,updates.enemyHit];
 		gridStatus.forEach(function(clas){
 			changingTheColorOfGrid(clas.table,clas.stat,clas.color)
