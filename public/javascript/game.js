@@ -120,8 +120,31 @@ var serveStatus = function(){
 	changeTheColorOfGamePage();
 	intervalObject = setInterval(update,500);
 };
+var d3Function=function(data){
+    var x = d3.scale.linear()
+        .domain([0,100])
+        .range([110, 400]);
 
+    d3.select("body").selectAll("div")
+        .data(data)
+      	.enter().append("div")
+        .text(function(d,i) { return ++i+"."+d.name+'-'+d.accuracy+'%'})
+        .style("width",function(d,i){
+        	 return x(d.accuracy)+"px";
+        })
+        .style("background-color","orange")
+        .style("height",'40px')
+        .style("margin","5px")
+        .on("mouseover", function(d) {
+            d3.select(this).style('background-color', 'red');
+        })
+        .on("mouseout",function(d){
+            d3.select(this).style('background-color','orange')
+        }) 
+};              
 
 var highscore = function(){
-	$.get('highscore',function(data){});
+	$.get('highscore',function(data){
+		d3Function(JSON.parse(data))
+	});
 };
