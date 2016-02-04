@@ -74,7 +74,7 @@ var update = function(){
 			clearInterval(intervalObject);
 			$.get('getResult',function(data){
 				$('html').html(data);
-				winnerAndLoser(update);
+				winnerAndLoser();
 			})
 		};
 	});
@@ -98,7 +98,7 @@ var Context = function(updates){
 	this.loserAccuracy =  hitAccuracy(loser);
 }
 
-var winnerAndLoser = function(update){
+var winnerAndLoser = function(){
 	$.get('gameOver',function(data){
 		var updates = data;
 		var winnerShipsSunk = updates.status.filter(function(ele){return ele==0}).length;
@@ -123,5 +123,7 @@ var serveStatus = function(){
 
 
 var highscore = function(){
-	$.get('highscore',function(data){});
+	$.get('highscore',function(data){
+
+	});
 };
