@@ -13,8 +13,8 @@ html
       .firstpagestart
         br
         input#name(type='text', name='name', placeholder='name', required='')  
-        input#gameId(type='number', name='gameId', placeholder='optional gameid')
-        button(onclick='login()') Start
+        input#gameId(type='text', name='gameId', placeholder='optional gameid')
+        button(type='submit' onclick='login()') Start
         audio#mysoundclip(preload='auto')
           source(src='./soundFiles/tick.wav')
       #welcome
