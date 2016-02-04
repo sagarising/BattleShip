@@ -124,6 +124,9 @@ var d3Function=function(data){
     var x = d3.scale.linear()
         .domain([0,100])
         .range([110, 400]);
+    var color=d3.scale.linear()
+        .domain([0,100])
+        .range(['yellow','green']);
 
     d3.select("body").selectAll("div")
         .data(data)
@@ -132,14 +135,16 @@ var d3Function=function(data){
         .style("width",function(d,i){
         	 return x(d.accuracy)+"px";
         })
-        .style("background-color","orange")
+        .style("background-color",function(d){
+        	return color(d.accuracy);
+        })
         .style("height",'40px')
         .style("margin","5px")
         .on("mouseover", function(d) {
-            d3.select(this).style('background-color', 'red');
+            d3.select(this).style('opacity','0.7');
         })
         .on("mouseout",function(d){
-            d3.select(this).style('background-color','orange')
+            d3.select(this).style('opacity','1');
         }) 
 };              
 
