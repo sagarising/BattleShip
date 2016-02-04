@@ -136,16 +136,19 @@ describe('controller',function(){
 	describe('/gameOver',function(){
 		it('should give game summary',function(done){
 			var game = {
-						gameOver:function(){return true}
+						gameOver:function(){return {won:"sdfd",loss:"dfdf"}}
 						};
 			var observer = {
 				gameOfCurrentPlayer : function() {
 						return game;
-					}
+					},
+				deleteGame : function(){
+					return;
+				}
 			};
 
 			controller.injectObserver(observer);
-
+			controller.count=0;
 			request(controller)
 			.get('/gameOver')
 			.expect('Content-Type',/application\/json/)

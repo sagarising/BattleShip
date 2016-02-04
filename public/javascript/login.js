@@ -15,8 +15,13 @@ setTimeout(welcome,500);
 
 var login = function() {
 	var Name = $("#name").val();
+	if(!Name)
+		return;
 	var GameId = $("#gameId").val();
 	$.post('login',{name: Name, gameId:GameId},function(data){
-		$('html').html(data);
+		if(data=="Game is booked.")
+			$('#gameId').val(""),$('#gameId').attr("placeholder",data+"Choose another id.");
+		else
+			$('html').html(data);
 	});
 };
