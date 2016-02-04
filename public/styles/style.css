@@ -57,16 +57,12 @@ section .own #own tr tbody{
 }
 
 /*//==========================common styling==============================\\*/
-#instructionLink{
+#instructionLink,#teamLink,#highscoreLink{
   left: 20%;
   margin: 8px;
   margin-top: 2%;
 }
-#teamLink{
-  left: 20%;
-  margin: 8px;
-  margin-top: 2%;
-}
+
 
 .controlPanelHeading{
   font-weight: 200;

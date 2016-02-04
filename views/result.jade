@@ -8,7 +8,12 @@ html
     audio#mysoundclip(preload='auto')
       source(src='../soundFiles/gameOver.wav')
     hr
-    h1(align='center') Game Over
+    .banner
+      h3.nameAndGameId!=playerInfo
+      h2.otherPageLogo GAME OVER
+      a#instructionLink(href='instructions.html', target='_blank') Instructions
+      a#teamLink(href='team.html', target='_blank') Our Team
+      a#highscoreLink(href='highscore.html', target='_blank') View Highscore
     hr
     script#declare(type='text/x-handlebars-template').
       <section id ="resultBox">
@@ -274,6 +279,5 @@ html
       <div id="hits" class="label">HITS</div>
       <div id="miss" class="label">MISS</div>
       <div id="shipsLeft" class="label">Left</div>
-      <button onclick = "highscore()">HighScore</button>
       <button id = "restartButton" onclick="soundPlay();location.reload(false);">Play Again</button>
     #result
