@@ -151,7 +151,7 @@ describe('controller',function(){
 			controller.count=0;
 			request(controller)
 			.get('/gameOver')
-			.expect('Content-Type',/text\/json/)
+			.expect('Content-Type',/application\/json/)
 			.expect(200,done);
 		});
 	});
