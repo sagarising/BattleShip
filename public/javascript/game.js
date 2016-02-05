@@ -120,33 +120,113 @@ var serveStatus = function(){
 	changeTheColorOfGamePage();
 	intervalObject = setInterval(update,500);
 };
-var d3Function=function(data){
-    var x = d3.scale.linear()
-        .domain([0,100])
-        .range([110, 400]);
-    var color=d3.scale.linear()
-        .domain([0,100])
-        .range(['yellow','green']);
+             
 
-    d3.select("body").selectAll("div")
-        .data(data)
-      	.enter().append("div")
-        .text(function(d,i) { return ++i+"."+d.name+'-'+d.accuracy+'%'})
-        .style("width",function(d,i){
-        	 return x(d.accuracy)+"px";
-        })
-        .style("background-color",function(d){
-        	return color(d.accuracy);
-        })
-        .style("height",'40px')
-        .style("margin","5px")
-        .on("mouseover", function(d) {
-            d3.select(this).style('opacity','0.7');
-        })
-        .on("mouseout",function(d){
-            d3.select(this).style('opacity','1');
-        }) 
-};              
+var d3Function = function(data){
+	var x = d3.scale.linear()
+        .domain([0,100])
+        .range([500,100]);
+
+	var svgContainer = d3.select(".chart").append("svg")
+						.attr("width", 1000)
+						.attr("height",600);
+
+	svgContainer.append("defs").append("path")
+		.attr("id","accuracyPath")
+		.attr("d","M50,220 50,130")
+
+
+	var yAxis = svgContainer.append("line")
+						.attr('x1',60)
+						.attr('x2',60)
+						.attr('y1',20)
+						.attr('y2',550)
+						.attr('stroke','black')
+						.attr('stroke-width',2)
+
+	var xAxis = svgContainer.append("line")
+						.attr('x1',10)
+						.attr('x2',1000)
+						.attr('y1',500)
+						.attr('y2',500)
+						.attr('stroke','black')
+						.attr('stroke-width',2)
+
+	var accuracy = svgContainer.append("text")
+						.append("textPath")
+						.attr("xlink:href","#accuracyPath")
+						.text("Accuracy")
+	var player = svgContainer.append("text")
+						.attr("x",400)
+						.attr("y",520)
+						.text("Players")
+
+	var chart_label = svgContainer.append("text")
+						.attr("x",300)
+						.attr("y",120)
+						.text("hover on bars to see details.")			
+						.attr('fill','grey')		
+
+
+	var text = svgContainer.selectAll("text")
+						.data(data)
+						.enter().append("text")
+						.attr('id',function(d,i){
+							return "text"+i;
+						})
+						.text(function(d){
+							return d.name
+						})
+
+						.attr("x",function(d,i){
+							return (i*50)
+						})
+						.attr("y",function(d,i){
+							return x(d.accuracy)-10;
+						})
+						.attr('stroke','black')
+						.attr('stroke-width',1)
+						.attr('visibility','hidden')
+
+	var line = svgContainer.selectAll("line")
+						.data(data)
+						.enter().append('line')
+						.attr('id',function(d,i){
+							return "line"+i;
+						})
+						.attr('x1',function(d,i){
+							return (i*50)+10
+						})
+						.attr('y1',500)
+						.attr('x2',function(d,i){
+							return (i*50)+10;
+						})
+						.on('mouseover',function(d,i){
+							var id =this.id;
+							var selector = id.replace('line','text')
+							d3.selectAll("#"+selector)
+							.attr('visibility','auto');
+							d3.select(this)
+							.attr('stroke','red')
+            			})
+            			.on('mouseout',function(d){
+            				var id =this.id;
+							var selector = id.replace('line','text')
+							d3.selectAll("#"+selector)
+            				.attr('visibility','hidden');
+            				d3.select(this)
+							.attr('stroke','black')
+            			})
+						.attr('y2',function(d){
+							return 500;
+						})
+						.transition().duration(750).ease("linear")
+						.attr('y2',function(d){
+							return x(d.accuracy);
+						})
+						.attr('stroke','black')
+						.attr('stroke-width',20)
+}
 
 var highscore = function(){
 	$.get('highscore',function(data){
