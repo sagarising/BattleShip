@@ -84,6 +84,21 @@ describe('Observer',function(){
 	});
 
 	describe('deleteGame',function(){
-
+		var observer = new Observer();
+		observer.addPrivateGame(12);
+		observer.addGame();
+		observer.addGame();
+		it('should delete the given default game',function(){
+			var game = observer.games[0];
+			assert.equal(observer.games.length,2);
+			observer.deleteGame(game);
+			assert.equal(observer.games.length,1);
+		});
+		it('should remove the given private game',function(){
+			var game = observer.privateGames[0];
+			assert.equal(observer.privateGames.length,1);
+			observer.deleteGame(game);
+			assert.equal(observer.privateGames.length,0);
+		});
 	});
 });
