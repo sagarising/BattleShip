@@ -168,9 +168,10 @@ var d3Function = function(data){
 						.attr('fill','grey')		
 
 
-	var text = svgContainer.selectAll("text")
+	var text = svgContainer.selectAll(".text")
 						.data(data)
 						.enter().append("text")
+						.attr('class','.text')
 						.attr('id',function(d,i){
 							return "text"+i;
 						})
@@ -179,7 +180,7 @@ var d3Function = function(data){
 						})
 
 						.attr("x",function(d,i){
-							return (i*50)
+							return (i*50)+85;
 						})
 						.attr("y",function(d,i){
 							return x(d.accuracy)-10;
@@ -188,18 +189,18 @@ var d3Function = function(data){
 						.attr('stroke-width',1)
 						.attr('visibility','hidden')
 
-	var line = svgContainer.selectAll("line")
+	var line = svgContainer.selectAll(".bars")
 						.data(data)
 						.enter().append('line')
 						.attr('id',function(d,i){
 							return "line"+i;
 						})
 						.attr('x1',function(d,i){
-							return (i*50)+10
+							return (i*50)+100
 						})
 						.attr('y1',500)
 						.attr('x2',function(d,i){
-							return (i*50)+10;
+							return (i*50)+100;
 						})
 						.on('mouseover',function(d,i){
 							var id =this.id;
