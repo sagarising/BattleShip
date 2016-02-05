@@ -131,7 +131,34 @@ var d3Function = function(data){
 						.attr("width", 1000)
 						.attr("height",600);
 
-	var xAxis = svgContainer.selectAll("text")
+	svgContainer.append("defs").append("path")
+		.attr("id","accuracyPath")
+		.attr("d","M50,220 50,130")
+
+
+	var yAxis = svgContainer.append("line")
+						.attr('x1',60)
+						.attr('x2',60)
+						.attr('y1',20)
+						.attr('y2',550)
+						.attr('stroke','black')
+						.attr('stroke-width',2)
+
+	var xAxis = svgContainer.append("line")
+						.attr('x1',10)
+						.attr('x2',1000)
+						.attr('y1',500)
+						.attr('y2',500)
+						.attr('stroke','black')
+						.attr('stroke-width',2)
+
+	var accuracy = svgContainer.append("text")
+						.append("textPath")
+						.attr("xlink:href","#accuracyPath")
+						.text("Accuracy")
+
+
+	var text = svgContainer.selectAll("text")
 						.data(data)
 						.enter().append("text")
 						.attr('id',function(d,i){
@@ -173,7 +200,9 @@ var d3Function = function(data){
 							.attr('stroke','red')
             			})
             			.on('mouseout',function(d){
-            				d3.selectAll("text")
+            				var id =this.id;
+							var selector = id.replace('line','text')
+							d3.selectAll("#"+selector)
             				.attr('visibility','hidden');
             				d3.select(this)
 							.attr('stroke','black')
