@@ -49,15 +49,29 @@ describe('Observer',function(){
 		});
 		it('should create a new game if there is no game exisiting with the given id',function(){
 			observer.allocatePlayerToSpecificGame('sagar',grid,20);
-			console.log(observer)
 			assert.equal(observer.privateGames[1]._players.length,1);
 			assert.equal(observer.privateGames[1].gameID,20);
 		});
 	});
 
-	// describe('allocatePlayer',function(){
-
-	// });
+	describe('allocatePlayer',function(){
+		var observer = new Observer();
+		var grid = new Grid();
+		observer.addGame();
+		it('should allocate player to the existing default game',function(){
+			observer.allocatePlayer('Abhi',grid);
+			assert.equal(observer.games[0]._players.length,1);
+			assert.equal(observer.games[0]._players[0].name,'Abhi');
+			assert.equal(observer.games[0].gameID,1);
+		});
+		it('should allocate player to a new default game if the current game is filled',function(){
+			observer.allocatePlayer('Nabhi',grid);
+			observer.allocatePlayer('Pandey',grid);
+			assert.equal(observer.games[0]._players.length,2);
+			assert.equal(observer.games[1]._players[0].name,'Pandey');
+			assert.equal(observer.games[1].gameID,2);
+		});
+	});
 
 	describe('gameOfCurrentPlayer',function(){
 		var observer = new Observer();
@@ -69,7 +83,7 @@ describe('Observer',function(){
 		});
 	});
 
-	// describe('deleteGame',function(){
+	describe('deleteGame',function(){
 
-	// });
+	});
 });
