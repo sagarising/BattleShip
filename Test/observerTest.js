@@ -34,12 +34,26 @@ describe('Observer',function(){
 		});
 	});
 
-	// describe('allocatePlayerToSpecificGame',function(){
-	// 	var observer = new Observer();
-	// 	it('should allocate player to a given game id',function(){
-
-	// 	});
-	// });
+	describe('allocatePlayerToSpecificGame',function(){
+		var observer = new Observer();
+		var grid = new Grid();
+		it('should allocate player to a given game id',function(){
+			observer.allocatePlayerToSpecificGame('Abhi',grid,3);
+			assert.equal(observer.privateGames[0]._players.length,1);
+		});
+		it('should throw an error when more than two players are allocated to same game',function(){
+			observer.allocatePlayerToSpecificGame('Nabhi',grid,3);
+			expect(function(){
+				observer.allocatePlayerToSpecificGame('Pandeji',grid,3);
+			}).to.throw("Game is booked.");
+		});
+		it('should create a new game if there is no game exisiting with the given id',function(){
+			observer.allocatePlayerToSpecificGame('sagar',grid,20);
+			console.log(observer)
+			assert.equal(observer.privateGames[1]._players.length,1);
+			assert.equal(observer.privateGames[1].gameID,20);
+		});
+	});
 
 	// describe('allocatePlayer',function(){
 
