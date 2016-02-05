@@ -156,6 +156,16 @@ var d3Function = function(data){
 						.append("textPath")
 						.attr("xlink:href","#accuracyPath")
 						.text("Accuracy")
+	var player = svgContainer.append("text")
+						.attr("x",400)
+						.attr("y",520)
+						.text("Players")
+
+	var chart_label = svgContainer.append("text")
+						.attr("x",300)
+						.attr("y",120)
+						.text("hover on bars to see details.")			
+						.attr('fill','grey')		
 
 
 	var text = svgContainer.selectAll("text")
