@@ -58,7 +58,12 @@ section .own #own tr tbody{
   visibility: hidden;
   border-width: 5px;
 }
-
+/*//==========================highScores styling==============================\\*/
+.chart{
+  margin-left: 300px;
+  text-align: left;
+  text-indent: -15%;
+}
 /*//==========================common styling==============================\\*/
 #instructionLink,#teamLink,#highscoreLink{
   left: 20%;
