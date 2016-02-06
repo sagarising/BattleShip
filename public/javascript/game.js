@@ -120,14 +120,24 @@ var serveStatus = function(){
 	changeTheColorOfGamePage();
 	intervalObject = setInterval(update,500);
 };
-             
 
-var d3Function = function(data){
-	var x = d3.scale.linear()
+
+var shipPlacementChart = function(data){
+
+
+
+}
+
+
+
+
+
+var accuracyChart = function(data){
+	var y = d3.scale.linear()
         .domain([0,100])
         .range([500,100]);
 
-	var svgContainer = d3.select(".chart").append("svg")
+	var svgContainer = d3.select("#accuracy").append("svg")
 						.attr("width", 1000)
 						.attr("height",600);
 
@@ -183,7 +193,7 @@ var d3Function = function(data){
 							return (i*50)+85;
 						})
 						.attr("y",function(d,i){
-							return x(d.accuracy)-10;
+							return y(d.accuracy)-10;
 						})
 						.attr('stroke','black')
 						.attr('stroke-width',1)
@@ -223,7 +233,7 @@ var d3Function = function(data){
 						})
 						.transition().duration(750).ease("linear")
 						.attr('y2',function(d){
-							return x(d.accuracy);
+							return y(d.accuracy);
 						})
 						.attr('stroke','black')
 						.attr('stroke-width',20)
@@ -231,6 +241,13 @@ var d3Function = function(data){
 
 var highscore = function(){
 	$.get('highscore',function(data){
-		d3Function(JSON.parse(data))
+		accuracyChart(JSON.parse(data))
+	});
+	$.get('shipPlacementData',function(data){
+		shipPlacementChart(JSON.parse(data))
 	});
 };
+
+
+
+

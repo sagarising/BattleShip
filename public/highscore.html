@@ -3,13 +3,15 @@
 		<title>Highscores</title>
 		<link rel="stylesheet" type="text/css" href="./styles/style.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script type="text/javascript" src="./javascript/game.js"></script>
 		<script type="text/javascript" src="./javascript/d3.min.js"></script>
 	</head>
 
 	<body onload="highscore()">
 		<hr><h1 align="center">Highscores</h1><hr>
-		<div class="chart"></div>
+		<div id="accuracy" class=".chart"></div>
+		<div class=".chart"></div>
+		<button onclick="shipPlacementChart()">change chart</button>
 		<hr>
 	</body>
+		<script type="text/javascript" src="./javascript/gameStatistics.js"></script>
 </html>
