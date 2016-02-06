@@ -54,24 +54,44 @@ describe('Observer',function(){
 		});
 	});
 
-	describe('allocatePlayer',function(){
+	describe('allocatePlayer',function() {
 		var observer = new Observer();
-		var grid = new Grid();
-		observer.addGame();
-		it('should allocate player to the existing default game',function(){
-			observer.allocatePlayer('Abhi',grid);
-			assert.equal(observer.games[0]._players.length,1);
-			assert.equal(observer.games[0]._players[0].name,'Abhi');
-			assert.equal(observer.games[0].gameID,1);
+		it('Initially games should have length 0',function(){
+			expect(observer.games).to.have.length(0);
 		});
-		it('should allocate player to a new default game if the current game is filled',function(){
-			observer.allocatePlayer('Nabhi',grid);
-			observer.allocatePlayer('Pandey',grid);
-			assert.equal(observer.games[0]._players.length,2);
-			assert.equal(observer.games[1]._players[0].name,'Pandey');
-			assert.equal(observer.games[1].gameID,2);
+		it('should allocate player into game1',function() {
+			observer.allocatePlayer('abhishek');
+			expect(observer.games[0]).to.have.keys("_players","gameID","_result","seen");
 		});
-	});
+		it('Game ID for first player should be 1',function() {
+			expect(observer.games[0].gameID).to.equal(1);
+		});
+		it('should add second player in the same game',function() {
+			observer.allocatePlayer('nabeel');
+			expect(observer.games).to.have.length(1);
+		});
+		it('Game ID for second player should be 1',function() {
+			expect(observer.games[0].gameID).to.equal(1);
+		});
+		it('should add third player in the next game',function() {
+			observer.allocatePlayer('pandey');
+			expect(observer.games).to.have.length(2);
+		});
+		it('Game ID for third player should be 2',function() {
+			expect(observer.games[1].gameID).to.equal(2);
+		});
+		it('should add forth player in the same second game',function() {
+			observer.allocatePlayer('lalit');
+			expect(observer.games).to.have.length(2);
+		});
+		it('should add fifth player in the next game',function() {
+			observer.allocatePlayer('mohan');
+			expect(observer.games).to.have.length(3);
+		});
+		it('Game ID for fifth player should be 3',function() {
+			expect(observer.games[2].gameID).to.equal(3);
+		});
+	})
 
 	describe('gameOfCurrentPlayer',function(){
 		var observer = new Observer();
