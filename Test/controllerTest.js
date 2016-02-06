@@ -56,7 +56,7 @@ describe('controller',function(){
 	});
 
 	describe('/attack',function(){
-		it('should give attacking points if it is a hit',function(done){
+		it('should give "1" if it is a hit',function(done){
 			var game = {
 						isHit : function(){return true;},
 						removeHitPoint:function(){},
@@ -77,11 +77,11 @@ describe('controller',function(){
 			.send({point:"a1"})
 			.set('cookie',['name=shibi'])
 			.expect('Content-Type',/text\/html/)
-			.expect('success')
+			.expect('1')
 			.expect(200,done);
 		});
 
-		it('should give attacking points if it is a miss',function(done){
+		it('should give "0" if it is a miss',function(done){
 			var game = {
 						isHit : function(){return false;},
 						insert_point_into_missPoints:function(){},
@@ -100,7 +100,7 @@ describe('controller',function(){
 			.send({point:"a1"})
 			.set('cookie',['name=shibi'])
 			.expect('Content-Type',/text\/html/)
-			.expect('success')
+			.expect('0')
 			.expect(200,done);
 		});
 	});
