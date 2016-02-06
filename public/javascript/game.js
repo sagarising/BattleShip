@@ -11,8 +11,12 @@ var changeTheColorOfGamePage = function(){
 
 var attack = function(point) {
 	$.post('attack',{point:point.id},function(data){
-		if(data=='success')
-		$(point).addClass("noClick");
+		if(data==1){
+			$(point).addClass("noClick");$(point).css("background-color","red")}
+		else if(data == 0){
+			$(point).addClass("noClick");$(point).css("background-color","darkseagreen")}
+		else 
+			return;
 	});
 	$(point).css("animation","scale_once 0.5s 1 alternate");
 	soundPlay();
@@ -24,9 +28,6 @@ var soundPlay=function(){
 	audio.play();
 };
 
-//gamePage
-
-//
 var changingTheColorOfGrid=function(clas,usedSpace,colour){
 	usedSpace.forEach(function(eachCoordinate){
 		$('.'+clas+' [id='+eachCoordinate+']').css("background-color",colour);
@@ -35,7 +36,6 @@ var changingTheColorOfGrid=function(clas,usedSpace,colour){
 
 var statusUpdate = function(id,array){
 	console.log(id,'id')
-	// console.log(array,"array")
 	array.forEach(function(each,index){
 		if(!each){
 			var ship = $('#'+id+' tr')[index].children[1];
@@ -44,7 +44,6 @@ var statusUpdate = function(id,array){
 	});
 };
 
-//gamePage
 
 var displayTurn = function(turn){
 	if(turn == true){
@@ -66,7 +65,7 @@ var update = function(){
 		displayTurn(playerTurn);
 		shipStatus = updates.enemyStatusTable;
 		statusUpdate(shipStatus.table,shipStatus.stat);
-		var gridStatus = [updates.ownHit,updates.enemyMiss,updates.enemyHit];
+		var gridStatus = [updates.ownHit];
 		gridStatus.forEach(function(clas){
 			changingTheColorOfGrid(clas.table,clas.stat,clas.color)
 		});
