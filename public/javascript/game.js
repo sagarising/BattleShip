@@ -125,40 +125,25 @@ var serveStatus = function(){
 var d3Function = function(data){
 	var x = d3.scale.linear()
         .domain([0,100])
-        .range([500,100]);
+        .range([0,10]);
 
 	var svgContainer = d3.select(".chart").append("svg")
 						.attr("width", 1000)
 						.attr("height",600);
+// ==============================================================
+function slide(data) {
+	console.log(data)
+  var circle = d3.select(this);
+  (function repeat() {
+    circle = circle.transition()
+        .attr("cy", 500)
+      .transition()
+        .attr("cy",data.accuracy+50)
+        .each("end", repeat);
+  })();
+}
 
-	svgContainer.append("defs").append("path")
-		.attr("id","accuracyPath")
-		.attr("d","M50,220 50,130")
-
-
-	var yAxis = svgContainer.append("line")
-						.attr('x1',60)
-						.attr('x2',60)
-						.attr('y1',20)
-						.attr('y2',550)
-						.attr('stroke','black')
-						.attr('stroke-width',2)
-
-	var xAxis = svgContainer.append("line")
-						.attr('x1',10)
-						.attr('x2',1000)
-						.attr('y1',500)
-						.attr('y2',500)
-						.attr('stroke','black')
-						.attr('stroke-width',2)
-
-	var accuracy = svgContainer.append("text")
-						.append("textPath")
-						.attr("xlink:href","#accuracyPath")
-						.text("Accuracy")
-
-
-	var text = svgContainer.selectAll("text")
+var text = svgContainer.selectAll("text")
 						.data(data)
 						.enter().append("text")
 						.attr('id',function(d,i){
@@ -169,53 +154,141 @@ var d3Function = function(data){
 						})
 
 						.attr("x",function(d,i){
-							return (i*50)
+							return (i*50)+80
 						})
-						.attr("y",function(d,i){
-							return x(d.accuracy)-10;
-						})
+						.attr("y",70)
 						.attr('stroke','black')
 						.attr('stroke-width',1)
 						.attr('visibility','hidden')
 
-	var line = svgContainer.selectAll("line")
+var circle = svgContainer.selectAll("circle")
 						.data(data)
-						.enter().append('line')
-						.attr('id',function(d,i){
-							return "line"+i;
+						.enter().append("circle")
+						.attr("id",function(d,i){
+							return "circ"+i;
 						})
-						.attr('x1',function(d,i){
-							return (i*50)+10
-						})
-						.attr('y1',500)
-						.attr('x2',function(d,i){
-							return (i*50)+10;
+						.attr("cx",function(d,i){
+							return (i*50)+100;
 						})
 						.on('mouseover',function(d,i){
+							d3.select(this)
+							.interrupt()
 							var id =this.id;
-							var selector = id.replace('line','text')
+							var selector = id.replace('circ','text')
 							d3.selectAll("#"+selector)
 							.attr('visibility','auto');
 							d3.select(this)
-							.attr('stroke','red')
+							.attr('fill','green')
             			})
             			.on('mouseout',function(d){
+							d3.select(this)
+            				.transition().duration(2000)
+							.each(slide)
             				var id =this.id;
-							var selector = id.replace('line','text')
+							var selector = id.replace('circ','text')
 							d3.selectAll("#"+selector)
             				.attr('visibility','hidden');
             				d3.select(this)
-							.attr('stroke','black')
+							.attr('fill','red')
             			})
-						.attr('y2',function(d){
-							return 500;
+						.transition().duration(function(d,i){
+							return d.accuracy*50
 						})
-						.transition().duration(750).ease("linear")
-						.attr('y2',function(d){
-							return x(d.accuracy);
+						.each(slide)
+						.attr("r",function(d,i){
+							return d.accuracy/4
 						})
-						.attr('stroke','black')
-						.attr('stroke-width',20)
+						.attr('fill','red')
+						
+            			
+// ==============================================================
+
+	// svgContainer.append("defs").append("path")
+	// 	.attr("id","accuracyPath")
+	// 	.attr("d","M50,220 50,130")
+
+
+	// var yAxis = svgContainer.append("line")
+	// 					.attr('x1',60)
+	// 					.attr('x2',60)
+	// 					.attr('y1',20)
+	// 					.attr('y2',550)
+	// 					.attr('stroke','black')
+	// 					.attr('stroke-width',2)
+
+	// var xAxis = svgContainer.append("line")
+	// 					.attr('x1',10)
+	// 					.attr('x2',1000)
+	// 					.attr('y1',500)
+	// 					.attr('y2',500)
+	// 					.attr('stroke','black')
+	// 					.attr('stroke-width',2)
+
+	// var accuracy = svgContainer.append("text")
+	// 					.append("textPath")
+	// 					.attr("xlink:href","#accuracyPath")
+	// 					.text("Accuracy")
+
+
+	// var text = svgContainer.selectAll("text")
+	// 					.data(data)
+	// 					.enter().append("text")
+	// 					.attr('id',function(d,i){
+	// 						return "text"+i;
+	// 					})
+	// 					.text(function(d){
+	// 						return d.name
+	// 					})
+
+	// 					.attr("x",function(d,i){
+	// 						return (i*50)+80
+	// 					})
+	// 					.attr("y",function(d,i){
+	// 						if(i%2==0) return 150;
+	// 						return 250;
+	// 					})
+	// 					.attr('stroke','black')
+	// 					.attr('stroke-width',1)
+	// 					.attr('visibility','hidden')
+
+	// var line = svgContainer.selectAll("line")
+	// 					.data(data)
+	// 					.enter().append('line')
+	// 					.attr('id',function(d,i){
+	// 						return "line"+i;
+	// 					})
+	// 					.attr('x1',function(d,i){
+	// 						return (i*50)+10
+	// 					})
+	// 					.attr('y1',500)
+	// 					.attr('x2',function(d,i){
+	// 						return (i*50)+10;
+	// 					})
+						// .on('mouseover',function(d,i){
+						// 	var id =this.id;
+						// 	var selector = id.replace('line','text')
+						// 	d3.selectAll("#"+selector)
+						// 	.attr('visibility','auto');
+						// 	d3.select(this)
+						// 	.attr('stroke','red')
+      //       			})
+      //       			.on('mouseout',function(d){
+      //       				var id =this.id;
+						// 	var selector = id.replace('line','text')
+						// 	d3.selectAll("#"+selector)
+      //       				.attr('visibility','hidden');
+      //       				d3.select(this)
+						// 	.attr('stroke','black')
+      //       			})
+	// 					.attr('y2',function(d){
+	// 						return 500;
+	// 					})
+	// 					.transition().duration(750).ease("linear")
+	// 					.attr('y2',function(d){
+	// 						return x(d.accuracy);
+	// 					})
+	// 					.attr('stroke','black')
+	// 					.attr('stroke-width',20)
 }
 
 var highscore = function(){
