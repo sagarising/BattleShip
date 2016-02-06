@@ -196,7 +196,7 @@ var accuracyChart = function(){
 							return y(d.accuracy);
 						})
 						.attr('stroke','black')
-						.attr('stroke-width',20)
+						.attr('stroke-width',45)
 }
 
 
