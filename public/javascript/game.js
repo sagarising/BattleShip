@@ -18,6 +18,7 @@ var attack = function(point) {
 		else 
 			return;
 	});
+	intervalObject = setInterval(update,500);
 	$(point).css("animation","scale_once 0.5s 1 alternate");
 	soundPlay();
 };
@@ -62,6 +63,7 @@ var update = function(){
 		var gridStatus = [];
 		var updates = data;
 		var playerTurn = updates.isTurn;
+		if(playerTurn){clearInterval(intervalObject)};
 		displayTurn(playerTurn);
 		shipStatus = updates.enemyStatusTable;
 		statusUpdate(shipStatus.table,shipStatus.stat);
