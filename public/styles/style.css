@@ -56,11 +56,23 @@ section .own #own tr tbody{
   border-width: 5px;
 }
 /*//==========================highScores styling==============================\\*/
-.chart{
-  margin-left: 300px;
-  text-align: left;
-  text-indent: -15%;
+#chartdiv{
+  margin-left: 50px;
 }
+.axis path{
+  fill:none;
+  stroke:black;
+}
+
+.axis .tick{
+  stroke:silver; 
+}
+
+
+.axis .tick text{
+  stroke:black; 
+}
+
 /*//==========================common styling==============================\\*/
 #instructionLink,#teamLink,#highscoreLink{
   left: 20%;

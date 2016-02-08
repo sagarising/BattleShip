@@ -7,7 +7,7 @@ var highscore = function(){
 };
 
 
-var svgContainer = d3.select("#accuracy").append("svg")
+var svgContainer = d3.select("#chartdiv").append("svg")
 						.attr("width", 1000)
 						.attr("height",600);
 
@@ -97,25 +97,25 @@ var accuracyChart = function(){
 	var y = d3.scale.linear()
         .domain([0,100])
         .range([500,100]);
+
     var group = svgContainer.append("g")
     			.attr("id","bargraph")
     			.attr("class","graph");
 
 	group.append("defs").append("path")
 		.attr("id","accuracyPath")
-		.attr("d","M50,220 50,130")
+		.attr("d","M20,220 20,130")
 
 
-	var yAxis = group.append("line")
-						.attr('x1',60)
-						.attr('x2',60)
-						.attr('y1',20)
-						.attr('y2',550)
-						.attr('stroke','black')
-						.attr('stroke-width',2)
+	var yAxis = d3.svg.axis()
+				.scale(y)
+				.orient("left")
+				.ticks(10)
+				.innerTickSize(-1000);
 
+	
 	var xAxis = group.append("line")
-						.attr('x1',10)
+						.attr('x1',50)
 						.attr('x2',1000)
 						.attr('y1',500)
 						.attr('y2',500)
@@ -196,7 +196,12 @@ var accuracyChart = function(){
 							return y(d.accuracy);
 						})
 						.attr('stroke','black')
-						.attr('stroke-width',45)
+						.attr('stroke-width',45);
+	group.append('g')
+		.attr('class','axis')
+		.call(yAxis)
+		.attr('transform','translate(60,0)');
+	
 }
 
 
