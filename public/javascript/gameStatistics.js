@@ -56,69 +56,40 @@ var accuracyChart = function(){
 
 
 	
-	var line = group.selectAll(".bars")
+	var lines = group.selectAll(".bars")
 						.data(data)
 						.enter().append('line')
-						.attr('id',function(d,i){
-							return "line"+i;
-						})
+						.attr('y2',500)
 						.attr('x1',function(d,i){
 							return (i*50)+100
 						})
-						.attr('y1',500)
 						.attr('x2',function(d,i){
 							return (i*50)+100;
 						})
+						.attr('y1',500)
 						.on('mouseover',function(d,i){
-							var id =this.id;
-							var selector = id.replace('line','text')
-							d3.selectAll("#"+selector)
-							.attr('visibility','auto');
-							d3.select(this)
-							.attr('stroke','grey')
+							d3.select(this).attr('stroke','grey')
             			})
             			.on('mouseout',function(d){
-            				var id =this.id;
-							var selector = id.replace('line','text')
-							d3.selectAll("#"+selector)
-            				.attr('visibility','hidden');
-            				d3.select(this)
-							.attr('stroke','black')
+							d3.select(this).attr('stroke','black')
             			})
-						.attr('y2',function(d){
-							return 500;
-						})
-						.transition().duration(750).ease("linear")
-						.attr('y2',function(d){
-							return y(d.accuracy);
-						})
 						.attr('stroke','black')
-						.attr('stroke-width',45);
+						.attr('stroke-width',45)
+    
+    lines.append('svg:title')
+        .text(function(d){return d.name.trim()+' '+d.accuracy+'%'})
+	
+
+	lines.transition()
+		.duration(500).ease('linear')
+		.attr('y2',function(d){
+			return y(d.accuracy);
+		});
+	
 	group.append('g')
 		.attr('class','axis')
 		.call(yAxis)
 		.attr('transform','translate(60,0)');
-
-	var text = group.selectAll(".text")
-						.data(data)
-						.enter().append("text")
-						.attr('class','.text')
-						.attr('id',function(d,i){
-							return "text"+i;
-						})
-						.attr("x",function(d,i){
-							return (i*50)+80;
-						})
-						.attr("y",function(d,i){
-							return y(d.accuracy)-10;
-						})
-						.attr('stroke','black')
-						.attr('stroke-width',1)
-						.attr('visibility','hidden')
-						.text(function(d){
-							return d.name+'('+d.accuracy+')'
-						})
-
-}
+};
 
 
