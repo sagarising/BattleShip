@@ -65,7 +65,8 @@ section .own #own tr tbody{
 }
 
 .axis .tick{
-  stroke:silver; 
+  stroke:grey;
+  stroke-width:0.2; 
 }
 
 
