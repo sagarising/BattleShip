@@ -18,6 +18,7 @@
 
 .firstpagestart{
   padding-top: 40px;
+  z-index: 1;
 }
 /*//=========================shipPlacingPage.html styling==================\\*/
 #shipDeployment{
@@ -196,6 +197,7 @@ a:hover{
 .shipimage{
   position: fixed;
   bottom:0px;
+  z-index:-1;
 }
 .shipPlacingSection {
     position: relative;
