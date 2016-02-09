@@ -37,7 +37,7 @@ var sendToGamePage = function(){
 				if(data===true){
 					clearInterval(createInterval);				
 					$.get('gamePage',function(data){
-					$('html').html(data);
+					$('body').html(data);
 					serveStatus();
 					});
 				}
@@ -65,7 +65,7 @@ var instruct = function(){
 instruct();
 var reset=function(){
 	$.get('reset',function(data){
-		$('html').html(data);
+		$('body').html(data);
 	});
 };
 
