@@ -42,6 +42,7 @@ var sendToGamePage = function(){
 					});
 				}
 				$('#loading').css('visibility','visible');
+				$('#shipDeployment').css('opacity',0.3)
 				$('#selectShip').css('display','none');
 				$('table').css('pointerEvents','none');
 			}

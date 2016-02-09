@@ -185,9 +185,7 @@ a:hover{
 }
 #loading{
     position: absolute;
-    background-color: black;
-    font-size: larger;
-    color:white;
+    transform: scale(2);
     left:15%;
     top:50%;
     visibility: hidden;
