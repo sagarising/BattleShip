@@ -74,7 +74,7 @@ var update = function(){
 		if(updates.isGameOver){
 			clearInterval(intervalObject);
 			$.get('getResult',function(data){
-				$('html').html(data);
+				$('body').html(data);
 				winnerAndLoser();
 			})
 		};
