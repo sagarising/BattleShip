@@ -20,8 +20,33 @@ var svgContainer = d3.select("#chartdiv").append("svg")
 
 var shipPositionChart = function(data){
 	d3.selectAll(".graph").remove();
-	console.log(JSON.stringify(data));
+	var ramp=d3.scale.linear().domain([0,10,100]).range(["white","yellow","firebrick"]);
+	var group = svgContainer.append("g")
+    			.attr("id","shipPosition")
+    			.attr("class","graph");
+    var rectangles = group.selectAll("rect")
+    					  .data(data)
+    					  .enter().append('rect')
+    					  .attr('x',function(d,i){
+    					  	return (+(d.column_id)*50)+300
+    					  })
+    					  .attr('y',function(d,i){
+    					  	var charCode = d.row_id.charCodeAt();
+    					  	return ((charCode*50)-3200)
+    					  })
+    					  .attr('height',50)
+    					  .attr('width',50)
+    					  .attr('fill','white')
+    					  .attr('stroke-width',1)
+    					  .attr('stroke','black')
 
+
+    rectangles.append('svg:title')
+        .text(function(d){return d.row_id+d.column_id+" "+d.counts+'times'})
+    rectangles.transition().duration(3000)
+    	.attr('fill',function(d,i){
+    		return ramp(d.counts)
+		  })
 };
 
 var accuracyChart = function(data){
@@ -90,7 +115,7 @@ var accuracyChart = function(data){
 	
 
 	lines.transition()
-		.duration(500).ease('linear')
+		.duration(1000).ease('bounce')
 		.attr('y2',function(d){
 			return y(d.accuracy);
 		});
