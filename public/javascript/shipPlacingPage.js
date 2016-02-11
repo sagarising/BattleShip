@@ -75,3 +75,6 @@ var soundPlay=function(){
 		audio.play();
 };
 
+window.onbeforeunload = function(){
+	return 'Game data will be lost';
+};

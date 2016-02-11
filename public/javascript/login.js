@@ -26,6 +26,3 @@ var login = function() {
 	});
 };
 
-$(window).on('beforeunload',function(){
-	return 'Game data will be lost';
-})
