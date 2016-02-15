@@ -74,6 +74,7 @@ var update = function(){
 		if(updates.isGameOver){
 			clearInterval(intervalObject);
 			$.get('getResult',function(data){
+				window.onbeforeunload = null;
 				$('body').html(data);
 				winnerAndLoser();
 			})
@@ -121,3 +122,5 @@ var serveStatus = function(){
 	changeTheColorOfGamePage();
 	intervalObject = setInterval(update,500);
 };
+
+
