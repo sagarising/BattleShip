@@ -33,10 +33,11 @@
     "jade": "^1.11.0",
     "lodash": "^3.10.1",
     "pg": "4.4.3",
+    "selenium-webdriver": "^2.47.0",
     "sinon": "^1.17.2",
     "supertest": "^1.1.0"
   },
-   "engines": {
+  "engines": {
     "node": ">= 0.12.0",
     "npm": ">= 1.2.0"
   }
