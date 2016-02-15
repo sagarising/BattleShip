@@ -3,6 +3,7 @@ var expect = require('chai').expect;
 var Player = require('../lib/player');
 var sinon = require('sinon');
 var Grid = require('../lib/Grid');
+var Ship = require('../lib/Ship');
 
 describe('Player',function() {
 	it('Should have no ship initially',function(){
@@ -40,7 +41,9 @@ describe('Player',function() {
 	describe('if_it_is_Hit',function(){
 		var grid = new Grid();
 		var player = new Player('ram',grid);
-		player.grid.usedCoordinates = ['A1','A2','A3','A4','A5','D6','D7','D8','D9','B5','C5','D5','E3','E4','E5','H1','H2'];
+		player.ships.push(new Ship(['A1','A2','A3','A4','A5']));
+		player.ships.push(new Ship(['D6','D7','D8','D9']));
+		player.grid.usedCoordinates = ['A1','A2','A3','A4','A5','D6','D7','D8','D9'];
 		it('should return 1 if it is hit',function(){
 			var result = player.if_it_is_Hit('A2');
 			expect(result).to.equal(1);
@@ -51,12 +54,12 @@ describe('Player',function() {
 		});
 		it('should remove attackPoint from uesdCoordinates when is is a hit',function(){
 			player.if_it_is_Hit('A1');
-			var expected = ['A3','A4','A5','D6','D7','D8','D9','B5','C5','D5','E3','E4','E5','H1','H2'];
+			var expected = ['A3','A4','A5','D6','D7','D8','D9'];
 			assert.deepEqual(player.grid.usedCoordinates,expected);	
 		});
 		it('should not remove any coordinate from usedCoordinates if it is not a hit',function(){
 			player.if_it_is_Hit('B7');
-			var expected = ['A3','A4','A5','D6','D7','D8','D9','B5','C5','D5','E3','E4','E5','H1','H2'];
+			var expected = ['A3','A4','A5','D6','D7','D8','D9'];
 			assert.deepEqual(player.grid.usedCoordinates,expected);	
 		});
 		it('should push the coordinate to destroyed field if it is a hit',function(){
@@ -72,5 +75,4 @@ describe('Player',function() {
 			assert.deepEqual(result,expected);
 		});
 	});
-
 });
