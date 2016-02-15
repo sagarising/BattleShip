@@ -138,6 +138,12 @@ describe('Game',function(){
 			assert.throw(boundFunction,Error,'Cannot place over other ship.');
 			expect(player.ships[1]).to.have.all.keys({coordinates:[null,null,null]});
 		});
+		it('should return error if we try to place more than 5 ships',function(){
+			var shipInfo = {shipSize:3,align:'vertical',coordinate:'B4'};
+			player.grid.usedCoordinates = ['A1','A2','A3','A4','A5','A6','A7','A8','A9','A10','B1','B2','B3','C5','B5','B6','B7'];
+			var boundFunction = game.positionShip.bind(null,shipInfo,player);
+			assert.throw(boundFunction,Error,'Ships already placed');
+		});
 	});
 
 	describe('isHit',function(){
@@ -164,8 +170,8 @@ describe('Game',function(){
 	describe('removeHitPoint',function(){
 		var game = new Game();
 		var grid1 = new Grid();
-		grid1.usedCoordinates = ['A1','A2','D1','F3'];
-		var ships1 = [{coordinates:['A1','A2','D1','F3']}];
+		grid1.usedCoordinates = ['A1','D1','F3'];
+		var ships1 = [{coordinates:['A1','D1','F3'],isAlive:1}];
 		var player1 = {name:"Abhi",isReady:false,ships:ships1,grid : grid1};
 		var player2 = {name:"Nabhi"};
 		game.addPlayer(player1);
@@ -173,12 +179,17 @@ describe('Game',function(){
 		it('should remove the point from usedCoordinates',function(){
 			game.removeHitPoint('F3','Nabhi');
 			var result = game._enemyPlayer("Nabhi").grid.usedCoordinates;
-			assert.deepEqual(['A1','A2','D1'],result);
+			assert.deepEqual(['A1','D1'],result);
 		});
 		it('should remove the hit point from usedCoordinates and add to destroyed',function(){
 			game.removeHitPoint('D1','Nabhi');
 			var result = game._enemyPlayer("Nabhi").grid.destroyed;
 			assert.deepEqual(['F3','D1'],result);
+		});
+		it('should change the isAlive property to 0 when the ship sunks',function(){
+			game.removeHitPoint('A1','Nabhi');
+			var result = game._enemyPlayer("Nabhi").ships[0].isAlive;
+			assert.deepEqual(0,result);
 		});
 	});
 
@@ -240,18 +251,30 @@ describe('Game',function(){
 		var game = new Game();
 		var grid1 = new Grid();
 		grid1.usedCoordinates.length = 17;
-		var player1 = {name:"Abhi",isReady:true,grid : grid1,turn:true};
+		var player1 = {name:"Abhi",isReady:false,grid : grid1,turn:true};
 		var player2 = {name:"Nabhi",isReady:true};
 		game.addPlayer(player1);
 		game.addPlayer(player2);
 		it('should return true if both players are ready',function(){
-			var result = game.canStartPlaying(player1);
+			var result = game.arePlayersReady(player1);
 			assert.equal(result,true);
+		});
+		it('should change isReady property of player to true if he placed all ships',function(){
+			var result = game.arePlayersReady(player1);
+			var status = game._enemyPlayer('Nabhi').isReady;
+			assert.equal(result,true);
+			assert.equal(status,true);
 		});
 		it('should return false if players are not ready',function(){
 			game._enemyPlayer('Abhi').isReady = false;
-			var result = game.canStartPlaying(player1);
+			var result = game.arePlayersReady(player1);
 			assert.equal(result,false);
+		});
+		it('should give an error when clicked on Ready before selecting 5 ships',function(){
+			grid1.usedCoordinates.length = 15;
+			game._enemyPlayer('Nabhi').isReady = false;
+			var result = game.arePlayersReady(player1);
+			assert.equal(result,'select more ships');
 		});
 	});
 
