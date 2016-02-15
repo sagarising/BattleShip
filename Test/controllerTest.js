@@ -103,6 +103,29 @@ describe('controller',function(){
 			.expect('0')
 			.expect(200,done);
 		});
+
+		it('should give "-1" if it is not turn of the player',function(done){
+			var game = {
+						isHit : function(){return false;},
+						insert_point_into_missPoints:function(){},
+						changeTurn : function(){},
+						currentPlayerTurn : function(){return false}
+						};
+			var observer = {
+				gameOfCurrentPlayer : function() {
+						return game;
+					}
+			};
+			controller.injectObserver(observer);
+
+			request(controller)
+			.post('/attack')
+			.send({point:"a1"})
+			.set('cookie',['name=shibi'])
+			.expect('Content-Type',/text\/html/)
+			.expect('-1')
+			.expect(200,done);
+		});
 	});
 
 	describe('/givingUpdate',function(){
