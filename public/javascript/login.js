@@ -22,6 +22,7 @@ var login = function() {
 		if(data=="Game is booked.")
 			$('#gameId').val(""),$('#gameId').attr("placeholder",data+"Choose another id.");
 		else
-			$('html').html(data);
+			$('body').html(data);
 	});
 };
+
