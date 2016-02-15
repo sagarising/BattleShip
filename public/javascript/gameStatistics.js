@@ -20,7 +20,12 @@ var svgContainer = d3.select("#chartdiv").append("svg")
 
 var shipPositionChart = function(data){
 	d3.selectAll(".graph").remove();
-	var ramp=d3.scale.linear().domain([0,10,100]).range(["white","yellow","firebrick"]);
+	var max = d3.max(data,function(d){return d.counts;});
+									
+
+	var ramp=d3.scale.linear()
+					 .domain([0,max/2,max])
+					 .range(["white","yellow","orange"]);
 	var group = svgContainer.append("g")
     			.attr("id","shipPosition")
     			.attr("class","graph");
@@ -39,8 +44,6 @@ var shipPositionChart = function(data){
     					  .attr('fill','white')
     					  .attr('stroke-width',1)
     					  .attr('stroke','black')
-
-
     rectangles.append('svg:title')
         .text(function(d){return d.row_id+d.column_id+" "+d.counts+'times'})
     rectangles.transition().duration(3000)
