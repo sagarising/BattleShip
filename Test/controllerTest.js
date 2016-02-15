@@ -55,6 +55,16 @@ describe('controller',function(){
 		});
 	});
 
+	describe('/gamePage',function(){
+		it('should give the game page',function(done){
+			request(controller)
+				.get('/gamePage')
+				.set('cookie',['name=shibi','gameId=somthing'])
+				.expect('Content-Type',/text\/html/)
+				.expect(200,done);
+		});
+	});
+
 	describe('/attack',function(){
 		it('should give "1" if it is a hit',function(done){
 			var game = {
