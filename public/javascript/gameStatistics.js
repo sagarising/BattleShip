@@ -20,12 +20,12 @@ var svgContainer = d3.select("#chartdiv").append("svg")
 
 var shipPositionChart = function(data){
 	d3.selectAll(".graph").remove();
-	var max = d3.max(data,function(d){return d.counts;});
-									
+	var max = d3.max(data,function(d){console.log(typeof d.counts);return +d.counts;});
+	console.log(max);	
 
 	var ramp=d3.scale.linear()
 					 .domain([0,max/2,max])
-					 .range(["white","yellow","orange"]);
+					 .range(["white","lightgreen","seagreen"]);
 	var group = svgContainer.append("g")
     			.attr("id","shipPosition")
     			.attr("class","graph");

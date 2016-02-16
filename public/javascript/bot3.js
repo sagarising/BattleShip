@@ -1,5 +1,6 @@
 var webdriver = require('selenium-webdriver'),
 	chrome = require('selenium-webdriver/chrome'),
+	firefox = require('selenium-webdriver/firefox'),
     By = require('selenium-webdriver').By,
     until = require('selenium-webdriver').until;
 
@@ -48,7 +49,7 @@ var attacker = function() {
 	},20000).then(function(){
 		driver.sleep(2000);
 		setInterval(function(){
-			driver.executeScript("var a = $('.turn').text(); return a").then(function(turn){
+			driver.findElement(By.className('turn')).getText().then(function(turn){
 				if(turn == "Your turn"){
 					console.log(turn,points[i]);
 					driver.findElement(By.css('#enemy #'+points[i++])).click();
@@ -59,7 +60,7 @@ var attacker = function() {
 
 }
 
-driver.get('http://localhost:5000/');
+driver.get('http://localhost:5000/');    //this is the url its going to hit
 fillInformation().place().attack();
 // driver.quit();
 
