@@ -55,12 +55,36 @@ describe('controller',function(){
 		});
 	});
 
+	describe('/reset',function(){
+		it('should give the ship placing page with initial state',function(done){
+			var game = {
+							reinitiatingUsedCoordinates : function(){}
+						};
+			var observer = {
+				gameOfCurrentPlayer : function() {
+						return game;
+					}
+			};
+			controller.injectObserver(observer);
+
+			request(controller)
+				.get('/reset')
+				.set('cookie',['name=shibi;gameId=something'])
+				.expect('Content-Type',/text\/html/)
+				.expect(/selectShip/)
+				.expect(/shibi/)
+				.expect(/GameId: something/)
+				.expect(200,done);
+		});
+	});
+
 	describe('/gamePage',function(){
 		it('should give the game page',function(done){
 			request(controller)
 				.get('/gamePage')
 				.set('cookie',['name=shibi','gameId=somthing'])
 				.expect('Content-Type',/text\/html/)
+				.expect(/attackController/)
 				.expect(200,done);
 		});
 	});
