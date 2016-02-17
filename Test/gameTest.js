@@ -273,8 +273,9 @@ describe('Game',function(){
 		it('should give an error when clicked on Ready before selecting 5 ships',function(){
 			grid1.usedCoordinates.length = 15;
 			game._enemyPlayer('Nabhi').isReady = false;
-			var result = game.arePlayersReady(player1);
-			assert.equal(result,'select more ships');
+
+			var boundFunction = game.arePlayersReady.bind(game,player1);
+			assert.throw(boundFunction,Error,'Select more ships');
 		});
 	});
 
