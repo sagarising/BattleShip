@@ -30,20 +30,15 @@ var checkAndSubmit = function(self){
 var sendToGamePage = function(){
 	var createInterval = setInterval(function(){
 		$.get('makeReady',function(data){
-			if(data==='select more ships'){
-				$('#alert').show();
-			}
-			else{
-				if(data){
-					clearInterval(createInterval);				
-					$('body').html(data);
+			if(data){
+				clearInterval(createInterval);				
+				$('body').html(data);
 					serveStatus();
-				}
-				$('#loading').css('visibility','visible');
-				$('#shipDeployment').css('opacity',0.3)
-				$('#selectShip').css('display','none');
-				$('table').css('pointerEvents','none');
 			}
+			$('#loading').css('visibility','visible');
+			$('#shipDeployment').css('opacity',0.3)
+			$('#selectShip').css('display','none');
+			$('table').css('pointerEvents','none');
 		})
 	},500);	
 };
