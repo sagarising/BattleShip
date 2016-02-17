@@ -34,12 +34,10 @@ var sendToGamePage = function(){
 				$('#alert').show();
 			}
 			else{
-				if(data===true){
+				if(data){
 					clearInterval(createInterval);				
-					$.get('gamePage',function(data){
 					$('body').html(data);
 					serveStatus();
-					});
 				}
 				$('#loading').css('visibility','visible');
 				$('#shipDeployment').css('opacity',0.3)
