@@ -218,12 +218,6 @@ section table#own{
     pointer-events:none;
     opacity: 0.5;
 }
-#alert{
-    display: none;
-}
-
-
-
 
 #restartButton{
     margin-left: 100px;
