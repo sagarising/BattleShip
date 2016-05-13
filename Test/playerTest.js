@@ -2,7 +2,7 @@ var assert = require('chai').assert;
 var expect = require('chai').expect;
 var Player = require('../lib/player');
 var sinon = require('sinon');
-var Grid = require('../lib/Grid');
+var Grid = require('../lib/grid');
 var Ship = require('../lib/Ship');
 
 describe('Player',function() {
