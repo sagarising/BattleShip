@@ -3,9 +3,9 @@ var expect = require('chai').expect;
 var Game = require('../lib/Game').Game;
 var sinon = require('sinon');
 var Grid = require('../lib/grid');
-var Ship = require('../lib/Ship');
+var Ship = require('../lib/ship');
 var lib = require('../lib/Game').lib;
-var Player = require('../lib/Player');
+var Player = require('../lib/player');
 
 describe('Game',function(){
 	describe('addPlayer',function(){

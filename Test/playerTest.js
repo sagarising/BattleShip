@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 var Player = require('../lib/player');
 var sinon = require('sinon');
 var Grid = require('../lib/grid');
-var Ship = require('../lib/Ship');
+var Ship = require('../lib/ship');
 
 describe('Player',function() {
 	it('Should have no ship initially',function(){
