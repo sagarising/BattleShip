@@ -1,1 +1,1 @@
-npm test && sudo npm start
+npm test && screen sudo npm start 
