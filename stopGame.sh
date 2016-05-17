@@ -1,2 +1,2 @@
 pidToStop=$(pidof node)
-sudo kill pidToStop
+sudo kill $pidToStop
