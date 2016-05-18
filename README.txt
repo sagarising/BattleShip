@@ -1,4 +1,4 @@
-Game is Running on url ::::: http://54.200.3.124/
+Game is Running on url ::::: http://52.38.140.245/
 
 
 To install all dependencies and devDependencies, type on terminal ::::::
