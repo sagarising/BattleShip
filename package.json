@@ -6,7 +6,9 @@
   "scripts": {
     "test": "mocha",
     "watch": "mocha -R min --watch",
-    "start": "node server.js"
+    "start": "node server.js",
+    "coverage": "istanbul cover _mocha",
+    "check-coverage": "istanbul check-coverage "
   },
   "repository": {
     "type": "git",
@@ -30,12 +32,10 @@
     "cookie-parser": "^1.4.0",
     "express": "^4.13.3",
     "helmet": "^1.0.1",
-    "jade": "^1.11.0",
     "lodash": "^3.10.1",
     "pg": "4.4.3",
-    "selenium-webdriver": "^2.47.0",
-    "sinon": "^1.17.2",
-    "supertest": "^1.1.0"
+    "pug": "^2.0.0-alpha8",
+    "selenium-webdriver": "^2.47.0"
   },
   "engines": {
     "node": ">= 0.12.0",
