@@ -1,0 +1,283 @@
+html
+  head
+    title result
+    script(type='text/javascript', src='./javascript/handlebars-v4.0.5.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+    script(type='text/javascript', src='./javascript/game.js')
+    link(rel='stylesheet', href='./styles/style.css')
+    audio#mysoundclip(preload='auto')
+      source(src='../soundFiles/gameOver.wav')
+    hr
+    .banner
+      h3.nameAndGameId!=playerInfo
+      h2.otherPageLogo GAME OVER
+      a#instructionLink(href='instructions.html', target='_blank') Instructions
+      a#teamLink(href='team.html', target='_blank') Our Team
+      a#highscoreLink(href='highscore.html', target='_blank') View Highscore
+    hr
+    script#declare(type='text/x-handlebars-template').
+      <section id ="resultBox">
+      <div style="float:left; width:800px; padding-left:200px;">
+      <h2>Winner : <span style="color:blue">{{winner}}</span></h2>
+      <p>Ships destroyed : <span style="color:blue">{{winnerStatus}}</span></p>
+      <p>Hit Accuracy: <span style="color:blue">{{winnerAccuracy}}</span></p>
+      </div>
+      <div style="float:left;">
+      <h2>Loser : <span style="color:blue">{{loser}}</span></h2>
+      <p>Ships destroyed: <span style="color:blue">{{loserStatus}}</span></p>
+      <p>Hit Accuracy: <span style="color:blue">{{loserAccuracy}}</span></p>
+      </div>
+      <div class="own" style="padding-left:150px; float:left">
+      <table class="grid" id="winner">
+      <tr>
+      <td  width=25px  height=25px id="A1"></td>
+      <td  width=25px  height=25px id="A2"></td>
+      <td  width=25px  height=25px id="A3"></td>
+      <td  width=25px  height=25px id="A4"></td>
+      <td  width=25px  height=25px id="A5"></td>
+      <td  width=25px  height=25px id="A6"></td>
+      <td  width=25px  height=25px id="A7"></td>
+      <td  width=25px  height=25px id="A8"></td>
+      <td  width=25px  height=25px id="A9"></td>
+      <td  width=25px  height=25px id="A10"></td>
+      </tr>
+      <tr>
+      <td  width=25px  height=25px id="B1"></td>
+      <td  width=25px  height=25px id="B2"></td>
+      <td  width=25px  height=25px id="B3"></td>
+      <td  width=25px  height=25px id="B4"></td>
+      <td  width=25px  height=25px id="B5"></td>
+      <td  width=25px  height=25px id="B6"></td>
+      <td  width=25px  height=25px id="B7"></td>
+      <td  width=25px  height=25px id="B8"></td>
+      <td  width=25px  height=25px id="B9"></td>
+      <td  width=25px  height=25px id="B10"></td>
+      </tr>
+      <tr>
+      <td  width=25px  height=25px id="C1"></td>
+      <td  width=25px  height=25px id="C2"></td>
+      <td  width=25px  height=25px id="C3"></td>
+      <td  width=25px  height=25px id="C4"></td>
+      <td  width=25px  height=25px id="C5"></td>
+      <td  width=25px  height=25px id="C6"></td>
+      <td  width=25px  height=25px id="C7"></td>
+      <td  width=25px  height=25px id="C8"></td>
+      <td  width=25px  height=25px id="C9"></td>
+      <td  width=25px  height=25px id="C10"></td>
+      </tr>
+      <tr>
+      <td  width=25px  height=25px id="D1"></td>
+      <td  width=25px  height=25px id="D2"></td>
+      <td  width=25px  height=25px id="D3"></td>
+      <td  width=25px  height=25px id="D4"></td>
+      <td  width=25px  height=25px id="D5"></td>
+      <td  width=25px  height=25px id="D6"></td>
+      <td  width=25px  height=25px id="D7"></td>
+      <td  width=25px  height=25px id="D8"></td>
+      <td  width=25px  height=25px id="D9"></td>
+      <td  width=25px  height=25px id="D10"></td>
+      </tr>
+      <tr>
+      <td  width=25px  height=25px id="E1"></td>
+      <td  width=25px  height=25px id="E2"></td>
+      <td  width=25px  height=25px id="E3"></td>
+      <td  width=25px  height=25px id="E4"></td>
+      <td  width=25px  height=25px id="E5"></td>
+      <td  width=25px  height=25px id="E6"></td>
+      <td  width=25px  height=25px id="E7"></td>
+      <td  width=25px  height=25px id="E8"></td>
+      <td  width=25px  height=25px id="E9"></td>
+      <td  width=25px  height=25px id="E10"></td>
+      </tr>
+      <tr>
+      <td  width=25px  height=25px id="F1"></td>
+      <td  width=25px  height=25px id="F2"></td>
+      <td  width=25px  height=25px id="F3"></td>
+      <td  width=25px  height=25px id="F4"></td>
+      <td  width=25px  height=25px id="F5"></td>
+      <td  width=25px  height=25px id="F6"></td>
+      <td  width=25px  height=25px id="F7"></td>
+      <td  width=25px  height=25px id="F8"></td>
+      <td  width=25px  height=25px id="F9"></td>
+      <td  width=25px  height=25px id="F10"></td>
+      </tr>
+      <tr>
+      <td  width=25px  height=25px id="G1"></td>
+      <td  width=25px  height=25px id="G2"></td>
+      <td  width=25px  height=25px id="G3"></td>
+      <td  width=25px  height=25px id="G4"></td>
+      <td  width=25px  height=25px id="G5"></td>
+      <td  width=25px  height=25px id="G6"></td>
+      <td  width=25px  height=25px id="G7"></td>
+      <td  width=25px  height=25px id="G8"></td>
+      <td  width=25px  height=25px id="G9"></td>
+      <td  width=25px  height=25px id="G10"></td>
+      </tr>
+      <tr>
+      <td  width=25px  height=25px id="H1"></td>
+      <td  width=25px  height=25px id="H2"></td>
+      <td  width=25px  height=25px id="H3"></td>
+      <td  width=25px  height=25px id="H4"></td>
+      <td  width=25px  height=25px id="H5"></td>
+      <td  width=25px  height=25px id="H6"></td>
+      <td  width=25px  height=25px id="H7"></td>
+      <td  width=25px  height=25px id="H8"></td>
+      <td  width=25px  height=25px id="H9"></td>
+      <td  width=25px  height=25px id="H10"></td>
+      </tr>
+      <tr>
+      <td  width=25px  height=25px id="I1"></td>
+      <td  width=25px  height=25px id="I2"></td>
+      <td  width=25px  height=25px id="I3"></td>
+      <td  width=25px  height=25px id="I4"></td>
+      <td  width=25px  height=25px id="I5"></td>
+      <td  width=25px  height=25px id="I6"></td>
+      <td  width=25px  height=25px id="I7"></td>
+      <td  width=25px  height=25px id="I8"></td>
+      <td  width=25px  height=25px id="I9"></td>
+      <td  width=25px  height=25px id="I10"></td>
+      </tr>
+      <tr>
+      <td  width=25px  height=25px id="J1"></td>
+      <td  width=25px  height=25px id="J2"></td>
+      <td  width=25px  height=25px id="J3"></td>
+      <td  width=25px  height=25px id="J4"></td>
+      <td  width=25px  height=25px id="J5"></td>
+      <td  width=25px  height=25px id="J6"></td>
+      <td  width=25px  height=25px id="J7"></td>
+      <td  width=25px  height=25px id="J8"></td>
+      <td  width=25px  height=25px id="J9"></td>
+      <td  width=25px  height=25px id="J10"></td>
+      </tr>
+      </table>
+      </div>
+      <div class="enemy" style="padding-right:170px; float:right">
+      <table class="grid" id="loser">
+      <tr>
+      <td  width=25px  height=25px id="A1"></td>
+      <td  width=25px  height=25px id="A2"></td>
+      <td  width=25px  height=25px id="A3"></td>
+      <td  width=25px  height=25px id="A4"></td>
+      <td  width=25px  height=25px id="A5"></td>
+      <td  width=25px  height=25px id="A6"></td>
+      <td  width=25px  height=25px id="A7"></td>
+      <td  width=25px  height=25px id="A8"></td>
+      <td  width=25px  height=25px id="A9"></td>
+      <td  width=25px  height=25px id="A10"></td>
+      </tr>
+      <tr>
+      <td  width=25px  height=25px id="B1"></td>
+      <td  width=25px  height=25px id="B2"></td>
+      <td  width=25px  height=25px id="B3"></td>
+      <td  width=25px  height=25px id="B4"></td>
+      <td  width=25px  height=25px id="B5"></td>
+      <td  width=25px  height=25px id="B6"></td>
+      <td  width=25px  height=25px id="B7"></td>
+      <td  width=25px  height=25px id="B8"></td>
+      <td  width=25px  height=25px id="B9"></td>
+      <td  width=25px  height=25px id="B10"></td>
+      </tr>
+      <tr>
+      <td  width=25px  height=25px id="C1"></td>
+      <td  width=25px  height=25px id="C2"></td>
+      <td  width=25px  height=25px id="C3"></td>
+      <td  width=25px  height=25px id="C4"></td>
+      <td  width=25px  height=25px id="C5"></td>
+      <td  width=25px  height=25px id="C6"></td>
+      <td  width=25px  height=25px id="C7"></td>
+      <td  width=25px  height=25px id="C8"></td>
+      <td  width=25px  height=25px id="C9"></td>
+      <td  width=25px  height=25px id="C10"></td>
+      </tr>
+      <tr>
+      <td  width=25px  height=25px id="D1"></td>
+      <td  width=25px  height=25px id="D2"></td>
+      <td  width=25px  height=25px id="D3"></td>
+      <td  width=25px  height=25px id="D4"></td>
+      <td  width=25px  height=25px id="D5"></td>
+      <td  width=25px  height=25px id="D6"></td>
+      <td  width=25px  height=25px id="D7"></td>
+      <td  width=25px  height=25px id="D8"></td>
+      <td  width=25px  height=25px id="D9"></td>
+      <td  width=25px  height=25px id="D10"></td>
+      </tr>
+      <tr>
+      <td  width=25px  height=25px id="E1"></td>
+      <td  width=25px  height=25px id="E2"></td>
+      <td  width=25px  height=25px id="E3"></td>
+      <td  width=25px  height=25px id="E4"></td>
+      <td  width=25px  height=25px id="E5"></td>
+      <td  width=25px  height=25px id="E6"></td>
+      <td  width=25px  height=25px id="E7"></td>
+      <td  width=25px  height=25px id="E8"></td>
+      <td  width=25px  height=25px id="E9"></td>
+      <td  width=25px  height=25px id="E10"></td>
+      </tr>
+      <tr>
+      <td  width=25px  height=25px id="F1"></td>
+      <td  width=25px  height=25px id="F2"></td>
+      <td  width=25px  height=25px id="F3"></td>
+      <td  width=25px  height=25px id="F4"></td>
+      <td  width=25px  height=25px id="F5"></td>
+      <td  width=25px  height=25px id="F6"></td>
+      <td  width=25px  height=25px id="F7"></td>
+      <td  width=25px  height=25px id="F8"></td>
+      <td  width=25px  height=25px id="F9"></td>
+      <td  width=25px  height=25px id="F10"></td>
+      </tr>
+      <tr>
+      <td  width=25px  height=25px id="G1"></td>
+      <td  width=25px  height=25px id="G2"></td>
+      <td  width=25px  height=25px id="G3"></td>
+      <td  width=25px  height=25px id="G4"></td>
+      <td  width=25px  height=25px id="G5"></td>
+      <td  width=25px  height=25px id="G6"></td>
+      <td  width=25px  height=25px id="G7"></td>
+      <td  width=25px  height=25px id="G8"></td>
+      <td  width=25px  height=25px id="G9"></td>
+      <td  width=25px  height=25px id="G10"></td>
+      </tr>
+      <tr>
+      <td  width=25px  height=25px id="H1"></td>
+      <td  width=25px  height=25px id="H2"></td>
+      <td  width=25px  height=25px id="H3"></td>
+      <td  width=25px  height=25px id="H4"></td>
+      <td  width=25px  height=25px id="H5"></td>
+      <td  width=25px  height=25px id="H6"></td>
+      <td  width=25px  height=25px id="H7"></td>
+      <td  width=25px  height=25px id="H8"></td>
+      <td  width=25px  height=25px id="H9"></td>
+      <td  width=25px  height=25px id="H10"></td>
+      </tr>
+      <tr>
+      <td  width=25px  height=25px id="I1"></td>
+      <td  width=25px  height=25px id="I2"></td>
+      <td  width=25px  height=25px id="I3"></td>
+      <td  width=25px  height=25px id="I4"></td>
+      <td  width=25px  height=25px id="I5"></td>
+      <td  width=25px  height=25px id="I6"></td>
+      <td  width=25px  height=25px id="I7"></td>
+      <td  width=25px  height=25px id="I8"></td>
+      <td  width=25px  height=25px id="I9"></td>
+      <td  width=25px  height=25px id="I10"></td>
+      </tr>
+      <tr>
+      <td  width=25px  height=25px id="J1"></td>
+      <td  width=25px  height=25px id="J2"></td>
+      <td  width=25px  height=25px id="J3"></td>
+      <td  width=25px  height=25px id="J4"></td>
+      <td  width=25px  height=25px id="J5"></td>
+      <td  width=25px  height=25px id="J6"></td>
+      <td  width=25px  height=25px id="J7"></td>
+      <td  width=25px  height=25px id="J8"></td>
+      <td  width=25px  height=25px id="J9"></td>
+      <td  width=25px  height=25px id="J10"></td>
+      </tr>
+      </table>
+      </div>
+      </section><br>
+      <div id="hits" class="label">HITS</div>
+      <div id="miss" class="label">MISS</div>
+      <div id="shipsLeft" class="label">Left</div>
+      <button id = "restartButton" onclick="soundPlay();location.reload(false);">Play Again</button>
+    #result
