@@ -8,7 +8,7 @@
     "watch": "mocha -R min --watch",
     "start": "node server.js",
     "coverage": "istanbul cover _mocha",
-    "check-coverage": "istanbul check-coverage --"
+    "check-coverage": "istanbul check-coverage "
   },
   "repository": {
     "type": "git",
